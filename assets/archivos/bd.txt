@@ -1,0 +1,109 @@
+crear tablas para las solicitudes
+//Tabla de solicitud
+CREATE TABLE SolicitudMantSistemas (
+    id NUMBER PRIMARY KEY,
+    codigo VARCHAR2(25) NOT NULL,
+    mac VARCHAR2(25) NOT NULL,
+    ip VARCHAR2(15) NOT NULL,
+    tipoSolicitud VARCHAR2(15) NOT NULL,
+    tipoMantenimiento VARCHAR2(15) NOT NULL,
+    responsableBien VARCHAR2(40) NOT NULL,
+    departamento VARCHAR2(40) NOT NULL,
+    cedula VARCHAR2(12) NOT NULL,
+    cargo VARCHAR2(40) NOT NULL,
+    encargado VARCHAR2(40) NOT NULL,
+    fechaSolicitud DATE NOT NULL,
+    horaSolicitud TIMESTAMP NOT NULL,   
+    fechaSolicitudF DATE NOT NULL,
+    horaSolicitudF TIMESTAMP NOT NULL,  
+    detalles VARCHAR2(256) NOT NULL,
+    impresora VARCHAR2(2) NOT NULL,                   
+);
+
+CREATE SEQUENCE SolicitudMantSistemas_seq
+    START WITH 1
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+
+    CREATE OR REPLACE TRIGGER trg_SolicitudMantSistemas_id
+BEFORE INSERT ON Solicitudes
+FOR EACH ROW
+BEGIN
+    IF :NEW.id IS NULL THEN
+        SELECT SolicitudMantSistemas_seq.NEXTVAL
+        INTO :NEW.id
+        FROM dual;
+    END IF;
+END;
+
+
+-- Tabla de Componentes
+CREATE TABLE MantSistemasComponentes(
+    id NUMBER PRIMARY KEY,
+    solicitud_id NUMBER,
+    nombre VARCHAR2(50),
+    descripcion VARCHAR2(255),
+    serie VARCHAR2(50),
+    observacion VARCHAR2(255),
+    CONSTRAINT fk_solicitud_componentes
+        FOREIGN KEY (solicitud_id)
+        REFERENCES SolicitudMantSistemas(id)
+        ON DELETE CASCADE
+);
+
+-- Secuencia para la generación automática del id
+CREATE SEQUENCE MantSistemasComponentes_seq
+    START WITH 1
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+
+CREATE OR REPLACE TRIGGER trg_MantSistemasComponentes_id
+BEFORE INSERT ON MantSistemasComponentes
+FOR EACH ROW
+BEGIN
+    IF :NEW.COMP_ID IS NULL THEN
+        SELECT MantSistemasComponentes_seq.NEXTVAL
+        INTO :NEW.COMP_ID
+        FROM dual;
+    END IF;
+END;
+/
+/
+
+
+//Cambios
+-- Tabla de Cambios
+CREATE TABLE MantSistemasCambios (
+    id NUMBER PRIMARY KEY,
+    solicitud_id NUMBER,
+    fecha_cambio DATE NOT NULL,
+    nombre_componente VARCHAR2(50),
+    descripcion VARCHAR2(255),
+    serie VARCHAR2(50),
+    CONSTRAINT fk_solicitud_cambios
+        FOREIGN KEY (solicitud_id)
+        REFERENCES SolicitudMantSistemas(id)
+        ON DELETE CASCADE
+);
+
+-- Secuencia para la generación automática del id
+CREATE SEQUENCE MantSistemasCambios_seq
+    START WITH 1
+    INCREMENT BY 1
+    NOCACHE
+    NOCYCLE;
+
+-- Trigger para asignar automáticamente el id a cada nuevo registro
+CREATE OR REPLACE TRIGGER trg_MantSistemasCambios_id
+BEFORE INSERT ON MantSistemasCambios
+FOR EACH ROW
+BEGIN
+    IF :NEW.id IS NULL THEN
+        SELECT MantSistemasCambios_seq.NEXTVAL
+        INTO :NEW.id
+        FROM dual;
+    END IF;
+END;
+/
