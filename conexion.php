@@ -4,7 +4,7 @@ class Conexion
     private static $instance;
     private $conexion;
 
-    private function __construct()
+    /* private function __construct()
     {
         $db_username = 'ERPTENA';
         $db_password = 'GADTN$$2022';
@@ -16,7 +16,20 @@ class Conexion
             header("Location: respuesta.php");
             exit(); 
         }
+    } */
+    private function __construct()
+{
+    $db_username = 'SYSTEM';
+    $db_password = 'Cifu1234';
+    $db_connection_string = 'ORCL';
+    try {
+        $this->conexion = new PDO("oci:dbname=" . $db_connection_string . ";charset=AL32UTF8", $db_username, $db_password);
+        $this->conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        die("Error al conectar a Oracle: " . $e->getMessage());
     }
+}
+
     
     public static function getInstance()
     {
