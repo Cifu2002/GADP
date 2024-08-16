@@ -8,15 +8,13 @@ class Conexion
         $username = 'ERPTENA';
         $password = 'GADTN$$2022';
         $connection_string = '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=172.16.66.2)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=TENA)))';
-    
+
         try {
             $this->conexion = oci_connect($username, $password, $connection_string);
             if (!$this->conexion) {
                 $e = oci_error();
                 throw new Exception($e['message']);
             }
-            // Mensaje de éxito si la conexión se realiza correctamente
-            echo "Conexión a Oracle exitosa.";
         } catch (Exception $e) {
             die("Error al conectar a Oracle: " . $e->getMessage());
         }
