@@ -1,18 +1,24 @@
 <?php
-
 class Conexion
 {
-    private static $instance = null;
+    private static $instance;
     private $conexion;
 
-    private function __construct() {
+    public function __construct() {
         $db_username = 'ERPTENA';
         $db_password = 'GADTN$$2022';
-        $db_connection_string = 'cabildo'; // Asegúrate de que este identificador esté correctamente definido
+        $host = '172.16.66.2'; // Reemplaza con la IP de la base de datos Oracle
+        $port = '1521'; // Puerto estándar de Oracle
+        $service_name = 'TENA'; // Reemplaza con el nombre del servicio de tu BD
+
+        $connection_string = "(DESCRIPTION =
+                                (ADDRESS = (PROTOCOL = TCP)(HOST = $host)(PORT = $port))
+                                (CONNECT_DATA = (SERVICE_NAME = $service_name))
+                              )";
 
         try {
-            // Usando OCI8 para conectar a Oracle
-            $this->conexion = oci_connect($db_username, $db_password, $db_connection_string);
+            // Conexión usando OCI8
+            $this->conexion = oci_connect($db_username, $db_password, $connection_string);
             if (!$this->conexion) {
                 $e = oci_error();
                 throw new Exception($e['message']);
@@ -22,9 +28,15 @@ class Conexion
         }
     }
 
+    public function __destruct() {
+        if ($this->conexion) {
+            oci_close($this->conexion);
+        }
+    }
+
     public static function getInstance()
     {
-        if (self::$instance === null) {
+        if (!self::$instance) {
             self::$instance = new self();
         }
         return self::$instance;
@@ -35,15 +47,8 @@ class Conexion
         return $this->conexion;
     }
 
-    public function __destruct() {
-        if ($this->conexion) {
-            oci_close($this->conexion);
-        }
-    }
-
     private function __clone()
     {
     }
 }
-
 ?>
