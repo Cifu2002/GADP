@@ -4,50 +4,65 @@ namespace PhpOffice\PhpSpreadsheet\Worksheet;
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
-/**
- * @implements \Iterator<int, Worksheet>
- */
 class Iterator implements \Iterator
 {
     /**
      * Spreadsheet to iterate.
+     *
+     * @var Spreadsheet
      */
-    private Spreadsheet $subject;
+    private $subject;
 
     /**
      * Current iterator position.
+     *
+     * @var int
      */
-    private int $position = 0;
+    private $position = 0;
 
     /**
      * Create a new worksheet iterator.
+     *
+     * @param Spreadsheet $subject
      */
-    public function __construct(Spreadsheet $subject)
+    public function __construct(Spreadsheet $subject = null)
     {
         // Set subject
         $this->subject = $subject;
     }
 
     /**
+     * Destructor.
+     */
+    public function __destruct()
+    {
+        unset($this->subject);
+    }
+
+    /**
      * Rewind iterator.
      */
-    public function rewind(): void
+    public function rewind()
     {
         $this->position = 0;
     }
 
     /**
      * Current Worksheet.
+     *
+     * @return Worksheet
      */
-    public function current(): Worksheet
+    public function current()
     {
         return $this->subject->getSheet($this->position);
     }
 
     /**
      * Current key.
+     *
+     * @return int
      */
-    public function key(): int
+    public function key()
     {
         return $this->position;
     }
@@ -55,16 +70,18 @@ class Iterator implements \Iterator
     /**
      * Next value.
      */
-    public function next(): void
+    public function next()
     {
         ++$this->position;
     }
 
     /**
      * Are there more Worksheet instances available?
+     *
+     * @return bool
      */
-    public function valid(): bool
+    public function valid()
     {
-        return $this->position < $this->subject->getSheetCount() && $this->position >= 0;
+        return $this->position < $this->subject->getSheetCount();
     }
 }
