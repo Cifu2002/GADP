@@ -5,20 +5,13 @@ class Conexion
     private $conexion;
 
     public function __construct() {
-        $db_username = 'ERPTENA';
-        $db_password = 'GADTN$$2022';
-        $host = '172.16.66.2'; // Reemplaza con la IP de la base de datos Oracle
-        $port = '1521'; // Puerto estándar de Oracle
-        $service_name = 'TENA'; // Reemplaza con el nombre del servicio de tu BD
-
-        $connection_string = "(DESCRIPTION =
-                                (ADDRESS = (PROTOCOL = TCP)(HOST = $host)(PORT = $port))
-                                (CONNECT_DATA = (SERVICE_NAME = $service_name))
-                              )";
+        $username = 'ERPTENA';
+        $password = 'GADTN$$2022';
+        $connection_string = '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=172.16.66.2)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=TENA)))';
 
         try {
             // Conexión usando OCI8
-            $this->conexion = oci_connect($db_username, $db_password, $connection_string);
+            $this->conexion = oci_connect($username, $password, $connection_string);
             if (!$this->conexion) {
                 $e = oci_error();
                 throw new Exception($e['message']);
