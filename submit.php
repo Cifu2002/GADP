@@ -1,5 +1,5 @@
 <?php
-$batchFilePath = 'C:\Solicitud_MAC\run_java.bat';
+$batchFilePath = 'run_java.bat';
 
 $command = "cmd /c \"$batchFilePath\"";
 
