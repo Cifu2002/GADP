@@ -4,33 +4,28 @@ class Conexion
     private static $instance;
     private $conexion;
 
-    /* private function __construct()
-    {
-        $db_username = 'ERPTENA';
-        $db_password = 'GADTN$$2022';
-        $db_connection_string = 'cabildo';
-        try {
-            $this->conexion = new PDO("oci:dbname=" . $db_connection_string, $db_username, $db_password);
-            $this->conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        } catch (PDOException $e) {
-            header("Location: respuesta.php");
-            exit(); 
-        }
-    } */
-    private function __construct()
-{
-    $db_username = 'ERPTENA';
-    $db_password = 'GADTN$$2022';
-    $db_connection_string = 'cabildo';
-    try {
-        $this->conexion = new PDO("oci:dbname=" . $db_connection_string . ";charset=AL32UTF8", $db_username, $db_password);
-        $this->conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    } catch (PDOException $e) {
-        die("Error al conectar a Oracle: " . $e->getMessage());
-    }
-}
+    public function __construct() {
+        $username = 'ERPTENA';
+        $password = 'GADTN$$2022';
+        $connection_string = '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=172.16.66.2)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=TENA)))';
 
-    
+        try {
+            $this->conexion = oci_connect($username, $password, $connection_string);
+            if (!$this->conexion) {
+                $e = oci_error();
+                throw new Exception($e['message']);
+            }
+        } catch (Exception $e) {
+            die("Error al conectar a Oracle: " . $e->getMessage());
+        }
+    }
+
+    public function __destruct() {
+        if ($this->conexion) {
+            oci_close($this->conexion);
+        }
+    }
+
     public static function getInstance()
     {
         if (!self::$instance) {
@@ -48,5 +43,4 @@ class Conexion
     {
     }
 }
-
 ?>
