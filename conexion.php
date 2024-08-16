@@ -19,9 +19,9 @@ class Conexion
     } */
     private function __construct()
 {
-    $db_username = 'SYSTEM';
-    $db_password = 'Cifu1234';
-    $db_connection_string = 'ORCL';
+    $db_username = 'ERPTENA';
+    $db_password = 'GADTN$$2022';
+    $db_connection_string = 'cabildo';
     try {
         $this->conexion = new PDO("oci:dbname=" . $db_connection_string . ";charset=AL32UTF8", $db_username, $db_password);
         $this->conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
