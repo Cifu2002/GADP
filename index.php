@@ -1,6 +1,7 @@
 <?php
 include_once ("Consultas.php");
 $encargados = Consultas::listarEncargados();
+include_once ("leerExcel.php");
 
 
 /* $ip = isset($_GET['ip']) ? $_GET['ip'] : null;*/
@@ -11,7 +12,30 @@ $codigo = isset($_GET['codigo']) ? $_GET['codigo'] : null;
 $porCodigo = isset($_GET['porCodigo']) ? $_GET['porCodigo'] : null;
 $valido = false;
 $causa = '';
+$departamentos = Excel::listarDepartamentos(trim($departamento));
+if ($usuario !== null || $departamento !== null || $codigo !== null) {
+    if ($usuario !== null && validarExistencia((string) $usuario) === null) {
+        $valido = false;
+        $causa = 'Usuario no encontrado';
+    } else {
+        if ($departamento !== null && validarExistencia((string) $departamento) === null) {
+            $valido = false;
+            $causa = 'Departamento no encontrado';
+        } else {
+            if ($codigo !== null && validarExistencia((string) $codigo) === null) {
+                $valido = false;
+                $causa = 'Codigo no encontrado';
+            } else {
+                $valido = true;
+            }
+        }
+    }
 
+    if (!$valido) {
+        header("Location: index.php?error=$causa&val=$valido");
+        die();
+    }
+}
 
 if (!empty($mac)) {
     $valido = true;
