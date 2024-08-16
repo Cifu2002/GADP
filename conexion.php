@@ -13,6 +13,7 @@ class Conexion
             $this->conexion = oci_connect($username, $password, $connection_string);
             if (!$this->conexion) {
                 $e = oci_error();
+                echo("exito");
                 throw new Exception($e['message']);
             }
         } catch (Exception $e) {
