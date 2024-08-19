@@ -295,7 +295,7 @@ class Consultas
                     'codigo' => $resultado['PC_COD_AF'] ?? null
                 ], JSON_UNESCAPED_UNICODE);
             } else {
-                return null;
+                return json_encode(['error' => 'No se encontró ningún registro con la mac especificado.']);
             }
         } catch (Exception $e) {
             error_log('Error al obtener información por la mac: ' . $e->getMessage());
