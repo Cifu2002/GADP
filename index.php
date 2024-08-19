@@ -9,36 +9,30 @@ $usuario = isset($_GET['usuario']) ? $_GET['usuario'] : null;
 $departamento = isset($_GET['departamento']) ? $_GET['departamento'] : null;
 $codigo = isset($_GET['codigo']) ? $_GET['codigo'] : null;
 $porCodigo = isset($_GET['porCodigo']) ? $_GET['porCodigo'] : null;
+$valido = true;
+$valido2 = false;
 $causa = '';
 $departamentos = Consultas::listarDepartamentos();
 
-$valido = false; // Inicialmente asumimos que no es válido
-$causa = '';
-
-if ($usuario !== null || $departamento !== null || $codigo !== null) {
-    $valido = true; // Si hay alguna de las tres variables, asumimos que es válido hasta que se demuestre lo contrario
-
+/* if ($usuario !== null || $departamento !== null || $codigo !== null) {
     if ($usuario !== null && Consultas::validarExistencia('USUARIO', $usuario) === null) {
         $valido = false;
         $causa = 'Usuario no encontrado';
-    }
-
-    if ($departamento !== null && Consultas::validarExistencia('DEPARTAMENTO', $departamento) === null) {
+    } else if ($departamento !== null && Consultas::validarExistencia('DEPARTAMENTO', $departamento) === null) {
         $valido = false;
         $causa = 'Departamento no encontrado';
-    }
-
-    if ($codigo !== null && Consultas::validarExistencia('PC_COD_AF', $codigo) === null) {
+    } else if ($codigo !== null && Consultas::validarExistencia('PC_COD_AF', $codigo) === null) {
         $valido = false;
         $causa = 'Código no encontrado';
+    } else {
+        $valido = true;
     }
 
     if (!$valido) {
-        header("Location: index.php?error=" . urlencode($causa) . "&val=" . urlencode($valido));
+        header("Location: index.php?error=$causa&val=$valido");
         die();
     }
-}
-
+} */
 
 if (!empty($mac)) {
     $valido = true;
@@ -300,6 +294,8 @@ if (!empty($mac)) {
     <script>
         $(document).ready(function () {
             let porCodigo = <?php echo $porCodigo ? 'true' : 'false'; ?>;
+            alert(<?php echo $valido ?>);
+            alert(<?php echo $valido2 ?>);
             /* Enviar codigo y obtener datos */
             $("#btn-cargar-codigo").on('click', function () {
                 let codigo = $("#codigo").val().trim();
@@ -422,7 +418,7 @@ if (!empty($mac)) {
                 });
             }
 
-            /* if ($("#departamento").val() !== "" && porCodigo === true) {
+            if ($("#departamento").val() !== "" && porCodigo === true) {
                 let departamento = $("#departamento").val();
                 let usuario = '<?php echo $usuario ?>';
                 let op = 2;
@@ -440,7 +436,7 @@ if (!empty($mac)) {
                         console.error("Error en la solicitud AJAX:", status, error);
                     }
                 });
-            }; */
+            };
             configurarFechaMinima();
             let $esCorrectivo = false;
             /* Inicializar datepicker */

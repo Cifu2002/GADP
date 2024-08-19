@@ -10,7 +10,7 @@ class Conexion
         $connection_string = '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=172.16.66.2)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=TENA)))';
 
         try {
-            $this->conexion = oci_connect($username, $password, $connection_string);
+            $this->conexion = oci_connect($username, $password, $connection_string,'UTF8');
             if (!$this->conexion) {
                 $e = oci_error();
                 throw new Exception($e['message']);
