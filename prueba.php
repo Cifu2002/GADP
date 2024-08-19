@@ -1,5 +1,6 @@
 <?php
 include_once("Consultas.php");
+
 $mac = isset($_GET['mac']) ? $_GET['mac'] : null;
 $usuario = isset($_GET['usuario']) ? $_GET['usuario'] : null;
 $departamento = isset($_GET['departamento']) ? $_GET['departamento'] : null;
@@ -27,40 +28,40 @@ if ($usuario !== null || $departamento !== null || $codigo !== null) {
         header("Location: index.php?error=$causa&val=$valido");
         die();
     }
-   
 }
- function validarExistencia($columna, $valor)
+
+function validarExistencia($columna, $valor)
+{
+    // Normalización fuera de la consulta
+    function normalize($text)
     {
-        function normalize($text)
-        {
-            $search = ['á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', 'ñ', 'Ñ'];
-            $replace = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U', 'n', 'N'];
-            return str_replace($search, $replace, $text);
-        }
-
-        // Normalizar el valor antes de la consulta
-        $valorNormalizado = normalize($valor);
-
-        try {
-            $conexion = Conexion::getInstance()->getConexion();
-            // Usa una consulta SQL parametrizada para evitar problemas de inyección SQL
-            $consulta = "SELECT $columna FROM INVENTARIOEQUIPOS WHERE normalize($columna) = :valor";
-            $stid = oci_parse($conexion, $consulta);
-
-            // Normalizar el valor antes de pasarlo a la consulta
-            oci_bind_by_name($stid, ':valor', $valorNormalizado);
-            oci_execute($stid);
-
-            // Recuperar el resultado y normalizarlo para la comparación
-            $resultado = oci_fetch_assoc($stid);
-            oci_free_statement($stid);
-            oci_close($conexion);
-
-            // Normalizar el resultado obtenido
-            return $resultado ? normalize($resultado[$columna]) : null;
-        } catch (Exception $e) {
-            error_log("Error al validar $columna: " . $e->getMessage());
-            return null;
-        }
+        $search = ['á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', 'ñ', 'Ñ'];
+        $replace = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U', 'n', 'N'];
+        return str_replace($search, $replace, $text);
     }
+
+    // Normalizar el valor antes de la consulta
+    $valorNormalizado = normalize($valor);
+
+    try {
+        $conexion = Conexion::getInstance()->getConexion();
+        // Consulta parametrizada con valor normalizado
+        $consulta = "SELECT $columna FROM INVENTARIOEQUIPOS WHERE $columna = :valor";
+        $stid = oci_parse($conexion, $consulta);
+
+        oci_bind_by_name($stid, ':valor', $valorNormalizado);
+        oci_execute($stid);
+
+        $resultado = oci_fetch_assoc($stid);
+        oci_free_statement($stid);
+        oci_close($conexion);
+
+        // Retorna el resultado normalizado si existe, o null si no existe
+        return $resultado ? normalize($resultado[$columna]) : null;
+    } catch (Exception $e) {
+        error_log("Error al validar $columna: " . $e->getMessage());
+        return null;
+    }
+}
+
 ?>
