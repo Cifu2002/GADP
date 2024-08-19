@@ -250,12 +250,12 @@ class Consultas
             oci_close($conexion);
 
             if ($resultado) {
-                header('Content-Type: application/json');
+                // Evita htmlspecialchars si no estás generando HTML
                 return json_encode([
-                    'usuario' => htmlspecialchars($resultado['USUARIO']),
-                    'departamento' => htmlspecialchars($resultado['DEPARTAMENTO']),
-                    'mac' => htmlspecialchars($resultado['MAC'])
-                ]);
+                    'usuario' => $resultado['USUARIO'],
+                    'departamento' => $resultado['DEPARTAMENTO'],
+                    'mac' => $resultado['MAC']
+                ], JSON_UNESCAPED_UNICODE); // Asegúrate de que los caracteres especiales se manejen correctamente
             } else {
                 return json_encode(['error' => 'No se encontró ningún registro con el código especificado.']);
             }
@@ -264,6 +264,7 @@ class Consultas
             return json_encode(['error' => 'Ocurrió un error al procesar la solicitud.']);
         }
     }
+
 
     public static function obtenerDatosporMac($mac)
     {
