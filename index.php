@@ -12,7 +12,7 @@ $porCodigo = isset($_GET['porCodigo']) ? $_GET['porCodigo'] : null;
 $valido = true;
 $valido2 = false;
 $causa = '';
-$departamentos = Consultas::listarDepartamentos();
+$departamentos = Consultas::listarDepartamentos(trim($departamento));
 
 /* if ($usuario !== null || $departamento !== null || $codigo !== null) {
     if ($usuario !== null && Consultas::validarExistencia('USUARIO', $usuario) === null) {
