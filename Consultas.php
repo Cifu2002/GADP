@@ -28,34 +28,36 @@ class Consultas
     }
 
     public static function listarDepartamentos()
-    {
-        try {
-            $conexion = Conexion::getInstance()->getConexion();
-            // Consulta para excluir valores NULL y ordenar alfabéticamente
-            $consulta = "SELECT DISTINCT DEPARTAMENTO FROM INVENTARIOEQUIPOS 
+{
+    try {
+        $conexion = Conexion::getInstance()->getConexion();
+        // Consulta para excluir valores NULL y ordenar alfabéticamente
+        $consulta = "SELECT DISTINCT DEPARTAMENTO FROM INVENTARIOEQUIPOS 
                      WHERE DEPARTAMENTO IS NOT NULL 
                      ORDER BY DEPARTAMENTO";
-            $stid = oci_parse($conexion, $consulta);
-            oci_execute($stid);
+        $stid = oci_parse($conexion, $consulta);
+        oci_execute($stid);
 
-            $opciones = '';
-            while (($fila = oci_fetch_assoc($stid)) !== false) {
-                // Asegúrate de que los valores están siendo capturados correctamente
-                $departamento = htmlspecialchars($fila['DEPARTAMENTO'], ENT_QUOTES, 'UTF-8');
-                if (!empty($departamento)) {
-                    $opciones .= '<option value="' . $departamento . '">' . $departamento . '</option>';
-                }
+        $opciones = '';
+        while (($fila = oci_fetch_assoc($stid)) !== false) {
+            // Normaliza y limpia los valores
+            $departamento = trim($fila['DEPARTAMENTO']);
+            $departamento = htmlspecialchars($departamento, ENT_QUOTES, 'UTF-8');
+            if (!empty($departamento)) {
+                $opciones .= '<option value="' . $departamento . '">' . $departamento . '</option>';
             }
-
-            oci_free_statement($stid);
-            oci_close($conexion);
-
-            return $opciones;
-        } catch (Exception $e) {
-            error_log('Error al listar departamentos: ' . $e->getMessage());
-            return '<option value="">Error al cargar departamentos</option>';
         }
+
+        oci_free_statement($stid);
+        oci_close($conexion);
+
+        return $opciones;
+    } catch (Exception $e) {
+        error_log('Error al listar departamentos: ' . $e->getMessage());
+        return '<option value="">Error al cargar departamentos</option>';
     }
+}
+
 
 
 
@@ -216,7 +218,6 @@ class Consultas
             return '<option value="">Error al cargar usuarios</option>';
         }
     }
-
 
 
     public static function obtenerDatosMacDepartamentoUsuario($pcCodAf)
