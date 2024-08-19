@@ -371,7 +371,7 @@ if (!empty($mac)) {
                             });
                             return;
                         }
-                        let usuario = data.usuario ? data.usuario.trim() : '';
+                        let usuarioR = data.usuario ? data.usuario.trim() : '';
                         let departamentoR = data.departamento ? data.departamento.trim() : '';
                         let codigo = data.codigo ? data.codigo.trim() : '';
                       ;
@@ -379,7 +379,7 @@ if (!empty($mac)) {
                         $("#codigoCargar").val(codigo);
                         $("#departamento").val(departamentoR);
                         let departamento = $("#departamento").val();
-                        let usuario = usuario;
+                        let usuario = usuarioR;
                         if (departamento && usuario) {
                             op = 2;
                             $.ajax({
