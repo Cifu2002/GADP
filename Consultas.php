@@ -286,12 +286,14 @@ class Consultas
             oci_free_statement($stid);
             oci_close($conexion);
 
+            header('Content-Type: application/json; charset=utf-8');
+
             if ($resultado) {
                 return json_encode([
-                    'usuario' => htmlspecialchars($resultado['USUARIO']),
-                    'departamento' => htmlspecialchars($resultado['DEPARTAMENTO']),
-                    'codigo' => htmlspecialchars($resultado['PC_COD_AF'])
-                ]);
+                    'usuario' => $resultado['USUARIO'] ?? null,
+                    'departamento' => $resultado['DEPARTAMENTO'] ?? null,
+                    'codigo' => $resultado['PC_COD_AF'] ?? null
+                ], JSON_UNESCAPED_UNICODE);
             } else {
                 return json_encode(['error' => 'No se encontró ningún registro con la mac especificado.']);
             }

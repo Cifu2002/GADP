@@ -48,7 +48,7 @@ switch ($op) {
                 /* Datos cargados segun la MAC*/
                 $mac = urldecode(filter_var($_GET['cargarporMac'], FILTER_SANITIZE_STRING));
                 $resultado = Consultas::obtenerDatosporMac($mac);
-                echo json_encode($resultado);
+                echo $resultado;
                 break;
             default:
                 break;
