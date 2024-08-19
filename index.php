@@ -356,7 +356,6 @@ if (!empty($mac)) {
             /* CODIGO POR MAC */
 
             if ($("#mac").val() && porCodigo === false) {
-                alert(9);
                 let cargarporMac = '<?php echo $mac ?>';
                 op = 4;
                 $.ajax({
@@ -367,7 +366,6 @@ if (!empty($mac)) {
                         cargarporMac: cargarporMac
                     },
                     success: function (data) {
-                        console.log(data);
                         if (data == null) {
                             Swal.fire({
                                 icon: 'error',
