@@ -419,7 +419,7 @@ if (!empty($mac)) {
             }
             
             alert(porCodigo);
-            alert(("#departamento").val());
+            alert($("#departamento").val());
             if ($("#departamento").val() !== "" && porCodigo === true) {
                 let departamento = $("#departamento").val();
                 let usuario = '<?php echo $usuario ?>';
