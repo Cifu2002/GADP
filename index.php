@@ -28,8 +28,8 @@ if ($usuario !== null || $departamento !== null || $codigo !== null) {
     }
 
     if (!$valido) {
-        header("Location: index.php?error=$causa&val=$valido");
-        die();
+        header("Location: index.php?error=" . urlencode($causa) . "&val=" . urlencode($valido));
+        exit();
     }
 }
 
@@ -324,7 +324,7 @@ if (!empty($mac)) {
                     },
                     dataType: "json",
                     success: function (data) {
-                        console.log('Respuesta del servidor:', data); 
+                        console.log('Respuesta del servidor:', data);
                         if (data.error) {
                             Swal.fire({
                                 icon: 'error',
@@ -338,7 +338,7 @@ if (!empty($mac)) {
                         let departamento = data.departamento ? data.departamento.trim() : '';
                         let mac = data.mac ? data.mac.trim() : '';
                         let url = `index.php?porCodigo=true&codigo=${encodeURIComponent(codigo)}&mac=${encodeURIComponent(mac)}&departamento=${encodeURIComponent(departamento)}&usuario=${encodeURIComponent(usuario)}`;
-                        alert (url);
+                        alert(url);
                         window.location.href = url;
 
                     }, error: function (xhr, status, error) {
@@ -410,7 +410,7 @@ if (!empty($mac)) {
                     }
                 });
             }
-            
+
             if ($("#departamento").val() !== "" && porCodigo === true) {
                 let departamento = $("#departamento").val();
                 let usuario = '<?php echo $usuario ?>';

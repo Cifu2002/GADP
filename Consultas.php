@@ -28,35 +28,35 @@ class Consultas
     }
 
     public static function listarDepartamentos($departamentoSeleccionado = null)
-{
-    try {
-        $conexion = Conexion::getInstance()->getConexion();
-        // Consulta para excluir valores NULL y ordenar alfabéticamente
-        $consulta = "SELECT DISTINCT DEPARTAMENTO FROM INVENTARIOEQUIPOS 
+    {
+        try {
+            $conexion = Conexion::getInstance()->getConexion();
+            // Consulta para excluir valores NULL y ordenar alfabéticamente
+            $consulta = "SELECT DISTINCT DEPARTAMENTO FROM INVENTARIOEQUIPOS 
                      WHERE DEPARTAMENTO IS NOT NULL 
                      ORDER BY DEPARTAMENTO";
-        $stid = oci_parse($conexion, $consulta);
-        oci_execute($stid);
+            $stid = oci_parse($conexion, $consulta);
+            oci_execute($stid);
 
-        $opciones = '';
-        while (($fila = oci_fetch_assoc($stid)) !== false) {
-            // Asegúrate de que los valores están siendo capturados correctamente y elimina espacios en blanco
-            $departamento = trim(htmlspecialchars($fila['DEPARTAMENTO'], ENT_QUOTES, 'UTF-8'));
-            if (!empty($departamento)) {
-                $seleccionado = ($departamentoSeleccionado !== null && $departamentoSeleccionado === $departamento) ? ' selected' : '';
-                $opciones .= '<option value="' . $departamento . '"' . $seleccionado . '>' . $departamento . '</option>';
+            $opciones = '';
+            while (($fila = oci_fetch_assoc($stid)) !== false) {
+                // Asegúrate de que los valores están siendo capturados correctamente y elimina espacios en blanco
+                $departamento = trim(htmlspecialchars($fila['DEPARTAMENTO'], ENT_QUOTES, 'UTF-8'));
+                if (!empty($departamento)) {
+                    $seleccionado = ($departamentoSeleccionado !== null && $departamentoSeleccionado === $departamento) ? ' selected' : '';
+                    $opciones .= '<option value="' . $departamento . '"' . $seleccionado . '>' . $departamento . '</option>';
+                }
             }
+
+            oci_free_statement($stid);
+            oci_close($conexion);
+
+            return $opciones;
+        } catch (Exception $e) {
+            error_log('Error al listar departamentos: ' . $e->getMessage());
+            return '<option value="">Error al cargar departamentos</option>';
         }
-
-        oci_free_statement($stid);
-        oci_close($conexion);
-
-        return $opciones;
-    } catch (Exception $e) {
-        error_log('Error al listar departamentos: ' . $e->getMessage());
-        return '<option value="">Error al cargar departamentos</option>';
     }
-}
     /* VALIDAR EXISTENCIA */
     /* public static function validarUsuario($nombreUsuario)
     {
@@ -142,25 +142,20 @@ class Consultas
             return str_replace($search, $replace, $text);
         }
 
-        // Normalizar el valor antes de la consulta
         $valorNormalizado = normalize($valor);
 
         try {
             $conexion = Conexion::getInstance()->getConexion();
-            // Usa una consulta SQL parametrizada para evitar problemas de inyección SQL
-            $consulta = "SELECT $columna FROM INVENTARIOEQUIPOS WHERE normalize($columna) = :valor";
+            $consulta = "SELECT $columna FROM INVENTARIOEQUIPOS WHERE $columna = :valor";
             $stid = oci_parse($conexion, $consulta);
 
-            // Normalizar el valor antes de pasarlo a la consulta
             oci_bind_by_name($stid, ':valor', $valorNormalizado);
             oci_execute($stid);
 
-            // Recuperar el resultado y normalizarlo para la comparación
             $resultado = oci_fetch_assoc($stid);
             oci_free_statement($stid);
             oci_close($conexion);
 
-            // Normalizar el resultado obtenido
             return $resultado ? normalize($resultado[$columna]) : null;
         } catch (Exception $e) {
             error_log("Error al validar $columna: " . $e->getMessage());
@@ -234,43 +229,43 @@ class Consultas
 
 
     public static function obtenerDatosMacDepartamentoUsuario($pcCodAf): string
-{
-    try {
-        // Obtener la conexión
-        $conexion = Conexion::getInstance()->getConexion();
-        
-        // Preparar y ejecutar la consulta
-        $consulta = "SELECT USUARIO, DEPARTAMENTO, MAC FROM INVENTARIOEQUIPOS WHERE PC_COD_AF = :pcCodAf";
-        $stid = oci_parse($conexion, $consulta);
-        oci_bind_by_name($stid, ':pcCodAf', $pcCodAf);
-        oci_execute($stid);
+    {
+        try {
+            // Obtener la conexión
+            $conexion = Conexion::getInstance()->getConexion();
 
-        // Obtener el resultado
-        $resultado = oci_fetch_assoc($stid);
-        oci_free_statement($stid);
-        oci_close($conexion);
+            // Preparar y ejecutar la consulta
+            $consulta = "SELECT USUARIO, DEPARTAMENTO, MAC FROM INVENTARIOEQUIPOS WHERE PC_COD_AF = :pcCodAf";
+            $stid = oci_parse($conexion, $consulta);
+            oci_bind_by_name($stid, ':pcCodAf', $pcCodAf);
+            oci_execute($stid);
 
-        // Definir el tipo de contenido JSON y codificar la respuesta
-        header('Content-Type: application/json; charset=utf-8');
+            // Obtener el resultado
+            $resultado = oci_fetch_assoc($stid);
+            oci_free_statement($stid);
+            oci_close($conexion);
 
-        if ($resultado) {
-            // Devolver los datos en formato JSON
-            return json_encode([
-                'usuario' => $resultado['USUARIO'] ?? null,
-                'departamento' => $resultado['DEPARTAMENTO'] ?? null,
-                'mac' => $resultado['MAC'] ?? null
-            ], JSON_UNESCAPED_UNICODE);
-        } else {
-            // Devolver un error en formato JSON
-            return json_encode(['error' => 'No se encontró ningún registro con el código especificado.'], JSON_UNESCAPED_UNICODE);
+            // Definir el tipo de contenido JSON y codificar la respuesta
+            header('Content-Type: application/json; charset=utf-8');
+
+            if ($resultado) {
+                // Devolver los datos en formato JSON
+                return json_encode([
+                    'usuario' => $resultado['USUARIO'] ?? null,
+                    'departamento' => $resultado['DEPARTAMENTO'] ?? null,
+                    'mac' => $resultado['MAC'] ?? null
+                ], JSON_UNESCAPED_UNICODE);
+            } else {
+                // Devolver un error en formato JSON
+                return json_encode(['error' => 'No se encontró ningún registro con el código especificado.'], JSON_UNESCAPED_UNICODE);
+            }
+        } catch (Exception $e) {
+            // Manejar excepciones y devolver un error en formato JSON
+            error_log('Error al obtener información por el código: ' . $e->getMessage());
+            header('Content-Type: application/json; charset=utf-8');
+            return json_encode(['error' => 'Ocurrió un error al procesar la solicitud.'], JSON_UNESCAPED_UNICODE);
         }
-    } catch (Exception $e) {
-        // Manejar excepciones y devolver un error en formato JSON
-        error_log('Error al obtener información por el código: ' . $e->getMessage());
-        header('Content-Type: application/json; charset=utf-8');
-        return json_encode(['error' => 'Ocurrió un error al procesar la solicitud.'], JSON_UNESCAPED_UNICODE);
     }
-}
 
 
     public static function obtenerDatosporMac($mac)
