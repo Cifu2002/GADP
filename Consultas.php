@@ -138,21 +138,39 @@ class Consultas
  */
     public static function validarExistencia($columna, $valor)
     {
+        function normalize($text)
+        {
+            $search = ['á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', 'ñ', 'Ñ'];
+            $replace = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U', 'n', 'N'];
+            return str_replace($search, $replace, $text);
+        }
+
+        // Normalizar el valor antes de la consulta
+        $valorNormalizado = normalize($valor);
+
         try {
             $conexion = Conexion::getInstance()->getConexion();
-            $consulta = "SELECT $columna FROM INVENTARIOEQUIPOS WHERE $columna = :valor";
+            // Usa una consulta SQL parametrizada para evitar problemas de inyección SQL
+            $consulta = "SELECT $columna FROM INVENTARIOEQUIPOS WHERE normalize($columna) = :valor";
             $stid = oci_parse($conexion, $consulta);
-            oci_bind_by_name($stid, ':valor', $valor);
+
+            // Normalizar el valor antes de pasarlo a la consulta
+            oci_bind_by_name($stid, ':valor', $valorNormalizado);
             oci_execute($stid);
+
+            // Recuperar el resultado y normalizarlo para la comparación
             $resultado = oci_fetch_assoc($stid);
             oci_free_statement($stid);
             oci_close($conexion);
-            return $resultado ? $resultado[$columna] : null;
+
+            // Normalizar el resultado obtenido
+            return $resultado ? normalize($resultado[$columna]) : null;
         } catch (Exception $e) {
             error_log("Error al validar $columna: " . $e->getMessage());
             return null;
         }
     }
+
 
     /* OBTENER DATOS */
     public static function obtenerDatosEncargado($id)
@@ -180,45 +198,42 @@ class Consultas
     }
 
     public static function obtenerDatosDepartamento($departamento, $usuarioSeleccionado = null)
-{
-    function normalize($text)
     {
-        $search = ['á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', 'ñ', 'Ñ'];
-        $replace = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U', 'n', 'N'];
-        return str_replace($search, $replace, $text);
-    }
-
-    $normalizedDepartamento = normalize($departamento);
-
-    try {
-        $conexion = Conexion::getInstance()->getConexion();
-        $consulta = "SELECT DISTINCT USUARIO, DEPARTAMENTO FROM INVENTARIOEQUIPOS WHERE DEPARTAMENTO IS NOT NULL";
-        $stid = oci_parse($conexion, $consulta);
-        oci_execute($stid);
-
-        $opciones = '';
-        while (($fila = oci_fetch_assoc($stid)) !== false) {
-            $usuario = htmlspecialchars(trim($fila['USUARIO']), ENT_QUOTES, 'UTF-8');
-            $departamentoBD = htmlspecialchars(trim($fila['DEPARTAMENTO']), ENT_QUOTES, 'UTF-8');
-
-            $normalizedDepartamentoBD = normalize($departamentoBD);
-
-            if ($normalizedDepartamentoBD === $normalizedDepartamento) {
-                $seleccionado = ($usuario === $usuarioSeleccionado) ? 'selected' : '';
-                $opciones .= '<option value="' . htmlspecialchars($usuario, ENT_QUOTES, 'UTF-8') . '" ' . $seleccionado . '>' . htmlspecialchars($usuario, ENT_QUOTES, 'UTF-8') . '</option>';
-            }
+        function normalize($text)
+        {
+            $search = ['á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', 'ñ', 'Ñ'];
+            $replace = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U', 'n', 'N'];
+            return str_replace($search, $replace, preg_replace('/\s+/', ' ', trim($text)));
         }
 
-        oci_free_statement($stid);
-        oci_close($conexion);
+        $normalizedDepartamento = normalize($departamento);
 
-        return $opciones;
-    } catch (Exception $e) {
-        error_log('Error al listar usuarios por departamento: ' . $e->getMessage());
-        return '<option value="">Error al cargar usuarios</option>';
+        try {
+            $conexion = Conexion::getInstance()->getConexion();
+            $consulta = "SELECT DISTINCT USUARIO, DEPARTAMENTO FROM INVENTARIOEQUIPOS";
+            $stid = oci_parse($conexion, $consulta);
+            oci_execute($stid);
+
+            $opciones = '';
+            while (($fila = oci_fetch_assoc($stid)) !== false) {
+                $usuario = htmlspecialchars(trim($fila['USUARIO']));
+                $departamentoBD = htmlspecialchars(trim($fila['DEPARTAMENTO']));
+
+                if (normalize($departamentoBD) === $normalizedDepartamento) {
+                    $seleccionado = ($usuario === $usuarioSeleccionado) ? 'selected' : '';
+                    $opciones .= '<option value="' . htmlspecialchars($usuario) . '" ' . $seleccionado . '>' . htmlspecialchars($usuario) . '</option>';
+                }
+            }
+
+            oci_free_statement($stid);
+            oci_close($conexion);
+
+            return $opciones;
+        } catch (Exception $e) {
+            error_log('Error al listar usuarios por departamento: ' . $e->getMessage());
+            return '<option value="">Error al cargar usuarios</option>';
+        }
     }
-}
-
 
 
     public static function obtenerDatosMacDepartamentoUsuario($pcCodAf)
