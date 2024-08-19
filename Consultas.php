@@ -249,22 +249,22 @@ class Consultas
         oci_free_statement($stid);
         oci_close($conexion);
 
+        header('Content-Type: application/json; charset=utf-8'); // Asegúrate de que el encabezado sea JSON
+
         if ($resultado) {
-            $data = [
+            // Utiliza json_encode directamente para manejar correctamente caracteres especiales
+            echo json_encode([
                 'usuario' => $resultado['USUARIO'],
                 'departamento' => $resultado['DEPARTAMENTO'],
                 'mac' => $resultado['MAC']
-            ];
-            header('Content-Type: application/json; charset=utf-8'); // Asegúrate de que el encabezado sea JSON
-            echo json_encode($data, JSON_UNESCAPED_UNICODE);
+            ], JSON_UNESCAPED_UNICODE); // Mantiene caracteres especiales
         } else {
-            header('Content-Type: application/json; charset=utf-8');
-            echo json_encode(['error' => 'No se encontró ningún registro con el código especificado.']);
+            echo json_encode(['error' => 'No se encontró ningún registro con el código especificado.'], JSON_UNESCAPED_UNICODE);
         }
     } catch (Exception $e) {
         error_log('Error al obtener información por el código: ' . $e->getMessage());
         header('Content-Type: application/json; charset=utf-8');
-        echo json_encode(['error' => 'Ocurrió un error al procesar la solicitud.']);
+        echo json_encode(['error' => 'Ocurrió un error al procesar la solicitud.'], JSON_UNESCAPED_UNICODE);
     }
 }
 

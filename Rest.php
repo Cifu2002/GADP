@@ -42,7 +42,7 @@ switch ($op) {
                 /* Datos de la mac, departamento y usuario*/
                 $codigo = urldecode(filter_var($_GET['codigo'], FILTER_SANITIZE_STRING));
                 $resultado = Consultas::obtenerDatosMacDepartamentoUsuario($codigo);
-                $resultado;
+                echo json_encode($resultado);
                 break;
             case 4:
                 /* Datos cargados segun la MAC*/
