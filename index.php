@@ -9,11 +9,11 @@ $usuario = isset($_GET['usuario']) ? $_GET['usuario'] : null;
 $departamento = isset($_GET['departamento']) ? $_GET['departamento'] : null;
 $codigo = isset($_GET['codigo']) ? $_GET['codigo'] : null;
 $porCodigo = isset($_GET['porCodigo']) ? $_GET['porCodigo'] : null;
-$valido = false;
+$valido = true;
 $causa = '';
 $departamentos = Consultas::listarDepartamentos();
 
-if ($usuario !== null || $departamento !== null || $codigo !== null) {
+/* if ($usuario !== null || $departamento !== null || $codigo !== null) {
     if ($usuario !== null && Consultas::validarExistencia('USUARIO', $usuario) === null) {
         $valido = false;
         $causa = 'Usuario no encontrado';
@@ -31,7 +31,7 @@ if ($usuario !== null || $departamento !== null || $codigo !== null) {
         header("Location: index.php?error=$causa&val=$valido");
         die();
     }
-}
+} */
 
 if (!empty($mac)) {
     $valido = true;
