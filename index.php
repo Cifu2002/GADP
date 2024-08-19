@@ -28,8 +28,8 @@ if ($usuario !== null || $departamento !== null || $codigo !== null) {
     }
 
     if (!$valido) {
-        header("Location: index.php?error=$causa&val=$valido");
-        die();
+        /* header("Location: index.php?error=$causa&val=$valido");
+        die(); */
     }
 }
 
@@ -323,10 +323,7 @@ if (!empty($mac)) {
                     },
                     dataType: "json",
                     success: function (data) {
-                        console.log('Respuesta del servidor:', data); // Verifica la respuesta
-
-                        
-
+                        console.log('Respuesta del servidor:', data); 
                         if (data.error) {
                             Swal.fire({
                                 icon: 'error',
@@ -343,6 +340,7 @@ if (!empty($mac)) {
                         alert(departamento);
                         alert(mac);
                         let url = `index.php?porCodigo=true&codigo=${encodeURIComponent(codigo)}&mac=${encodeURIComponent(mac)}&departamento=${encodeURIComponent(departamento)}&usuario=${encodeURIComponent(usuario)}`;
+                        alert (url);
                         window.location.href = url;
 
                     }, error: function (xhr, status, error) {
