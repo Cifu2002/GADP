@@ -372,12 +372,12 @@ if (!empty($mac)) {
                             return;
                         }
                         let usuario = data.usuario ? data.usuario.trim() : '';
-                        let departamento = data.departamento ? data.departamento.trim() : '';
+                        let departamentoR = data.departamento ? data.departamento.trim() : '';
                         let codigo = data.codigo ? data.codigo.trim() : '';
                       ;
 
                         $("#codigoCargar").val(codigo);
-                        $("#departamento").val(departamento);
+                        $("#departamento").val(departamentoR);
                         let departamento = $("#departamento").val();
                         let usuario = usuario;
                         if (departamento && usuario) {
