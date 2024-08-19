@@ -237,33 +237,36 @@ class Consultas
 
 
     public static function obtenerDatosMacDepartamentoUsuario($pcCodAf)
-    {
-        try {
-            $conexion = Conexion::getInstance()->getConexion();
-            $consulta = "SELECT USUARIO, DEPARTAMENTO, MAC FROM INVENTARIOEQUIPOS WHERE PC_COD_AF = :pcCodAf";
-            $stid = oci_parse($conexion, $consulta);
-            oci_bind_by_name($stid, ':pcCodAf', $pcCodAf);
-            oci_execute($stid);
+{
+    try {
+        $conexion = Conexion::getInstance()->getConexion();
+        $consulta = "SELECT USUARIO, DEPARTAMENTO, MAC FROM INVENTARIOEQUIPOS WHERE PC_COD_AF = :pcCodAf";
+        $stid = oci_parse($conexion, $consulta);
+        oci_bind_by_name($stid, ':pcCodAf', $pcCodAf);
+        oci_execute($stid);
 
-            $resultado = oci_fetch_assoc($stid);
-            oci_free_statement($stid);
-            oci_close($conexion);
+        $resultado = oci_fetch_assoc($stid);
+        oci_free_statement($stid);
+        oci_close($conexion);
 
-            if ($resultado) {
-                // Evita htmlspecialchars si no estás generando HTML
-                return json_encode([
-                    'usuario' => $resultado['USUARIO'],
-                    'departamento' => $resultado['DEPARTAMENTO'],
-                    'mac' => $resultado['MAC']
-                ], JSON_UNESCAPED_UNICODE); // Asegúrate de que los caracteres especiales se manejen correctamente
-            } else {
-                return json_encode(['error' => 'No se encontró ningún registro con el código especificado.']);
-            }
-        } catch (Exception $e) {
-            error_log('Error al obtener información por el código: ' . $e->getMessage());
-            return json_encode(['error' => 'Ocurrió un error al procesar la solicitud.']);
+        if ($resultado) {
+            $data = [
+                'usuario' => $resultado['USUARIO'],
+                'departamento' => $resultado['DEPARTAMENTO'],
+                'mac' => $resultado['MAC']
+            ];
+            header('Content-Type: application/json; charset=utf-8'); // Asegúrate de que el encabezado sea JSON
+            echo json_encode($data, JSON_UNESCAPED_UNICODE);
+        } else {
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode(['error' => 'No se encontró ningún registro con el código especificado.']);
         }
+    } catch (Exception $e) {
+        error_log('Error al obtener información por el código: ' . $e->getMessage());
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode(['error' => 'Ocurrió un error al procesar la solicitud.']);
     }
+}
 
 
     public static function obtenerDatosporMac($mac)

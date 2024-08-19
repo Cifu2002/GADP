@@ -296,6 +296,7 @@ if (!empty($mac)) {
             /* Enviar codigo y obtener datos */
             $("#btn-cargar-codigo").on('click', function () {
                 let codigo = $("#codigo").val().trim();
+                console.log(response);
                 let op = 3;
                 if (codigo === "") {
                     Swal.fire({
