@@ -31,13 +31,17 @@ class Consultas
     {
         try {
             $conexion = Conexion::getInstance()->getConexion();
-            $consulta = "SELECT DISTINCT DEPARTAMENTO FROM INVENTARIOEQUIPOS";
+            // Ajusta la consulta para excluir valores NULL
+            $consulta = "SELECT DISTINCT DEPARTAMENTO FROM INVENTARIOEQUIPOS WHERE DEPARTAMENTO IS NOT NULL";
             $stid = oci_parse($conexion, $consulta);
             oci_execute($stid);
+
             $opciones = '';
-            while (($fila = oci_fetch_assoc($stid)) != false) {
-                $opciones .= '<option value="' . htmlspecialchars($fila['DEPARTAMENTO']) . '"> ' . htmlspecialchars($fila['DEPARTAMENTO']) . '</option>';
+            while (($fila = oci_fetch_assoc($stid)) !== false) {
+                $departamento = htmlspecialchars($fila['DEPARTAMENTO']);
+                $opciones .= '<option value="' . $departamento . '">' . $departamento . '</option>';
             }
+
             oci_free_statement($stid);
             oci_close($conexion);
 
@@ -47,6 +51,7 @@ class Consultas
             return '<option value="">Error al cargar departamentos</option>';
         }
     }
+
 
     /* VALIDAR EXISTENCIA */
     /* public static function validarUsuario($nombreUsuario)
@@ -171,7 +176,7 @@ class Consultas
     {
         try {
             $conexion = Conexion::getInstance()->getConexion();
-            $consulta = "SELECT USUARIO FROM INVENTARIOEQUIPOS WHERE DEPARTAMENTO = :departamento AND USUARIO IS NOT NULL ORDER BY USUARIO ASC";
+            $consulta = "SELECT USUARIO FROM INVENTARIOEQUIPOS WHERE DEPARTAMENTO = :departamento";
             $stid = oci_parse($conexion, $consulta);
             oci_bind_by_name($stid, ':departamento', $departamento);
             oci_execute($stid);
@@ -192,7 +197,6 @@ class Consultas
             return '<option value="">Error al cargar usuarios</option>';
         }
     }
-
 
     public static function obtenerDatosMacDepartamentoUsuario($pcCodAf)
     {
