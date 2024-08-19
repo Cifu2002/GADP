@@ -192,14 +192,14 @@ class Consultas
 
     try {
         $conexion = Conexion::getInstance()->getConexion();
-        $consulta = "SELECT DISTINCT USUARIO, DEPARTAMENTO FROM INVENTARIOEQUIPOS";
+        $consulta = "SELECT DISTINCT USUARIO, DEPARTAMENTO FROM INVENTARIOEQUIPOS WHERE DEPARTAMENTO IS NOT NULL";
         $stid = oci_parse($conexion, $consulta);
         oci_execute($stid);
 
         $opciones = '';
         while (($fila = oci_fetch_assoc($stid)) !== false) {
-            $usuario = htmlspecialchars(trim(utf8_encode($fila['USUARIO'])), ENT_QUOTES, 'UTF-8');
-            $departamentoBD = htmlspecialchars(trim(utf8_encode($fila['DEPARTAMENTO'])), ENT_QUOTES, 'UTF-8');
+            $usuario = htmlspecialchars(trim($fila['USUARIO']), ENT_QUOTES, 'UTF-8');
+            $departamentoBD = htmlspecialchars(trim($fila['DEPARTAMENTO']), ENT_QUOTES, 'UTF-8');
 
             $normalizedDepartamentoBD = normalize($departamentoBD);
 
