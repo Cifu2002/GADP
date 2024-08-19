@@ -31,26 +31,33 @@ class Consultas
     {
         try {
             $conexion = Conexion::getInstance()->getConexion();
-            // Ajusta la consulta para excluir valores NULL
-            $consulta = "SELECT DISTINCT DEPARTAMENTO FROM INVENTARIOEQUIPOS WHERE DEPARTAMENTO IS NOT NULL";
+            // Consulta para excluir valores NULL y ordenar alfabéticamente
+            $consulta = "SELECT DISTINCT DEPARTAMENTO FROM INVENTARIOEQUIPOS 
+                         WHERE DEPARTAMENTO IS NOT NULL 
+                         ORDER BY DEPARTAMENTO";
             $stid = oci_parse($conexion, $consulta);
             oci_execute($stid);
-
+    
             $opciones = '';
             while (($fila = oci_fetch_assoc($stid)) !== false) {
-                $departamento = htmlspecialchars($fila['DEPARTAMENTO']);
-                $opciones .= '<option value="' . $departamento . '">' . $departamento . '</option>';
+                // Asegúrate de que los valores están siendo capturados correctamente
+                $departamento = htmlspecialchars($fila['DEPARTAMENTO'], ENT_QUOTES, 'UTF-8');
+                if (!empty($departamento)) {
+                    $opciones .= '<option value="' . $departamento . '">' . $departamento . '</option>';
+                }
             }
-
+    
             oci_free_statement($stid);
             oci_close($conexion);
-
+    
             return $opciones;
         } catch (Exception $e) {
             error_log('Error al listar departamentos: ' . $e->getMessage());
             return '<option value="">Error al cargar departamentos</option>';
         }
     }
+    
+
 
 
     /* VALIDAR EXISTENCIA */
