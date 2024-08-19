@@ -358,7 +358,7 @@ if (!empty($mac)) {
 
             /* CODIGO POR MAC */
 
-            if ($("#mac").val() && porCodigo === true) {
+            if ($("#mac").val() && porCodigo === false) {
 
                 let cargarporMac = '<?php echo $mac ?>';
                 op = 4;
@@ -418,7 +418,7 @@ if (!empty($mac)) {
                 });
             }
 
-            if ($("#departamento").val() !== "" && porCodigo === false) {
+            if ($("#departamento").val() !== "" && porCodigo === true) {
                 let departamento = $("#departamento").val();
                 let usuario = '<?php echo $usuario ?>';
                 let op = 2;
@@ -431,6 +431,8 @@ if (!empty($mac)) {
                         usuario: usuario
                     },
                     success: function (response) {
+                        console.log(response);
+                        alert(response);
                         $("#responsableBien").html(response);
                     }, error: function (xhr, status, error) {
                         console.error("Error en la solicitud AJAX:", status, error);
