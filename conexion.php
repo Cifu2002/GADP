@@ -16,10 +16,11 @@ class Conexion
                 throw new Exception($e['message']);
             }
     
-            // Establecer la codificación a UTF-8
-            oci_set_client_encoding($this->conexion, 'AL32UTF8');
-            // Configurar el identificador del cliente (opcional)
-            oci_set_client_identifier($this->conexion, 'UTF-8');
+            // Establecer codificación cliente si es compatible
+            $set_encoding = oci_set_client_encoding($this->conexion, 'WE8MSWIN1252');
+            if (!$set_encoding) {
+                throw new Exception('Error al establecer la codificación WE8MSWIN1252.');
+            }
         } catch (Exception $e) {
             die("Error al conectar a Oracle: " . $e->getMessage());
         }
