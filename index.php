@@ -300,8 +300,6 @@ if (!empty($mac)) {
     <script>
         $(document).ready(function () {
             let porCodigo = <?php echo $porCodigo ? 'true' : 'false'; ?>;
-            alert(<?php echo $valido ?>);
-            alert(<?php echo $valido2 ?>);
             /* Enviar codigo y obtener datos */
             $("#btn-cargar-codigo").on('click', function () {
                 let codigo = $("#codigo").val().trim();
@@ -424,7 +422,7 @@ if (!empty($mac)) {
                 });
             }
 
-            if ($("#departamento").val() !== "" && porCodigo === true) {
+            /* if ($("#departamento").val() !== "" && porCodigo === true) {
                 let departamento = $("#departamento").val();
                 let usuario = '<?php echo $usuario ?>';
                 let op = 2;
@@ -442,7 +440,7 @@ if (!empty($mac)) {
                         console.error("Error en la solicitud AJAX:", status, error);
                     }
                 });
-            };
+            }; */
             configurarFechaMinima();
             let $esCorrectivo = false;
             /* Inicializar datepicker */
