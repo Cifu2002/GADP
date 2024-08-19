@@ -14,15 +14,15 @@ $causa = '';
 $departamentos = Consultas::listarDepartamentos(trim($departamento));
 
 if ($usuario !== null || $departamento !== null || $codigo !== null) {
-    if ($usuario !== null && Consultas::validarExistencia('USUARIO',(string) $usuario) === null) {
+    if ($usuario !== null && Consultas::validarUsuario((string) $usuario) === null) {
         $valido = false;
         $causa = 'Usuario no encontrado';
     } else {
-        if ($departamento !== null && Consultas::validarExistencia('DEPARTAMENTO',(string) $departamento) === null) {
+        if ($departamento !== null && Consultas::validarDepartamentos((string) $departamento) === null) {
             $valido = false;
             $causa = 'Departamento no encontrado';
         } else {
-            if ($codigo !== null && Consultas::validarExistencia('PC_COD_AF',(string) $codigo) === null) {
+            if ($codigo !== null && Consultas::validarCodigo((string) $codigo) === null) {
                 $valido = false;
                 $causa = 'Codigo no encontrado';
             } else {

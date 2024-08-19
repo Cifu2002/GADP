@@ -58,7 +58,7 @@ class Consultas
         }
     }
     /* VALIDAR EXISTENCIA */
-    /* public static function validarUsuario($nombreUsuario)
+     public static function validarUsuario($nombreUsuario)
     {
         try {
             $conexion = Conexion::getInstance()->getConexion();
@@ -132,37 +132,6 @@ class Consultas
             return null;
         }
     }
- */
-    public static function validarExistencia($columna, $valor)
-    {
-        function normalize($text)
-        {
-            $search = ['á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', 'ñ', 'Ñ'];
-            $replace = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U', 'n', 'N'];
-            return str_replace($search, $replace, $text);
-        }
-
-        $valorNormalizado = normalize($valor);
-
-        try {
-            $conexion = Conexion::getInstance()->getConexion();
-            $consulta = "SELECT $columna FROM INVENTARIOEQUIPOS WHERE $columna = :valor";
-            $stid = oci_parse($conexion, $consulta);
-
-            oci_bind_by_name($stid, ':valor', $valorNormalizado);
-            oci_execute($stid);
-
-            $resultado = oci_fetch_assoc($stid);
-            oci_free_statement($stid);
-            oci_close($conexion);
-
-            return $resultado ? normalize($resultado[$columna]) : null;
-        } catch (Exception $e) {
-            error_log("Error al validar $columna: " . $e->getMessage());
-            return null;
-        }
-    }
-
 
     /* OBTENER DATOS */
     public static function obtenerDatosEncargado($id)
