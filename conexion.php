@@ -8,24 +8,17 @@ class Conexion
         $username = 'ERPTENA';
         $password = 'GADTN$$2022';
         $connection_string = '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=172.16.66.2)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=TENA)))';
-    
+
         try {
             $this->conexion = oci_connect($username, $password, $connection_string);
             if (!$this->conexion) {
                 $e = oci_error();
                 throw new Exception($e['message']);
             }
-    
-            // Establecer codificación cliente si es compatible
-            $set_encoding = oci_set_client_encoding($this->conexion, 'WE8MSWIN1252');
-            if (!$set_encoding) {
-                throw new Exception('Error al establecer la codificación WE8MSWIN1252.');
-            }
         } catch (Exception $e) {
             die("Error al conectar a Oracle: " . $e->getMessage());
         }
     }
-    
 
     public function __destruct() {
         if ($this->conexion) {
