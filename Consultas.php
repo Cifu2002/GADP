@@ -183,34 +183,32 @@ class Consultas
 {
     // Función para normalizar texto eliminando tildes
     function normalize($text) {
-        return preg_replace(
-            ['/á/', '/é/', '/í/', '/ó/', '/ú/', '/Á/', '/É/', '/Í/', '/Ó/', '/Ú/', '/ñ/', '/Ñ/'],
-            ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U', 'n', 'N'],
-            $text
-        );
+        // Normalizar los caracteres con tildes a su forma base
+        $search = ['á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', 'ñ', 'Ñ'];
+        $replace = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U', 'n', 'N'];
+        return str_replace($search, $replace, $text);
     }
 
-    $departamento = normalize($departamento);
+    $normalizedDepartamento = normalize($departamento);
 
     try {
         $conexion = Conexion::getInstance()->getConexion();
 
-        // Consulta para buscar ignorando tildes y sin usuarios repetidos
-        $consulta = "
-            SELECT DISTINCT USUARIO, DEPARTAMENTO
-            FROM INVENTARIOEQUIPOS
-            WHERE normalize(DEPARTAMENTO) = :departamento
-        ";
-
+        // Consulta para obtener usuarios del departamento, normalizada en PHP
+        $consulta = "SELECT DISTINCT USUARIO, DEPARTAMENTO FROM INVENTARIOEQUIPOS";
         $stid = oci_parse($conexion, $consulta);
-        oci_bind_by_name($stid, ':departamento', $departamento);
         oci_execute($stid);
 
         $opciones = '';
         while (($fila = oci_fetch_assoc($stid)) !== false) {
             $usuario = htmlspecialchars($fila['USUARIO']);
-            $seleccionado = ($usuario === $usuarioSeleccionado) ? 'selected' : '';
-            $opciones .= '<option value="' . $usuario . '" ' . $seleccionado . '>' . $usuario . '</option>';
+            $departamentoBD = htmlspecialchars($fila['DEPARTAMENTO']);
+
+            // Normalizar también el departamento obtenido de la base de datos
+            if (normalize($departamentoBD) === $normalizedDepartamento) {
+                $seleccionado = ($usuario === $usuarioSeleccionado) ? 'selected' : '';
+                $opciones .= '<option value="' . $usuario . '" ' . $seleccionado . '>' . $usuario . '</option>';
+            }
         }
 
         oci_free_statement($stid);
