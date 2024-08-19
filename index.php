@@ -366,6 +366,7 @@ if (!empty($mac)) {
                         cargarporMac: cargarporMac
                     },
                     success: function (data) {
+                        console.log(data);
                         if (data == null) {
                             Swal.fire({
                                 icon: 'error',
