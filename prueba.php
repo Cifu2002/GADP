@@ -1,8 +1,30 @@
 <?php
+include_once("Consultas.php");
 $mac = isset($_GET['mac']) ? $_GET['mac'] : null;
 $usuario = isset($_GET['usuario']) ? $_GET['usuario'] : null;
 $departamento = isset($_GET['departamento']) ? $_GET['departamento'] : null;
 $codigo = isset($_GET['codigo']) ? $_GET['codigo'] : null;
+$porCodigo = isset($_GET['porCodigo']) ? $_GET['porCodigo'] : null;
+$valido = false;
+$causa = '';
+$departamentos = Consultas::listarDepartamentos(trim($departamento));
+
+if ($usuario !== null || $departamento !== null || $codigo !== null) {
+    if ($usuario !== null && validarExistencia('USUARIO', $usuario) === null) {
+        $valido = false;
+        $causa = 'Usuario no encontrado';
+    } else if ($departamento !== null && validarExistencia('DEPARTAMENTO', $departamento) === null) {
+        $valido = false;
+        $causa = 'Departamento no encontrado';
+    } else if ($codigo !== null && validarExistencia('PC_COD_AF', $codigo) === null) {
+        $valido = false;
+        $causa = 'Código no encontrado';
+    } else {
+        $valido = true;
+    }
+
+   
+}
 function validarExistencia($columna, $valor)
 {
     function normalize($text)
