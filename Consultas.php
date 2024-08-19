@@ -273,34 +273,35 @@ class Consultas
 }
 
 
-public static function obtenerDatosporMac($mac)
-{
-    try {
-        $conexion = Conexion::getInstance()->getConexion();
-        $consulta = "SELECT USUARIO, DEPARTAMENTO, PC_COD_AF FROM INVENTARIOEQUIPOS WHERE MAC = :mac";
-        $stid = oci_parse($conexion, $consulta);
-        oci_bind_by_name($stid, ':mac', $mac);
-        oci_execute($stid);
+    public static function obtenerDatosporMac($mac)
+    {
+        try {
+            $conexion = Conexion::getInstance()->getConexion();
+            $consulta = "SELECT USUARIO, DEPARTAMENTO, PC_COD_AF FROM INVENTARIOEQUIPOS WHERE MAC = :mac";
+            $stid = oci_parse($conexion, $consulta);
+            oci_bind_by_name($stid, ':mac', $mac);
+            oci_execute($stid);
 
-        $resultado = oci_fetch_assoc($stid);
-        oci_free_statement($stid);
-        oci_close($conexion);
+            $resultado = oci_fetch_assoc($stid);
+            oci_free_statement($stid);
+            oci_close($conexion);
 
-        if ($resultado) {
-            return json_encode([
-                'usuario' => $resultado['USUARIO'] ?? null,
-                'departamento' => $resultado['DEPARTAMENTO'] ?? null,
-                'codigo' => $resultado['PC_COD_AF'] ?? null
-            ], JSON_UNESCAPED_UNICODE);
-        } else {
-            return null;  // Devuelve null si no se encuentra la MAC
+            header('Content-Type: application/json; charset=utf-8');
+
+            if ($resultado) {
+                return json_encode([
+                    'usuario' => $resultado['USUARIO'] ?? null,
+                    'departamento' => $resultado['DEPARTAMENTO'] ?? null,
+                    'codigo' => $resultado['PC_COD_AF'] ?? null
+                ], JSON_UNESCAPED_UNICODE);
+            } else {
+                return null;
+            }
+        } catch (Exception $e) {
+            error_log('Error al obtener información por la mac: ' . $e->getMessage());
+            return json_encode(['error' => 'Ocurrió un error al procesar la solicitud.']);
         }
-    } catch (Exception $e) {
-        error_log('Error al obtener información por la MAC: ' . $e->getMessage());
-        return json_encode(['error' => 'Ocurrió un error al procesar la solicitud.']);
     }
-}
-
 
 
 
