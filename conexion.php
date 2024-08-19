@@ -15,13 +15,13 @@ class Conexion
     
             if (!$this->conexion) {
                 $e = oci_error();
-                throw new Exception($e['message']);
+                throw new Exception('Error al conectar a Oracle: ' . $e['message']);
             }
     
-            // Establecer la codificación a UTF-8
-            oci_set_client_encoding($this->conexion, 'AL32UTF8');
+            // Intentar establecer la codificación a UTF-8 no es necesario aquí
+            // dado que la base de datos está configurada para WE8MSWIN1252
         } catch (Exception $e) {
-            die("Error al conectar a Oracle: " . $e->getMessage());
+            die($e->getMessage());
         }
     }
 
