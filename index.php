@@ -14,7 +14,7 @@ $valido2 = false;
 $causa = '';
 $departamentos = Consultas::listarDepartamentos(trim($departamento));
 
-/* if ($usuario !== null || $departamento !== null || $codigo !== null) {
+if ($usuario !== null || $departamento !== null || $codigo !== null) {
     if ($usuario !== null && Consultas::validarExistencia('USUARIO', $usuario) === null) {
         $valido = false;
         $causa = 'Usuario no encontrado';
@@ -32,7 +32,7 @@ $departamentos = Consultas::listarDepartamentos(trim($departamento));
         header("Location: index.php?error=$causa&val=$valido");
         die();
     }
-} */
+}
 
 if (!empty($mac)) {
     $valido = true;
