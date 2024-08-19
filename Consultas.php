@@ -171,7 +171,7 @@ class Consultas
     {
         try {
             $conexion = Conexion::getInstance()->getConexion();
-            $consulta = "SELECT USUARIO FROM INVENTARIOEQUIPOS WHERE DEPARTAMENTO = :departamento";
+            $consulta = "SELECT USUARIO FROM INVENTARIOEQUIPOS WHERE DEPARTAMENTO = :departamento AND USUARIO IS NOT NULL ORDER BY USUARIO ASC";
             $stid = oci_parse($conexion, $consulta);
             oci_bind_by_name($stid, ':departamento', $departamento);
             oci_execute($stid);
@@ -192,6 +192,7 @@ class Consultas
             return '<option value="">Error al cargar usuarios</option>';
         }
     }
+
 
     public static function obtenerDatosMacDepartamentoUsuario($pcCodAf)
     {
