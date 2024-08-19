@@ -356,7 +356,7 @@ if (!empty($mac)) {
             /* CODIGO POR MAC */
 
             if ($("#mac").val() && porCodigo === false) {
-
+                alert(9);
                 let cargarporMac = '<?php echo $mac ?>';
                 op = 4;
                 $.ajax({
@@ -367,6 +367,7 @@ if (!empty($mac)) {
                         cargarporMac: cargarporMac
                     },
                     success: function (data) {
+                        console.log(data);
                         if (data == null) {
                             Swal.fire({
                                 icon: 'error',
@@ -381,7 +382,7 @@ if (!empty($mac)) {
                         let departamentoR = data.departamento ? data.departamento.trim() : '';
                         let codigo = data.codigo ? data.codigo.trim() : '';
                         ;
-                        alert(usuarioR);
+                        alert(10);
                         $("#codigoCargar").val(codigo);
                         $("#departamento").val(departamentoR);
                         let departamento = $("#departamento").val();
