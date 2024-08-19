@@ -32,7 +32,7 @@ class Consultas
         try {
             $conexion = Conexion::getInstance()->getConexion();
             // Ajusta la consulta para excluir valores NULL
-            $consulta = "SELECT DISTINCT DEPARTAMENTO FROM INVENTARIOEQUIPOS WHERE DEPARTAMENTO IS NOT NULL";
+            $consulta = "SELECT DEPARTAMENTO FROM INVENTARIOEQUIPOS WHERE DEPARTAMENTO IS NOT NULL";
             $stid = oci_parse($conexion, $consulta);
             oci_execute($stid);
 
