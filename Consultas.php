@@ -28,34 +28,34 @@ class Consultas
     }
 
     public static function listarDepartamentos()
-{
-    try {
-        $conexion = Conexion::getInstance()->getConexion();
-        // Consulta para excluir valores NULL y ordenar alfabéticamente
-        $consulta = "SELECT DISTINCT DEPARTAMENTO FROM INVENTARIOEQUIPOS 
+    {
+        try {
+            $conexion = Conexion::getInstance()->getConexion();
+            // Consulta para excluir valores NULL y ordenar alfabéticamente
+            $consulta = "SELECT DISTINCT DEPARTAMENTO FROM INVENTARIOEQUIPOS 
                      WHERE DEPARTAMENTO IS NOT NULL 
                      ORDER BY DEPARTAMENTO";
-        $stid = oci_parse($conexion, $consulta);
-        oci_execute($stid);
+            $stid = oci_parse($conexion, $consulta);
+            oci_execute($stid);
 
-        $opciones = '';
-        while (($fila = oci_fetch_assoc($stid)) !== false) {
-            // Asegúrate de que los valores están siendo capturados correctamente
-            $departamento = htmlspecialchars($fila['DEPARTAMENTO'], ENT_QUOTES, 'UTF-8');
-            if (!empty($departamento)) {
-                $opciones .= '<option value="' . $departamento . '">' . $departamento . '</option>';
+            $opciones = '';
+            while (($fila = oci_fetch_assoc($stid)) !== false) {
+                // Asegúrate de que los valores están siendo capturados correctamente
+                $departamento = htmlspecialchars($fila['DEPARTAMENTO'], ENT_QUOTES, 'UTF-8');
+                if (!empty($departamento)) {
+                    $opciones .= '<option value="' . $departamento . '">' . $departamento . '</option>';
+                }
             }
+
+            oci_free_statement($stid);
+            oci_close($conexion);
+
+            return $opciones;
+        } catch (Exception $e) {
+            error_log('Error al listar departamentos: ' . $e->getMessage());
+            return '<option value="">Error al cargar departamentos</option>';
         }
-
-        oci_free_statement($stid);
-        oci_close($conexion);
-
-        return $opciones;
-    } catch (Exception $e) {
-        error_log('Error al listar departamentos: ' . $e->getMessage());
-        return '<option value="">Error al cargar departamentos</option>';
     }
-}
 
 
 
@@ -181,33 +181,31 @@ class Consultas
 
     public static function obtenerDatosDepartamento($departamento, $usuarioSeleccionado = null)
 {
-    // Función para normalizar texto eliminando tildes
-    function normalize($text) {
-        // Normalizar los caracteres con tildes a su forma base
+    function normalize($text)
+    {
+        // Normalizar los caracteres con tildes a su forma base y eliminar espacios adicionales
         $search = ['á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', 'ñ', 'Ñ'];
         $replace = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U', 'n', 'N'];
-        return str_replace($search, $replace, $text);
+        // Normalizar texto, eliminar espacios adicionales y reducir múltiples espacios a uno solo
+        return str_replace($search, $replace, preg_replace('/\s+/', ' ', trim($text)));
     }
 
     $normalizedDepartamento = normalize($departamento);
 
     try {
         $conexion = Conexion::getInstance()->getConexion();
-
-        // Consulta para obtener usuarios del departamento, normalizada en PHP
         $consulta = "SELECT DISTINCT USUARIO, DEPARTAMENTO FROM INVENTARIOEQUIPOS";
         $stid = oci_parse($conexion, $consulta);
         oci_execute($stid);
 
         $opciones = '';
         while (($fila = oci_fetch_assoc($stid)) !== false) {
-            $usuario = htmlspecialchars($fila['USUARIO']);
-            $departamentoBD = htmlspecialchars($fila['DEPARTAMENTO']);
+            $usuario = htmlspecialchars(trim($fila['USUARIO']));
+            $departamentoBD = htmlspecialchars(trim($fila['DEPARTAMENTO']));
 
-            // Normalizar también el departamento obtenido de la base de datos
             if (normalize($departamentoBD) === $normalizedDepartamento) {
                 $seleccionado = ($usuario === $usuarioSeleccionado) ? 'selected' : '';
-                $opciones .= '<option value="' . $usuario . '" ' . $seleccionado . '>' . $usuario . '</option>';
+                $opciones .= '<option value="' . htmlspecialchars($usuario) . '" ' . $seleccionado . '>' . htmlspecialchars($usuario) . '</option>';
             }
         }
 
@@ -220,6 +218,7 @@ class Consultas
         return '<option value="">Error al cargar usuarios</option>';
     }
 }
+
 
 
     public static function obtenerDatosMacDepartamentoUsuario($pcCodAf)
