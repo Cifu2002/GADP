@@ -180,44 +180,42 @@ class Consultas
     }
 
     public static function obtenerDatosDepartamento($departamento, $usuarioSeleccionado = null)
-{
-    function normalize($text)
     {
-        // Normalizar los caracteres con tildes a su forma base y eliminar espacios adicionales
-        $search = ['á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', 'ñ', 'Ñ'];
-        $replace = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U', 'n', 'N'];
-        // Normalizar texto, eliminar espacios adicionales y reducir múltiples espacios a uno solo
-        return str_replace($search, $replace, preg_replace('/\s+/', ' ', trim($text)));
-    }
-
-    $normalizedDepartamento = normalize($departamento);
-
-    try {
-        $conexion = Conexion::getInstance()->getConexion();
-        $consulta = "SELECT DISTINCT USUARIO, DEPARTAMENTO FROM INVENTARIOEQUIPOS";
-        $stid = oci_parse($conexion, $consulta);
-        oci_execute($stid);
-
-        $opciones = '';
-        while (($fila = oci_fetch_assoc($stid)) !== false) {
-            $usuario = htmlspecialchars(trim($fila['USUARIO']));
-            $departamentoBD = htmlspecialchars(trim($fila['DEPARTAMENTO']));
-
-            if (normalize($departamentoBD) === $normalizedDepartamento) {
-                $seleccionado = ($usuario === $usuarioSeleccionado) ? 'selected' : '';
-                $opciones .= '<option value="' . htmlspecialchars($usuario) . '" ' . $seleccionado . '>' . htmlspecialchars($usuario) . '</option>';
-            }
+        function normalize($text)
+        {
+            $search = ['á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', 'ñ', 'Ñ'];
+            $replace = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U', 'n', 'N'];
+            return str_replace($search, $replace, preg_replace('/\s+/', ' ', trim($text)));
         }
 
-        oci_free_statement($stid);
-        oci_close($conexion);
+        $normalizedDepartamento = normalize($departamento);
 
-        return $opciones;
-    } catch (Exception $e) {
-        error_log('Error al listar usuarios por departamento: ' . $e->getMessage());
-        return '<option value="">Error al cargar usuarios</option>';
+        try {
+            $conexion = Conexion::getInstance()->getConexion();
+            $consulta = "SELECT DISTINCT USUARIO, DEPARTAMENTO FROM INVENTARIOEQUIPOS";
+            $stid = oci_parse($conexion, $consulta);
+            oci_execute($stid);
+
+            $opciones = '';
+            while (($fila = oci_fetch_assoc($stid)) !== false) {
+                $usuario = htmlspecialchars(trim($fila['USUARIO']));
+                $departamentoBD = htmlspecialchars(trim($fila['DEPARTAMENTO']));
+
+                if (normalize($departamentoBD) === $normalizedDepartamento) {
+                    $seleccionado = ($usuario === $usuarioSeleccionado) ? 'selected' : '';
+                    $opciones .= '<option value="' . htmlspecialchars($usuario) . '" ' . $seleccionado . '>' . htmlspecialchars($usuario) . '</option>';
+                }
+            }
+
+            oci_free_statement($stid);
+            oci_close($conexion);
+
+            return $opciones;
+        } catch (Exception $e) {
+            error_log('Error al listar usuarios por departamento: ' . $e->getMessage());
+            return '<option value="">Error al cargar usuarios</option>';
+        }
     }
-}
 
 
 
