@@ -322,8 +322,8 @@ if (!empty($mac)) {
                         codigo: codigo
                     },
                     dataType: "json",
-                    success: function (response) {
-                        console.log('Respuesta del servidor:', response); // Verifica la respuesta
+                    success: function (data) {
+                        console.log('Respuesta del servidor:', data); // Verifica la respuesta
 
                         
 
@@ -336,9 +336,9 @@ if (!empty($mac)) {
                             return;
                         }
 
-                        let usuario = response.usuario ? response.usuario.trim() : '';
-                        let departamento = response.departamento ? response.departamento.trim() : '';
-                        let mac = response.mac ? response.mac.trim() : '';
+                        let usuario = data.usuario ? data.usuario.trim() : '';
+                        let departamento = data.departamento ? data.departamento.trim() : '';
+                        let mac = data.mac ? data.mac.trim() : '';
                         alert(usuario);
                         alert(departamento);
                         alert(mac);
