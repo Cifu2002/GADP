@@ -417,8 +417,9 @@ if (!empty($mac)) {
                     }
                 });
             }
-            alert(2);
+            
             alert(porCodigo);
+            alert(("#departamento").val());
             if ($("#departamento").val() !== "" && porCodigo === true) {
                 let departamento = $("#departamento").val();
                 let usuario = '<?php echo $usuario ?>';
