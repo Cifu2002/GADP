@@ -10,6 +10,7 @@ $departamento = isset($_GET['departamento']) ? $_GET['departamento'] : null;
 $codigo = isset($_GET['codigo']) ? $_GET['codigo'] : null;
 $porCodigo = isset($_GET['porCodigo']) ? $_GET['porCodigo'] : null;
 $valido = false;
+$valido2 = false;
 $causa = '';
 $departamentos = Consultas::listarDepartamentos();
 
@@ -28,8 +29,8 @@ if ($usuario !== null || $departamento !== null || $codigo !== null) {
     }
 
     if (!$valido) {
-        /* header("Location: index.php?error=$causa&val=$valido");
-        die(); */
+        header("Location: index.php?error=$causa&val=$valido");
+        die();
     }
 }
 
@@ -294,6 +295,7 @@ if (!empty($mac)) {
         $(document).ready(function () {
             let porCodigo = <?php echo $porCodigo ? 'true' : 'false'; ?>;
             alert(<?php echo $valido ?>);
+            alert(<?php echo $valido2 ?>);
             /* Enviar codigo y obtener datos */
             $("#btn-cargar-codigo").on('click', function () {
                 let codigo = $("#codigo").val().trim();
