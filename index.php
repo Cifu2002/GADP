@@ -14,22 +14,26 @@ $causa = '';
 $departamentos = Consultas::listarDepartamentos(trim($departamento));
 
 if ($usuario !== null || $departamento !== null || $codigo !== null) {
-    if ($usuario !== null && Consultas::validarExistencia('USUARIO', $usuario) === null) {
+    if ($usuario !== null && Consultas::validarExistencia('USUARIO',(string) $usuario) === null) {
         $valido = false;
         $causa = 'Usuario no encontrado';
-    } else if ($departamento !== null && Consultas::validarExistencia('DEPARTAMENTO', $departamento) === null) {
-        $valido = false;
-        $causa = 'Departamento no encontrado';
-    } else if ($codigo !== null && Consultas::validarExistencia('PC_COD_AF', $codigo) === null) {
-        $valido = false;
-        $causa = 'Código no encontrado';
     } else {
-        $valido = true;
+        if ($departamento !== null && Consultas::validarExistencia('DEPARTAMENTO',(string) $departamento) === null) {
+            $valido = false;
+            $causa = 'Departamento no encontrado';
+        } else {
+            if ($codigo !== null && Consultas::validarExistencia('PC_COD_AF',(string) $codigo) === null) {
+                $valido = false;
+                $causa = 'Codigo no encontrado';
+            } else {
+                $valido = true;
+            }
+        }
     }
 
     if (!$valido) {
-        header("Location: index.php?error=" . urlencode($causa) . "&val=" . urlencode($valido));
-        exit();
+        header("Location: index.php?error=$causa&val=$valido");
+        die();
     }
 }
 
