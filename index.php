@@ -9,30 +9,36 @@ $usuario = isset($_GET['usuario']) ? $_GET['usuario'] : null;
 $departamento = isset($_GET['departamento']) ? $_GET['departamento'] : null;
 $codigo = isset($_GET['codigo']) ? $_GET['codigo'] : null;
 $porCodigo = isset($_GET['porCodigo']) ? $_GET['porCodigo'] : null;
-$valido = false;
-$valido2 = false;
 $causa = '';
 $departamentos = Consultas::listarDepartamentos();
 
+$valido = false; // Inicialmente asumimos que no es válido
+$causa = '';
+
 if ($usuario !== null || $departamento !== null || $codigo !== null) {
+    $valido = true; // Si hay alguna de las tres variables, asumimos que es válido hasta que se demuestre lo contrario
+
     if ($usuario !== null && Consultas::validarExistencia('USUARIO', $usuario) === null) {
         $valido = false;
         $causa = 'Usuario no encontrado';
-    } else if ($departamento !== null && Consultas::validarExistencia('DEPARTAMENTO', $departamento) === null) {
+    }
+
+    if ($departamento !== null && Consultas::validarExistencia('DEPARTAMENTO', $departamento) === null) {
         $valido = false;
         $causa = 'Departamento no encontrado';
-    } else if ($codigo !== null && Consultas::validarExistencia('PC_COD_AF', $codigo) === null) {
+    }
+
+    if ($codigo !== null && Consultas::validarExistencia('PC_COD_AF', $codigo) === null) {
         $valido = false;
         $causa = 'Código no encontrado';
-    } else {
-        $valido = true;
     }
 
     if (!$valido) {
-        header("Location: index.php?error=$causa&val=$valido");
+        header("Location: index.php?error=" . urlencode($causa) . "&val=" . urlencode($valido));
         die();
     }
 }
+
 
 if (!empty($mac)) {
     $valido = true;
