@@ -249,16 +249,14 @@ class Consultas
         oci_free_statement($stid);
         oci_close($conexion);
 
-        header('Content-Type: application/json; charset=utf-8'); // Asegúrate de que el encabezado sea JSON
+        header('Content-Type: application/json; charset=utf-8');
 
         if ($resultado) {
-            $json_response = json_encode([
-                'usuario' => $resultado['USUARIO'],
-                'departamento' => $resultado['DEPARTAMENTO'],
-                'mac' => $resultado['MAC'] // Aquí no se utiliza htmlspecialchars
-            ], JSON_UNESCAPED_UNICODE); // Mantiene caracteres especiales
-
-            echo $json_response;
+            echo json_encode([
+                'usuario' => $resultado['USUARIO'] ?? '',
+                'departamento' => $resultado['DEPARTAMENTO'] ?? '',
+                'mac' => $resultado['MAC'] ?? ''
+            ], JSON_UNESCAPED_UNICODE);
         } else {
             echo json_encode(['error' => 'No se encontró ningún registro con el código especificado.'], JSON_UNESCAPED_UNICODE);
         }
