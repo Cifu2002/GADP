@@ -366,7 +366,6 @@ if (!empty($mac)) {
                         cargarporMac: cargarporMac
                     },
                     success: function (data) {
-                        console.log(data);
                         if (data == null) {
                             Swal.fire({
                                 icon: 'error',
@@ -405,6 +404,7 @@ if (!empty($mac)) {
                         }
 
                     }, error: function (xhr, status, error) {
+                        console.log(data);
                         Swal.fire({
                             icon: 'error',
                             title: 'Error en la solicitud',
