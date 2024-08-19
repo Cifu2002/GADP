@@ -181,7 +181,6 @@ class Consultas
 
     public static function obtenerDatosDepartamento($departamento, $usuarioSeleccionado = null)
 {
-    // Función para normalizar caracteres especiales
     function normalize($text)
     {
         $search = ['á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú', 'ñ', 'Ñ'];
@@ -189,7 +188,6 @@ class Consultas
         return str_replace($search, $replace, $text);
     }
 
-    // Normalizar el departamento proporcionado
     $normalizedDepartamento = normalize($departamento);
 
     try {
@@ -200,16 +198,13 @@ class Consultas
 
         $opciones = '';
         while (($fila = oci_fetch_assoc($stid)) !== false) {
-            $usuario = htmlspecialchars(trim($fila['USUARIO']), ENT_QUOTES, 'UTF-8');
-            $departamentoBD = htmlspecialchars(trim($fila['DEPARTAMENTO']), ENT_QUOTES, 'UTF-8');
+            $usuario = htmlspecialchars(trim(utf8_encode($fila['USUARIO'])), ENT_QUOTES, 'UTF-8');
+            $departamentoBD = htmlspecialchars(trim(utf8_encode($fila['DEPARTAMENTO'])), ENT_QUOTES, 'UTF-8');
 
-            // Normalizar el departamento de la base de datos
             $normalizedDepartamentoBD = normalize($departamentoBD);
 
-            // Comparar los departamentos normalizados
             if ($normalizedDepartamentoBD === $normalizedDepartamento) {
                 $seleccionado = ($usuario === $usuarioSeleccionado) ? 'selected' : '';
-                // Usar htmlspecialchars para el contenido HTML y asegurarse de que se manejen correctamente los caracteres especiales
                 $opciones .= '<option value="' . htmlspecialchars($usuario, ENT_QUOTES, 'UTF-8') . '" ' . $seleccionado . '>' . htmlspecialchars($usuario, ENT_QUOTES, 'UTF-8') . '</option>';
             }
         }
