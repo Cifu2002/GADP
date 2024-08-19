@@ -334,6 +334,9 @@ if (!empty($mac)) {
                         let usuario = data.usuario ? data.usuario.trim() : '';
                         let departamento = data.departamento ? data.departamento.trim() : '';
                         let mac = data.mac ? data.mac.trim() : '';
+                        alert (usuario);
+                        alert (departamento);
+                        alert (mac);
                         let url = `index.php?porCodigo=true&codigo=${encodeURIComponent(codigo)}&mac=${encodeURIComponent(mac)}&departamento=${encodeURIComponent(departamento)}&usuario=${encodeURIComponent(usuario)}`;
                         window.location.href = url;
 
