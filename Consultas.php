@@ -236,34 +236,42 @@ class Consultas
     }
 
 
-    public static function obtenerDatosMacDepartamentoUsuario($pcCodAf)
+    public static function obtenerDatosMacDepartamentoUsuario($pcCodAf): string
 {
     try {
+        // Obtener la conexión
         $conexion = Conexion::getInstance()->getConexion();
+        
+        // Preparar y ejecutar la consulta
         $consulta = "SELECT USUARIO, DEPARTAMENTO, MAC FROM INVENTARIOEQUIPOS WHERE PC_COD_AF = :pcCodAf";
         $stid = oci_parse($conexion, $consulta);
         oci_bind_by_name($stid, ':pcCodAf', $pcCodAf);
         oci_execute($stid);
 
+        // Obtener el resultado
         $resultado = oci_fetch_assoc($stid);
         oci_free_statement($stid);
         oci_close($conexion);
 
+        // Definir el tipo de contenido JSON y codificar la respuesta
         header('Content-Type: application/json; charset=utf-8');
 
         if ($resultado) {
-            echo json_encode([
-                'usuario' => $resultado['USUARIO'] ?? '',
-                'departamento' => $resultado['DEPARTAMENTO'] ?? '',
-                'mac' => $resultado['MAC'] ?? ''
+            // Devolver los datos en formato JSON
+            return json_encode([
+                'usuario' => $resultado['USUARIO'] ?? null,
+                'departamento' => $resultado['DEPARTAMENTO'] ?? null,
+                'mac' => $resultado['MAC'] ?? null
             ], JSON_UNESCAPED_UNICODE);
         } else {
-            echo json_encode(['error' => 'No se encontró ningún registro con el código especificado.'], JSON_UNESCAPED_UNICODE);
+            // Devolver un error en formato JSON
+            return json_encode(['error' => 'No se encontró ningún registro con el código especificado.'], JSON_UNESCAPED_UNICODE);
         }
     } catch (Exception $e) {
+        // Manejar excepciones y devolver un error en formato JSON
         error_log('Error al obtener información por el código: ' . $e->getMessage());
         header('Content-Type: application/json; charset=utf-8');
-        echo json_encode(['error' => 'Ocurrió un error al procesar la solicitud.'], JSON_UNESCAPED_UNICODE);
+        return json_encode(['error' => 'Ocurrió un error al procesar la solicitud.'], JSON_UNESCAPED_UNICODE);
     }
 }
 
