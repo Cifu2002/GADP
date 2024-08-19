@@ -57,11 +57,6 @@ class Consultas
         return '<option value="">Error al cargar departamentos</option>';
     }
 }
-
-
-
-
-
     /* VALIDAR EXISTENCIA */
     /* public static function validarUsuario($nombreUsuario)
     {

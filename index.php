@@ -385,7 +385,7 @@ if (!empty($mac)) {
                         let departamentoR = data.departamento ? data.departamento.trim() : '';
                         let codigo = data.codigo ? data.codigo.trim() : '';
                         ;
-
+                        alert(usuarioR);
                         $("#codigoCargar").val(codigo);
                         $("#departamento").val(departamentoR);
                         let departamento = $("#departamento").val();
@@ -418,8 +418,6 @@ if (!empty($mac)) {
                 });
             }
             
-            alert(porCodigo);
-            alert($("#departamento").val());
             if ($("#departamento").val() !== "" && porCodigo === true) {
                 let departamento = $("#departamento").val();
                 let usuario = '<?php echo $usuario ?>';
@@ -433,9 +431,6 @@ if (!empty($mac)) {
                         usuario: usuario
                     },
                     success: function (response) {
-                        alert(3);
-                        console.log(response);
-                        alert(response);
                         $("#responsableBien").html(response);
                     }, error: function (xhr, status, error) {
                         console.error("Error en la solicitud AJAX:", status, error);
