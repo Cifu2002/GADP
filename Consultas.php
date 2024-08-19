@@ -252,12 +252,13 @@ class Consultas
         header('Content-Type: application/json; charset=utf-8'); // Asegúrate de que el encabezado sea JSON
 
         if ($resultado) {
-            // Utiliza json_encode directamente para manejar correctamente caracteres especiales
-            echo json_encode([
+            $json_response = json_encode([
                 'usuario' => $resultado['USUARIO'],
                 'departamento' => $resultado['DEPARTAMENTO'],
-                'mac' => $resultado['MAC']
+                'mac' => $resultado['MAC'] // Aquí no se utiliza htmlspecialchars
             ], JSON_UNESCAPED_UNICODE); // Mantiene caracteres especiales
+
+            echo $json_response;
         } else {
             echo json_encode(['error' => 'No se encontró ningún registro con el código especificado.'], JSON_UNESCAPED_UNICODE);
         }
