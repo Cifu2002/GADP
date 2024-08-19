@@ -322,18 +322,22 @@ if (!empty($mac)) {
                         codigo: codigo
                     },
                     success: function (response) {
-                        let data = JSON.parse(response);
-                        if (data == null) {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Error',
-                                text: 'Código no encontrado'
-                            });
-                            return;
-                        }
-                        let usuario = data.usuario ? data.usuario.trim() : '';
-                        let departamento = data.departamento ? data.departamento.trim() : '';
-                        let mac = data.mac ? data.mac.trim() : '';
+                        console.log('Respuesta del servidor:', response); // Verifica la respuesta
+       
+            let data = JSON.parse(response);
+
+            if (data.error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.error
+                });
+                return;
+            }
+
+            let usuario = data.usuario ? data.usuario.trim() : '';
+            let departamento = data.departamento ? data.departamento.trim() : '';
+            let mac = data.mac ? data.mac.trim() : ''; 
                         alert (usuario);
                         alert (departamento);
                         alert (mac);
