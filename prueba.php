@@ -31,10 +31,14 @@ function validarExistencia($columna, $valor)
         oci_close($conexion);
 
         // Normalizar el resultado obtenido y devolverlo
-        return $resultado ? normalize($resultado[$columna]) : null;
+        if ($resultado) {
+            echo normalize($resultado[$columna]);
+        } else {
+            echo "No se encontró el valor.";
+        }
     } catch (Exception $e) {
         error_log("Error al validar $columna: " . $e->getMessage());
-        return null;
+        echo "Error al realizar la consulta.";
     }
 }
 ?>
