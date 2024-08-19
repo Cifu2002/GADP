@@ -9,7 +9,7 @@ $usuario = isset($_GET['usuario']) ? $_GET['usuario'] : null;
 $departamento = isset($_GET['departamento']) ? $_GET['departamento'] : null;
 $codigo = isset($_GET['codigo']) ? $_GET['codigo'] : null;
 $porCodigo = isset($_GET['porCodigo']) ? $_GET['porCodigo'] : null;
-$valido = true;
+$valido = false;
 $causa = '';
 $departamentos = Consultas::listarDepartamentos();
 
