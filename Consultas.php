@@ -250,6 +250,7 @@ class Consultas
             oci_close($conexion);
 
             if ($resultado) {
+                header('Content-Type: application/json');
                 return json_encode([
                     'usuario' => htmlspecialchars($resultado['USUARIO']),
                     'departamento' => htmlspecialchars($resultado['DEPARTAMENTO']),
