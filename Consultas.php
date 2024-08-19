@@ -181,14 +181,25 @@ class Consultas
 
     public static function obtenerDatosDepartamento($departamento, $usuarioSeleccionado = null)
 {
+    // Función para normalizar texto eliminando tildes
+    function normalize($text) {
+        return preg_replace(
+            ['/á/', '/é/', '/í/', '/ó/', '/ú/', '/Á/', '/É/', '/Í/', '/Ó/', '/Ú/', '/ñ/', '/Ñ/'],
+            ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U', 'n', 'N'],
+            $text
+        );
+    }
+
+    $departamento = normalize($departamento);
+
     try {
         $conexion = Conexion::getInstance()->getConexion();
 
         // Consulta para buscar ignorando tildes y sin usuarios repetidos
         $consulta = "
-            SELECT DISTINCT USUARIO
+            SELECT DISTINCT USUARIO, DEPARTAMENTO
             FROM INVENTARIOEQUIPOS
-            WHERE TRANSLATE(DEPARTAMENTO, 'ÁÉÍÓÚÑ', 'AEIOUN') LIKE TRANSLATE(:departamento, 'ÁÉÍÓÚÑ', 'AEIOUN')
+            WHERE normalize(DEPARTAMENTO) = :departamento
         ";
 
         $stid = oci_parse($conexion, $consulta);
