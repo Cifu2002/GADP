@@ -358,7 +358,7 @@ if (!empty($mac)) {
 
             /* CODIGO POR MAC */
 
-            if ($("#mac").val() && porCodigo === false) {
+            if ($("#mac").val() && porCodigo === true) {
 
                 let cargarporMac = '<?php echo $mac ?>';
                 op = 4;
@@ -418,7 +418,7 @@ if (!empty($mac)) {
                 });
             }
 
-            if ($("#departamento").val() !== "" && porCodigo === true) {
+            if ($("#departamento").val() !== "" && porCodigo === false) {
                 let departamento = $("#departamento").val();
                 let usuario = '<?php echo $usuario ?>';
                 let op = 2;
