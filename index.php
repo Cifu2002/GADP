@@ -293,6 +293,7 @@ if (!empty($mac)) {
     <script>
         $(document).ready(function () {
             let porCodigo = <?php echo $porCodigo ? 'true' : 'false'; ?>;
+            alert(<?php echo $valido ?>);
             /* Enviar codigo y obtener datos */
             $("#btn-cargar-codigo").on('click', function () {
                 let codigo = $("#codigo").val().trim();
