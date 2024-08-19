@@ -28,29 +28,33 @@ class Consultas
     }
 
     public static function listarDepartamentos()
-    {
-        try {
-            $conexion = Conexion::getInstance()->getConexion();
-            // Ajusta la consulta para excluir valores NULL
-            $consulta = "SELECT DEPARTAMENTO FROM INVENTARIOEQUIPOS WHERE DEPARTAMENTO IS NOT NULL";
-            $stid = oci_parse($conexion, $consulta);
-            oci_execute($stid);
+{
+    try {
+        $conexion = Conexion::getInstance()->getConexion();
+        // Consulta para excluir valores NULL
+        $consulta = "SELECT DISTINCT DEPARTAMENTO FROM INVENTARIOEQUIPOS WHERE DEPARTAMENTO IS NOT NULL";
+        $stid = oci_parse($conexion, $consulta);
+        oci_execute($stid);
 
-            $opciones = '';
-            while (($fila = oci_fetch_assoc($stid)) !== false) {
-                $departamento = htmlspecialchars($fila['DEPARTAMENTO']);
+        $opciones = '';
+        while (($fila = oci_fetch_assoc($stid)) !== false) {
+            $departamento = htmlspecialchars($fila['DEPARTAMENTO']);
+            // Asegúrate de que los valores están siendo capturados correctamente
+            if (!empty($departamento)) {
                 $opciones .= '<option value="' . $departamento . '">' . $departamento . '</option>';
             }
-
-            oci_free_statement($stid);
-            oci_close($conexion);
-
-            return $opciones;
-        } catch (Exception $e) {
-            error_log('Error al listar departamentos: ' . $e->getMessage());
-            return '<option value="">Error al cargar departamentos</option>';
         }
+
+        oci_free_statement($stid);
+        oci_close($conexion);
+
+        return $opciones;
+    } catch (Exception $e) {
+        error_log('Error al listar departamentos: ' . $e->getMessage());
+        return '<option value="">Error al cargar departamentos</option>';
     }
+}
+
 
 
     /* VALIDAR EXISTENCIA */
