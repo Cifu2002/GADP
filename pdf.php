@@ -103,7 +103,7 @@ $pdf->Cell(60, 10, 'Firma', 0, 0, 'C');
 
 $pdf->Ln(15);
 $pdf->SetX($margenIzquierdo);
-$pdf->Cell(0, 10, utf8_decode('Nombre: ..........               Nombre: .........'), 0, 1, 'C');
+$pdf->Cell(0, 10, utf8_decode('Nombre: ....................                                        Nombre: ...................'), 0, 1, 'C');
 
 $pdf->Output();
 ?>
