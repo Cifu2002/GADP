@@ -11,7 +11,7 @@ class PDF extends FPDF
         $this->Image('assets/images/cantonescudo1.png', 90, 10, 30); // Ajusta la posición X para centrar
 
         // Mueve el cursor a la siguiente línea después del logo
-        $this->Ln(25); // Ajusta este valor para controlar el espacio entre el logo y el título
+        $this->Ln(15); // Ajusta este valor para controlar el espacio entre el logo y el título
 
         // Título centrado
         $this->SetFont('Arial', 'B', 12);
