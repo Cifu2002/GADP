@@ -20,12 +20,6 @@ class PDF extends FPDF
     // Footer
     function Footer()
     {
-        // Position at 1.5 cm from bottom
-        $this->SetY(-20);
-
-        // Fuente Arial itálica 8
-        $this->SetFont('Arial', 'I', 8);
-
         // Asignar el ancho de cada línea
         $line1 = utf8_decode('Av. Juan Montalvo y Abdón Calderón');
         $line2 = utf8_decode('Teléfonos: (062) 886-452-886 021-886-052');
@@ -44,14 +38,18 @@ class PDF extends FPDF
         $posX2 = 210 - 10 - ($width2 + ($maxWidth - $width2) / 2); 
         $posX3 = 210 - 10 - ($width3 + ($maxWidth - $width3) / 2); 
 
+        // Posición Y para el footer
+        $posY = -30; // 30 unidades desde la parte inferior de la página
+
         // Imprimir cada línea con la posición calculada
-        $this->SetXY($posX1, 10);
+        $this->SetY($this->GetPageHeight() + $posY);
+        $this->SetX($posX1);
         $this->Cell(0, 10, $line1, 0, 1, 'R');
 
-        $this->SetXY($posX2, 20);
+        $this->SetX($posX2);
         $this->Cell(0, 10, $line2, 0, 1, 'R');
 
-        $this->SetXY($posX3, 30);
+        $this->SetX($posX3);
         $this->Cell(0, 10, $line3, 0, 1, 'R');
     }
 }
