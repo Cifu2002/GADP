@@ -30,7 +30,7 @@ class PDF extends FPDF
         $this->Cell(0, 10, utf8_decode('Alcaldía de la dignidad'), 0, 0, 'L');
 
         // Dirección - Ajuste manual para centrar respecto al grupo de líneas
-        $this->SetX(120); // Ajusta el valor según sea necesario
+        $this->SetX(90); // Ajusta el valor según sea necesario
         $this->Cell(0, 5, utf8_decode('Av. Juan Montalvo y Abdón Calderón'), 0, 1, 'R');
 
         // Teléfonos - Ajuste manual para centrar respecto al grupo de líneas
