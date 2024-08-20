@@ -679,8 +679,6 @@ if (!empty($mac)) {
                     }),
                     success: function (response) {
                         var data = JSON.parse(response);
-                        console.log(response);
-                        console.log(data);
                         if (data.status === 'success' && !isNaN(data.data)) {
                             Swal.fire({
                                 icon: 'success',

@@ -282,6 +282,7 @@ class Consultas
             $result = oci_fetch_assoc($stid);
             $solicitudID = $result['SOL_ID'];
             oci_free_statement($stid);
+            $tipoMantenimientoString = implode(',', $tipoMantenimiento);
             $consulta = "
             INSERT INTO SolicitudMantSistemas (
                 SOL_ID, SOL_COD, SOL_MAC, SOL_IP, SOL_TIPOSOLICITUD, SOL_ENCARGADO,
@@ -303,7 +304,7 @@ class Consultas
             oci_bind_by_name($stid, ':ip', $ip);
             oci_bind_by_name($stid, ':tipoSolicitud', $tipoSolicitud);
             oci_bind_by_name($stid, ':encargado', $encargado);
-            oci_bind_by_name($stid, ':tipoMantenimiento', implode(',', $tipoMantenimiento));
+            oci_bind_by_name($stid, ':tipoMantenimiento', $tipoMantenimientoString);
             oci_bind_by_name($stid, ':cedula', $cedula);
             oci_bind_by_name($stid, ':cargo', $cargo);
             oci_bind_by_name($stid, ':departamento', $departamento);
@@ -372,7 +373,7 @@ class Consultas
             }
             oci_commit($conexion);
 
-            return $tipoMantenimiento;
+            return $solicitudID;
 
         } catch (Exception $e) {
             oci_rollback($conexion);
