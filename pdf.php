@@ -52,17 +52,23 @@ $pdf->Cell(0, 10, utf8_decode('TRABAJO REALIZADO:'), 0, 1, 'L');
 $pdf->MultiCell(0, 10, str_repeat("_", 100), 0, 'L'); // Espacio para trabajo realizado
 
 // Fechas y firmas
-// Calcular el margen izquierdo para centrar las celdas
+
 $margenIzquierdo = ($pdf->GetPageWidth() - 150) / 2; // 150 es el ancho total de las celdas (30 * 5)
 
-// Fechas y firmas
 $pdf->Ln(10);
-$pdf->SetX($margenIzquierdo); // Posiciona la X para centrar las celdas
-$pdf->Cell(30, 10, 'INICIO', 1, 0, 'C'); // Añade el parámetro 'C' para centrar el texto dentro de la celda
+$pdf->SetX($margenIzquierdo); 
+$pdf->Cell(30, 10, '', 1, 0, 'C');
 $pdf->Cell(30, 10, 'DIA', 1, 0, 'C');
 $pdf->Cell(30, 10, 'MES', 1, 0, 'C');
 $pdf->Cell(30, 10, utf8_decode('AÑO'), 1, 0, 'C');
 $pdf->Cell(30, 10, 'HORA', 1, 0, 'C');
+
+$pdf->Ln(10);
+$pdf->SetX($margenIzquierdo); 
+$pdf->Cell(30, 10, 'INICIO', 1, 0, 'C');
+$pdf->Cell(30, 10, '', 1, 0, 'C');
+$pdf->Cell(30, 10, '', 1, 0, 'C');
+$pdf->Cell(30, 10, '', 1, 0, 'C');
 
 $pdf->Ln(10);
 $pdf->SetX($margenIzquierdo); // Reposiciona la X para la siguiente fila
