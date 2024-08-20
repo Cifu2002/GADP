@@ -35,6 +35,7 @@ switch ($op) {
         }
         break;
     case 'POST':
+        /* INSERTAR EN LA BD */
         $json_input = file_get_contents('php://input');
         $data = json_decode($json_input, true);
         $componentes = isset($data['componentes']) ? $data['componentes'] : [];
