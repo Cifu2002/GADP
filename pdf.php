@@ -7,7 +7,7 @@ class PDF extends FPDF
     function Header()
     {
         // Logo
-        $this->Image('logo.png', 10, 6, 30); // Ajusta el logo y posición
+        $this->Image('assets/images/cantonescudo1.png', 10, 6, 30); // Ajusta el logo y posición
         $this->SetFont('Arial', 'B', 12);
         // Title
         $this->Cell(0, 10, utf8_decode('DIRECCIÓN DE TECNOLOGÍA Y SISTEMAS INFORMÁTICOS 2024'), 0, 1, 'C');
