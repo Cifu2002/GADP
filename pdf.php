@@ -102,7 +102,6 @@ $pdf->Cell(60, 10, 'Firma', 0, 0, 'C');
 
 
 $pdf->Ln(15);
-$pdf->SetX($margenIzquierdo);
 $pdf->Cell(60, 10, 'Nombre:', 0, 0, 'C');
 $pdf->Cell(60, 10, '...............', 0, 0, 'C');
 $pdf->Cell(60, 10, 'Nombre:', 0, 0, 'C');
