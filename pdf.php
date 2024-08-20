@@ -7,16 +7,13 @@ class PDF extends FPDF
 
     function Header()
     {
-        // Centra el logo
-        $this->Image('assets/images/cantonescudo1.png', 90, 10, 30); // Ajusta la posición X para centrar
+        $this->Image('assets/images/cantonescudo1.png', 90, 10, 30);
 
-        // Mueve el cursor a la siguiente línea después del logo
-        $this->Ln(15); // Ajusta este valor para controlar el espacio entre el logo y el título
+        $this->Ln(15); 
 
-        // Título centrado
         $this->SetFont('Arial', 'B', 12);
         $this->Cell(0, 10, utf8_decode('DIRECCIÓN DE TECNOLOGÍA Y SISTEMAS INFORMÁTICOS 2024'), 0, 1, 'C');
-        $this->Ln(10);
+        $this->Ln(5);
     }
 
 
