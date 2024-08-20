@@ -66,13 +66,17 @@ $pdf->Ln(5);
 // Establecer la fuente para la parte en negrilla
 $pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(0, 10, utf8_decode('Mantenimiento: '), 0, 0, 'L');
-
-// Establecer la fuente para el resto del texto
 $pdf->SetFont('Arial', '', 12);
 $pdf->Cell(-78, 10, utf8_decode('Preventivo( ) Correctivo( ) Sis. eléctrico( )'), 0, 0, 'R');
 $pdf->Ln(10);
-$pdf->Cell(0, 10, utf8_decode('Soporte: Hardware( ) Software( ) Impresora( ) Redes( ) Virus( )'), 0, 1, 'L');
-$pdf->Cell(0, 10, utf8_decode('Capacitación: Office( ) Internet( ) Windows( ) Email( ) Uso de Equipo( )'), 0, 1, 'L');
+$pdf->SetFont('Arial', 'B', 12);
+$pdf->Cell(0, 10, utf8_decode('Soporte: '), 0, 1, 'L');
+$pdf->SetFont('Arial', '', 12);
+$pdf->Cell(-78, 10, utf8_decode('Hardware( ) Software( ) Impresora( ) Redes( ) Virus( )'), 0, 0, 'R');
+$pdf->Ln(10);
+$pdf->Cell(0, 10, utf8_decode('Capacitación: '), 0, 1, 'L');
+$pdf->SetFont('Arial', '', 12);
+$pdf->Cell(-78, 10, utf8_decode('Office( ) Internet( ) Windows( ) Email( ) Uso de Equipo( )'), 0, 0, 'R');
 
 // Diagnóstico y trabajo realizado
 $pdf->Ln(5);
