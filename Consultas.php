@@ -374,7 +374,7 @@ class Consultas
                 }
             }
             oci_commit($conexion);
-            if ($tipoSolicitud === "Preventiva") {
+            /* if ($tipoSolicitud === "Preventiva") {
                 PDF::GenerarPDFPreventivo(
                     $solicitudID,
                     $codigo,
@@ -397,7 +397,7 @@ class Consultas
             }
             if ($tipoSolicitud === "Correctiva") {
                 PDF::GenerarPDFCorrectivo();
-            }
+            } */
 
             return $solicitudID;
 
