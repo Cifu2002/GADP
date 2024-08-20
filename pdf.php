@@ -90,15 +90,23 @@ $pdf->Cell(60, 10, 'USUARIO ATENDIDO', 0, 0, 'C');
 
 $pdf->Ln(20);
 $pdf->SetX($margenIzquierdo);
-$pdf->Cell(60, 10, '....................', 0, 0, 'C');
-$pdf->Cell(60, 10, '....................', 0, 0, 'C');
-$pdf->Cell(60, 10, '....................', 0, 0, 'C');
+$pdf->Cell(60, 10, '.............................', 0, 0, 'C');
+$pdf->Cell(60, 10, '.............................', 0, 0, 'C');
+$pdf->Cell(60, 10, '.............................', 0, 0, 'C');
 
 $pdf->Ln(5);
 $pdf->SetX($margenIzquierdo);
 $pdf->Cell(60, 10, utf8_decode('Ing. Claudio Freire'), 0, 0, 'C');
 $pdf->Cell(60, 10, 'Firma', 0, 0, 'C');
 $pdf->Cell(60, 10, 'Firma', 0, 0, 'C');
+
+
+$pdf->Ln(15);
+$pdf->SetX($margenIzquierdo);
+$pdf->Cell(60, 10, 'Nombre:', 0, 0, 'C');
+$pdf->Cell(60, 10, '...............', 0, 0, 'C');
+$pdf->Cell(60, 10, 'Nombre:', 0, 0, 'C');
+$pdf->Cell(60, 10, '...............', 0, 0, 'C');
 
 $pdf->Output();
 ?>
