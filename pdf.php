@@ -44,8 +44,9 @@ class PDF extends FPDF
     function Footer()
     {
         $this->SetY(-20);
-        $this->SetFont('Arial', 'I', 8);
+        $this->SetFont('Arial', 'B', 12);
         $this->Cell(0, 10, utf8_decode('Alcaldía de la dignidad'), 0, 0, 'L');
+        $this->SetFont('Arial', 'I', 12);
         $this->Cell(0, 5, utf8_decode('Av. Juan Montalvo y Abdón Calderón'), 0, 1, 'R');
         $this->Cell(0, 5, utf8_decode('Teléfonos: (062) 886-452-886 021-886-052'), 0, 1, 'R');
         $this->Cell(0, 5, utf8_decode('www.tena.gob.ec'), 0, 0, 'R');
@@ -141,6 +142,7 @@ $pdf->Cell(60, 10, '.............................', 0, 0, 'C');
 
 $pdf->Ln(5);
 $pdf->SetX($margenIzquierdo);
+$pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(60, 10, utf8_decode('Ing. Claudio Freire'), 0, 0, 'C');
 $pdf->Cell(60, 10, 'Firma', 0, 0, 'C');
 $pdf->Cell(60, 10, 'Firma', 0, 0, 'C');
