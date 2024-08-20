@@ -81,11 +81,15 @@ $pdf->Cell(-54, 10, utf8_decode('Office( ) Internet( ) Windows( ) Email( ) Uso d
 
 // Diagnóstico y trabajo realizado
 $pdf->Ln(15);
+$pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(0, 10, 'DIAGNOSTICO:', 0, 1, 'L');
+$pdf->SetFont('Arial', '', 12);
 $pdf->MultiCell(0, 10, str_repeat("_", 100), 0, 'L'); // Espacio para diagnóstico
 
 $pdf->Ln(5);
+$pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(0, 10, utf8_decode('TRABAJO REALIZADO:'), 0, 1, 'L');
+$pdf->SetFont('Arial', '', 12);
 $pdf->MultiCell(0, 10, str_repeat("_", 100), 0, 'L'); // Espacio para trabajo realizado
 
 // Fechas y firmas
@@ -94,6 +98,7 @@ $margenIzquierdo = ($pdf->GetPageWidth() - 150) / 2; // 150 es el ancho total de
 
 $pdf->Ln(10);
 $pdf->SetX($margenIzquierdo);
+$pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(30, 10, '', 1, 0, 'C');
 $pdf->Cell(30, 10, 'DIA', 1, 0, 'C');
 $pdf->Cell(30, 10, 'MES', 1, 0, 'C');
@@ -103,6 +108,7 @@ $pdf->Cell(30, 10, 'HORA', 1, 0, 'C');
 $pdf->Ln(10);
 $pdf->SetX($margenIzquierdo);
 $pdf->Cell(30, 10, 'INICIO', 1, 0, 'C');
+$pdf->SetFont('Arial', '', 12);
 $pdf->Cell(30, 10, '', 1, 0, 'C');
 $pdf->Cell(30, 10, '', 1, 0, 'C');
 $pdf->Cell(30, 10, '', 1, 0, 'C');
@@ -110,7 +116,9 @@ $pdf->Cell(30, 10, '', 1, 0, 'C');
 
 $pdf->Ln(10);
 $pdf->SetX($margenIzquierdo); // Reposiciona la X para la siguiente fila
+$pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(30, 10, 'FIN', 1, 0, 'C');
+$pdf->SetFont('Arial', '', 12);
 $pdf->Cell(30, 10, '', 1, 0, 'C');
 $pdf->Cell(30, 10, '', 1, 0, 'C');
 $pdf->Cell(30, 10, '', 1, 0, 'C');
