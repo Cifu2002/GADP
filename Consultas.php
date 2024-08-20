@@ -31,7 +31,6 @@ class Consultas
     {
         try {
             $conexion = Conexion::getInstance()->getConexion();
-            // Consulta para excluir valores NULL y ordenar alfabéticamente
             $consulta = "SELECT DISTINCT DEPARTAMENTO FROM INVENTARIOEQUIPOS 
                      WHERE DEPARTAMENTO IS NOT NULL 
                      ORDER BY DEPARTAMENTO";
@@ -40,7 +39,6 @@ class Consultas
 
             $opciones = '';
             while (($fila = oci_fetch_assoc($stid)) !== false) {
-                // Asegúrate de que los valores están siendo capturados correctamente y elimina espacios en blanco
                 $departamento = trim(htmlspecialchars($fila['DEPARTAMENTO'], ENT_QUOTES, 'UTF-8'));
                 if (!empty($departamento)) {
                     $seleccionado = ($departamentoSeleccionado !== null && $departamentoSeleccionado === $departamento) ? ' selected' : '';
@@ -58,14 +56,13 @@ class Consultas
         }
     }
     /* VALIDAR EXISTENCIA */
-     public static function validarUsuario($nombreUsuario)
+    public static function validarUsuario($nombreUsuario)
     {
         try {
             $conexion = Conexion::getInstance()->getConexion();
             $consulta = "SELECT USUARIO FROM INVENTARIOEQUIPOS WHERE USUARIO = :nombreUsuario";
             $stid = oci_parse($conexion, $consulta);
 
-            // Bind del parámetro :nombreUsuario
             oci_bind_by_name($stid, ':nombreUsuario', $nombreUsuario);
 
             oci_execute($stid);
@@ -75,7 +72,6 @@ class Consultas
             oci_free_statement($stid);
             oci_close($conexion);
 
-            // Si el usuario existe, retorna el nombre del usuario, de lo contrario retorna null
             return $usuario ? $usuario['USUARIO'] : null;
         } catch (Exception $e) {
             error_log('Error al validar usuario: ' . $e->getMessage());
@@ -90,7 +86,6 @@ class Consultas
             $consulta = "SELECT DEPARTAMENTO FROM INVENTARIOEQUIPOS WHERE DEPARTAMENTO = :departamento";
             $stid = oci_parse($conexion, $consulta);
 
-            // Bind del parámetro :nombreUsuario
             oci_bind_by_name($stid, ':departamento', $departamento);
 
             oci_execute($stid);
@@ -100,7 +95,6 @@ class Consultas
             oci_free_statement($stid);
             oci_close($conexion);
 
-            // Si el usuario existe, retorna el nombre del usuario, de lo contrario retorna null
             return $departamento ? $departamento['DEPARTAMENTO'] : null;
         } catch (Exception $e) {
             error_log('Error al validar el departamento: ' . $e->getMessage());
@@ -115,7 +109,6 @@ class Consultas
             $consulta = "SELECT PC_COD_AF FROM INVENTARIOEQUIPOS WHERE PC_COD_AF = :codigo";
             $stid = oci_parse($conexion, $consulta);
 
-            // Bind del parámetro :nombreUsuario
             oci_bind_by_name($stid, ':codigo', $codigo);
 
             oci_execute($stid);
@@ -125,7 +118,6 @@ class Consultas
             oci_free_statement($stid);
             oci_close($conexion);
 
-            // Si el usuario existe, retorna el nombre del usuario, de lo contrario retorna null
             return $codigo ? $codigo['PC_COD_AF'] : null;
         } catch (Exception $e) {
             error_log('Error al validar el codigo: ' . $e->getMessage());
@@ -200,36 +192,28 @@ class Consultas
     public static function obtenerDatosMacDepartamentoUsuario($pcCodAf): string
     {
         try {
-            // Obtener la conexión
             $conexion = Conexion::getInstance()->getConexion();
-
-            // Preparar y ejecutar la consulta
             $consulta = "SELECT USUARIO, DEPARTAMENTO, MAC FROM INVENTARIOEQUIPOS WHERE PC_COD_AF = :pcCodAf";
             $stid = oci_parse($conexion, $consulta);
             oci_bind_by_name($stid, ':pcCodAf', $pcCodAf);
             oci_execute($stid);
 
-            // Obtener el resultado
             $resultado = oci_fetch_assoc($stid);
             oci_free_statement($stid);
             oci_close($conexion);
 
-            // Definir el tipo de contenido JSON y codificar la respuesta
             header('Content-Type: application/json; charset=utf-8');
 
             if ($resultado) {
-                // Devolver los datos en formato JSON
                 return json_encode([
                     'usuario' => $resultado['USUARIO'] ?? null,
                     'departamento' => $resultado['DEPARTAMENTO'] ?? null,
                     'mac' => $resultado['MAC'] ?? null
                 ], JSON_UNESCAPED_UNICODE);
             } else {
-                // Devolver un error en formato JSON
                 return json_encode(['error' => 'No se encontró ningún registro con el código especificado.'], JSON_UNESCAPED_UNICODE);
             }
         } catch (Exception $e) {
-            // Manejar excepciones y devolver un error en formato JSON
             error_log('Error al obtener información por el código: ' . $e->getMessage());
             header('Content-Type: application/json; charset=utf-8');
             return json_encode(['error' => 'Ocurrió un error al procesar la solicitud.'], JSON_UNESCAPED_UNICODE);

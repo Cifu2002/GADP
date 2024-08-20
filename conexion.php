@@ -4,23 +4,26 @@ class Conexion
     private static $instance;
     private $conexion;
 
-    public function __construct() {
-        $username = 'ERPTENA';
+    public function __construct()
+    {
+        $username = 'RPTENA';
         $password = 'GADTN$$2022';
         $connection_string = '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=172.16.66.2)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=TENA)))';
 
         try {
-            $this->conexion = oci_connect($username, $password, $connection_string,'UTF8');
+            $this->conexion = oci_connect($username, $password, $connection_string, 'UTF8');
             if (!$this->conexion) {
                 $e = oci_error();
                 throw new Exception($e['message']);
             }
         } catch (Exception $e) {
-            die("Error al conectar a Oracle: " . $e->getMessage());
+            header("Location: respuesta.php");
+            exit();
         }
     }
 
-    public function __destruct() {
+    public function __destruct()
+    {
         if ($this->conexion) {
             oci_close($this->conexion);
         }

@@ -49,7 +49,7 @@ if (!empty($mac)) {
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orden de reparación</title>
+    <title>Formulario de asistencia técnica</title>
     <link rel="icon" href="assets/images/cantonescudo1.png" type="image/x-icon">
     <link rel="stylesheet" href="assets/css/estilo.css"> <!-- CSS para el estilo -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -73,12 +73,10 @@ if (!empty($mac)) {
 
 <body>
     <div class="container">
-        <h1 class="titulo">Solicitud de arreglos</h1>
+        <h1 class="titulo">Formulario de asistencia técnica</h1>
         <img src="assets/images/cantonescudo1.png" alt="Escudo del Cantón" class="corner-image">
         <?php if (empty($mac) && $valido === false): ?>
             <div class="form-group">
-                <button type="button" class="btn-cargar" onclick="window.location.href='submit.php'">Cargar MAC e
-                    IP</button>
                 <input type="text" id="codigo" name="codigo" required>
                 <button type="button" id="btn-cargar-codigo" class="btn-cargar-codigo">Cargar
                     por
@@ -178,7 +176,7 @@ if (!empty($mac)) {
                 </div>
                 <!-- CORRECTIVO -->
                 <div class="tipoOcultar" id="correctivo">
-
+                    <!-- TABLA 1 -->
                     <div class="form-group-col-2">
                         <label class="T_tabla">Componentes del bien</label>
                         <table>
@@ -297,7 +295,6 @@ if (!empty($mac)) {
     <script>
         $(document).ready(function () {
             let porCodigo = <?php echo $porCodigo ? 'true' : 'false'; ?>;
-            alert(<?php echo $valido ?>);
             /* Enviar codigo y obtener datos */
             $("#btn-cargar-codigo").on('click', function () {
                 let codigo = $("#codigo").val().trim();
@@ -328,7 +325,7 @@ if (!empty($mac)) {
                     },
                     dataType: "json",
                     success: function (data) {
-                        console.log('Respuesta del servidor:', data);
+
                         if (data.error) {
                             Swal.fire({
                                 icon: 'error',
@@ -342,7 +339,6 @@ if (!empty($mac)) {
                         let departamento = data.departamento ? data.departamento.trim() : '';
                         let mac = data.mac ? data.mac.trim() : '';
                         let url = `index.php?porCodigo=true&codigo=${encodeURIComponent(codigo)}&mac=${encodeURIComponent(mac)}&departamento=${encodeURIComponent(departamento)}&usuario=${encodeURIComponent(usuario)}`;
-                        alert(url);
                         window.location.href = url;
 
                     }, error: function (xhr, status, error) {
@@ -381,8 +377,6 @@ if (!empty($mac)) {
                         let usuarioR = data.usuario ? data.usuario.trim() : '';
                         let departamentoR = data.departamento ? data.departamento.trim() : '';
                         let codigo = data.codigo ? data.codigo.trim() : '';
-                        ;
-                        alert(10);
                         $("#codigoCargar").val(codigo);
                         $("#departamento").val(departamentoR);
                         let departamento = $("#departamento").val();
@@ -516,7 +510,6 @@ if (!empty($mac)) {
             var mensajeFecha = document.getElementById('fecha-mensaje');
             mensajeFecha.innerText = '';
 
-            console.log(hoy);
             if (esFinDeSemana(hoy) === true) {
                 mensajeFecha.innerText = 'Solo dias laborales de Lunes a Viernes';
             }
@@ -536,7 +529,6 @@ if (!empty($mac)) {
                 var partesFecha = fechaFinalizacionStr.split('-');
                 var fechaFinalizacion = new Date(partesFecha[0], partesFecha[1] - 1, partesFecha[2]); // Año, Mes (0-indexado), Día
 
-                console.log(fechaFinalizacion);
                 if (esFinDeSemana(fechaFinalizacion) === true) {
                     mensajeFecha.innerText = 'Solo dias laborales de Lunes a Viernes';
                 }

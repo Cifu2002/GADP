@@ -1,25 +1,5 @@
 <?php
 include_once ('Consultas.php');
-include_once ('leerExcel.php');
-function sanitize_array_element($element)
-{
-    return [
-        'nombre' => filter_var($element['nombre'], FILTER_SANITIZE_STRING),
-        'descripcion' => filter_var($element['descripcion'], FILTER_SANITIZE_STRING),
-        'serie' => filter_var($element['serie'], FILTER_SANITIZE_STRING),
-        'observacion' => filter_var($element['observacion'], FILTER_SANITIZE_STRING)
-    ];
-}
-
-function sanitize_cambio_element($element)
-{
-    return [
-        'fechaCambio' => filter_var($element['fechaCambio'], FILTER_SANITIZE_STRING),
-        'nombreComponente' => filter_var($element['nombreComponente'], FILTER_SANITIZE_STRING),
-        'descripcion' => filter_var($element['descripcion'], FILTER_SANITIZE_STRING),
-        'serie' => filter_var($element['serie'], FILTER_SANITIZE_STRING)
-    ];
-}
 $op = $_SERVER["REQUEST_METHOD"];
 switch ($op) {
     case 'GET':
@@ -59,7 +39,6 @@ switch ($op) {
         $data = json_decode($json_input, true);
         $componentes = isset($data['componentes']) ? $data['componentes'] : [];
         $cambios = isset($data['cambios']) ? $data['cambios'] : [];
-        /* echo json_encode(['status' => 'debug', 'data' => $data]); */
         $codigo = filter_var($data['codigo'], FILTER_SANITIZE_STRING);
         $mac = filter_var($data['mac'], FILTER_SANITIZE_STRING);
         $ip = filter_var($data['ip'], FILTER_SANITIZE_STRING);
