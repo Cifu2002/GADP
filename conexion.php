@@ -6,7 +6,7 @@ class Conexion
 
     public function __construct()
     {
-        $username = 'RPTENA';
+        $username = 'ERPTENA';
         $password = 'GADTN$$2022';
         $connection_string = '(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=172.16.66.2)(PORT=1521))(CONNECT_DATA=(SERVER=DEDICATED)(SERVICE_NAME=TENA)))';
 
