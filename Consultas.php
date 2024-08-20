@@ -372,7 +372,7 @@ class Consultas
             }
             oci_commit($conexion);
 
-            return $solicitudID;
+            return $tipoMantenimiento;
 
         } catch (Exception $e) {
             oci_rollback($conexion);
