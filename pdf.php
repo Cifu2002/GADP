@@ -30,13 +30,13 @@ class PDF extends FPDF
         $this->Cell(0, 10, utf8_decode('Alcaldía de la dignidad'), 0, 0, 'L');
 
         // Dirección
-        $this->Cell(0, 5, utf8_decode('Av. Juan Montalvo y Abdón Calderón'), 0, 1, 'C');
+        $this->Cell(0, 5, utf8_decode('Av. Juan Montalvo y Abdón Calderón'), 0, 1, 'R');
 
         // Teléfonos
-        $this->Cell(0, 5, utf8_decode('Teléfonos: (062) 886-452-886 021-886-052'), 0, 1, 'C');
+        $this->Cell(0, 5, utf8_decode('Teléfonos: (062) 886-452-886 021-886-052'), 0, 1, 'R');
 
         // Sitio web
-        $this->Cell(0, 5, utf8_decode('www.tena.gob.ec'), 0, 0, 'C');
+        $this->Cell(0, 5, utf8_decode('www.tena.gob.ec'), 0, 0, 'R');
     }
 }
 
