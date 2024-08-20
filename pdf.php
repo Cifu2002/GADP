@@ -65,20 +65,27 @@ $pdf->Cell(30, 10, '', 1);
 $pdf->Cell(30, 10, '', 1);
 $pdf->Cell(30, 10, '', 1);
 
+// Calcular el margen izquierdo para centrar las celdas
+$margenIzquierdo = ($pdf->GetPageWidth() - 180) / 2;
+
 // Firmas
 $pdf->Ln(15);
-$pdf->Cell(60, 10, 'AUTORIZADO', 0);
-$pdf->Cell(60, 10, utf8_decode('TÉCNICO RESPONSABLE'), 0);
-$pdf->Cell(60, 10, 'USUARIO ATENDIDO', 0);
-$pdf->Ln(15);
-$pdf->Cell(60, 10, '____________________', 0);
-$pdf->Cell(60, 10, '____________________', 0);
-$pdf->Cell(60, 10, '____________________', 0);
+$pdf->SetX($margenIzquierdo);
+$pdf->Cell(60, 10, 'AUTORIZADO', 0, 0, 'C');
+$pdf->Cell(60, 10, utf8_decode('TÉCNICO RESPONSABLE'), 0, 0, 'C');
+$pdf->Cell(60, 10, 'USUARIO ATENDIDO', 0, 0, 'C');
 
 $pdf->Ln(10);
-$pdf->Cell(60, 10, utf8_decode('Ing. Claudio Freire'), 0);
-$pdf->Cell(60, 10, 'Firma', 0);
-$pdf->Cell(60, 10, 'Firma', 0);
+$pdf->SetX($margenIzquierdo);
+$pdf->Cell(60, 10, '....................', 0, 0, 'C');
+$pdf->Cell(60, 10, '....................', 0, 0, 'C');
+$pdf->Cell(60, 10, '....................', 0, 0, 'C');
+
+$pdf->Ln(10);
+$pdf->SetX($margenIzquierdo);
+$pdf->Cell(60, 10, utf8_decode('Ing. Claudio Freire'), 0, 0, 'C');
+$pdf->Cell(60, 10, 'Firma', 0, 0, 'C');
+$pdf->Cell(60, 10, 'Firma', 0, 0, 'C');
 
 $pdf->Output();
 ?>
