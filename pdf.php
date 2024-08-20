@@ -69,7 +69,8 @@ $pdf->Cell(0, 10, utf8_decode('Mantenimiento: '), 0, 0, 'L');
 
 // Establecer la fuente para el resto del texto
 $pdf->SetFont('Arial', '', 12);
-$pdf->Cell(-75, 10, utf8_decode('Preventivo( ) Correctivo( ) Sis. eléctrico( )'), 0, 0, 'R');
+$pdf->Cell(-72, 10, utf8_decode('Preventivo( ) Correctivo( ) Sis. eléctrico( )'), 0, 0, 'R');
+$pdf->Ln(10);
 $pdf->Cell(0, 10, utf8_decode('Soporte: Hardware( ) Software( ) Impresora( ) Redes( ) Virus( )'), 0, 1, 'L');
 $pdf->Cell(0, 10, utf8_decode('Capacitación: Office( ) Internet( ) Windows( ) Email( ) Uso de Equipo( )'), 0, 1, 'L');
 
