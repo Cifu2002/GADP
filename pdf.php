@@ -77,7 +77,7 @@ $pdf->Ln(10);
 $pdf->SetFont('Arial', 'B', 12);
 $pdf->Cell(0, 10, utf8_decode('Capacitación: '), 0, 0, 'L');
 $pdf->SetFont('Arial', '', 12);
-$pdf->Cell(-59, 10, utf8_decode('Office( ) Internet( ) Windows( ) Email( ) Uso de Equipo( )'), 0, 0, 'R');
+$pdf->Cell(-56, 10, utf8_decode('Office( ) Internet( ) Windows( ) Email( ) Uso de Equipo( )'), 0, 0, 'R');
 
 // Diagnóstico y trabajo realizado
 $pdf->Ln(15);
