@@ -26,20 +26,33 @@ class PDF extends FPDF
         // Fuente Arial itálica 8
         $this->SetFont('Arial', 'I', 8);
 
-        // Texto "Alcaldía de la dignidad"
-        $this->Cell(0, 10, utf8_decode('Alcaldía de la dignidad'), 0, 0, 'L');
+        // Asignar el ancho de cada línea
+        $line1 = utf8_decode('Av. Juan Montalvo y Abdón Calderón');
+        $line2 = utf8_decode('Teléfonos: (062) 886-452-886 021-886-052');
+        $line3 = utf8_decode('www.tena.gob.ec');
 
-        // Dirección - Ajuste manual para centrar respecto al grupo de líneas
-        $this->SetX(90); // Ajusta el valor según sea necesario
-        $this->Cell(0, 5, utf8_decode('Av. Juan Montalvo y Abdón Calderón'), 0, 1, 'R');
+        // Obtener los anchos de cada línea
+        $width1 = $this->GetStringWidth($line1);
+        $width2 = $this->GetStringWidth($line2);
+        $width3 = $this->GetStringWidth($line3);
 
-        // Teléfonos - Ajuste manual para centrar respecto al grupo de líneas
-        $this->SetX(105); // Ajusta el valor según sea necesario
-        $this->Cell(0, 5, utf8_decode('Teléfonos: (062) 886-452-886 021-886-052'), 0, 1, 'R');
+        // Obtener el ancho máximo
+        $maxWidth = max($width1, $width2, $width3);
 
-        // Sitio web - Ajuste manual para centrar respecto al grupo de líneas
-        $this->SetX(130); // Ajusta el valor según sea necesario
-        $this->Cell(0, 5, utf8_decode('www.tena.gob.ec'), 0, 1, 'R');
+        // Posición X para cada línea, alineando a la derecha y centrando
+        $posX1 = 210 - 10 - $width1; // 210 es el ancho de la página A4, 10 es el margen derecho
+        $posX2 = 210 - 10 - ($width2 + ($maxWidth - $width2) / 2); 
+        $posX3 = 210 - 10 - ($width3 + ($maxWidth - $width3) / 2); 
+
+        // Imprimir cada línea con la posición calculada
+        $this->SetXY($posX1, 10);
+        $this->Cell(0, 10, $line1, 0, 1, 'R');
+
+        $this->SetXY($posX2, 20);
+        $this->Cell(0, 10, $line2, 0, 1, 'R');
+
+        $this->SetXY($posX3, 30);
+        $this->Cell(0, 10, $line3, 0, 1, 'R');
     }
 }
 
