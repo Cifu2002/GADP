@@ -13,7 +13,7 @@ class PDF extends FPDF
 
         $this->SetFont('Arial', 'B', 12);
         $this->Cell(0, 10, utf8_decode('DIRECCIÓN DE TECNOLOGÍA Y SISTEMAS INFORMÁTICOS 2024'), 0, 1, 'C');
-        $this->Ln(5);
+        $this->Ln(2);
     }
 
 
@@ -37,13 +37,13 @@ $pdf->Cell(0, 10, utf8_decode('Registro de asistencia / orden de trabajo Nro. Or
 $pdf->Cell(0, 10, utf8_decode('Departamento Unidad: _______________  Cod. Equipo: ___________'), 0, 1, 'L');
 
 // Mantenimiento y Soporte
-$pdf->Ln(10);
+$pdf->Ln(5);
 $pdf->Cell(0, 10, utf8_decode('Mantenimiento: Preventivo( ) Correctivo( ) Sis. eléctrico( )'), 0, 1, 'L');
 $pdf->Cell(0, 10, utf8_decode('Soporte: Hardware( ) Software( ) Impresora( ) Redes( ) Virus( )'), 0, 1, 'L');
 $pdf->Cell(0, 10, utf8_decode('Capacitación: Office( ) Internet( ) Windows( ) Email( ) Uso de Equipo( )'), 0, 1, 'L');
 
 // Diagnóstico y trabajo realizado
-$pdf->Ln(10);
+$pdf->Ln(5);
 $pdf->Cell(0, 10, 'DIAGNOSTICO:', 0, 1, 'L');
 $pdf->MultiCell(0, 10, str_repeat("_", 100), 0, 'L'); // Espacio para diagnóstico
 
@@ -101,9 +101,10 @@ $pdf->Cell(60, 10, 'Firma', 0, 0, 'C');
 $pdf->Cell(60, 10, 'Firma', 0, 0, 'C');
 
 
-$pdf->Ln(15);
+$pdf->Ln(20);
 $pdf->SetX($margenIzquierdo);
-$pdf->Cell(0, 10, utf8_decode('Nombre: ....................                                        Nombre: ...................'), 0, 1, 'C');
+$pdf->Cell(0, 10, utf8_decode('Nombre: ....................                             
+                                              Nombre: ...................'), 0, 1, 'C');
 
 $pdf->Output();
 ?>
