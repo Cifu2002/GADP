@@ -1,6 +1,6 @@
 <?php
 include_once("conexion.php");
-
+include_once("pdf.php");
 class Consultas
 {
     /* Listar */
@@ -283,6 +283,7 @@ class Consultas
             $solicitudID = $result['SOL_ID'];
             oci_free_statement($stid);
             $tipoMantenimientoString = implode(',', $tipoMantenimiento);
+            $impresoraString = implode(',', $impresora);
             $consulta = "
             INSERT INTO SolicitudMantSistemas (
                 SOL_ID, SOL_COD, SOL_MAC, SOL_IP, SOL_TIPOSOLICITUD, SOL_ENCARGADO,
@@ -318,6 +319,7 @@ class Consultas
 
             oci_execute($stid);
             oci_free_statement($stid);
+
             if ($tipoSolicitud === "Correctiva") {
                 if (is_array($componentes) && !empty($componentes)) {
                     $consulta = "
@@ -372,6 +374,30 @@ class Consultas
                 }
             }
             oci_commit($conexion);
+            if ($tipoSolicitud === "Preventiva") {
+                PDF::GenerarPDFPreventivo(
+                    $solicitudID,
+                    $codigo,
+                    $mac,
+                    $ip,
+                    $tipoSolicitud,
+                    $tipoMantenimientoString,
+                    $responsableBien,
+                    $departamento,
+                    $cedula,
+                    $cargo,
+                    $encargado,
+                    $fechaSolicitud,
+                    $horaSolicitud,
+                    $fechaSolicitudF,
+                    $horaSolicitudF,
+                    $detalles,
+                    $impresoraString
+                );
+            }
+            if ($tipoSolicitud === "Correctiva") {
+                PDF::GenerarPDFCorrectivo();
+            }
 
             return $solicitudID;
 
