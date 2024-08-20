@@ -9,7 +9,7 @@ class PDF extends FPDF
     {
         $this->Image('assets/images/cantonescudo1.png', 90, 10, 30);
 
-        $this->Ln(15); 
+        $this->Ln(15);
 
         $this->SetFont('Arial', 'B', 12);
         $this->Cell(0, 10, utf8_decode('DIRECCIÓN DE TECNOLOGÍA Y SISTEMAS INFORMÁTICOS 2024'), 0, 1, 'C');
@@ -30,13 +30,13 @@ class PDF extends FPDF
         $this->Cell(0, 10, utf8_decode('Alcaldía de la dignidad'), 0, 0, 'L');
 
         // Dirección
-        $this->Cell(0, 10, utf8_decode('Av. Juan Montalvo y Abdón Calderón'), 0, 1, 'R');
+        $this->Cell(0, 5, utf8_decode('Av. Juan Montalvo y Abdón Calderón'), 0, 1, 'R');
 
         // Teléfonos
-        $this->Cell(0, 10, utf8_decode('Teléfonos: (062) 886-452-886 021-886-052'), 0, 1, 'R');
+        $this->Cell(0, 5, utf8_decode('Teléfonos: (062) 886-452-886 021-886-052'), 0, 1, 'R');
 
         // Sitio web
-        $this->Cell(0, 10, utf8_decode('www.tena.gob.ec'), 0, 0, 'R');
+        $this->Cell(0, 5, utf8_decode('www.tena.gob.ec'), 0, 0, 'R');
     }
 }
 
@@ -69,7 +69,7 @@ $pdf->MultiCell(0, 10, str_repeat("_", 100), 0, 'L'); // Espacio para trabajo re
 $margenIzquierdo = ($pdf->GetPageWidth() - 150) / 2; // 150 es el ancho total de las celdas (30 * 5)
 
 $pdf->Ln(10);
-$pdf->SetX($margenIzquierdo); 
+$pdf->SetX($margenIzquierdo);
 $pdf->Cell(30, 10, '', 1, 0, 'C');
 $pdf->Cell(30, 10, 'DIA', 1, 0, 'C');
 $pdf->Cell(30, 10, 'MES', 1, 0, 'C');
@@ -77,7 +77,7 @@ $pdf->Cell(30, 10, utf8_decode('AÑO'), 1, 0, 'C');
 $pdf->Cell(30, 10, 'HORA', 1, 0, 'C');
 
 $pdf->Ln(10);
-$pdf->SetX($margenIzquierdo); 
+$pdf->SetX($margenIzquierdo);
 $pdf->Cell(30, 10, 'INICIO', 1, 0, 'C');
 $pdf->Cell(30, 10, '', 1, 0, 'C');
 $pdf->Cell(30, 10, '', 1, 0, 'C');
