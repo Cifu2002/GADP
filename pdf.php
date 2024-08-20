@@ -69,6 +69,7 @@ $pdf->Cell(30, 10, 'INICIO', 1, 0, 'C');
 $pdf->Cell(30, 10, '', 1, 0, 'C');
 $pdf->Cell(30, 10, '', 1, 0, 'C');
 $pdf->Cell(30, 10, '', 1, 0, 'C');
+$pdf->Cell(30, 10, '', 1, 0, 'C');
 
 $pdf->Ln(10);
 $pdf->SetX($margenIzquierdo); // Reposiciona la X para la siguiente fila
@@ -87,13 +88,13 @@ $pdf->Cell(60, 10, 'AUTORIZADO', 0, 0, 'C');
 $pdf->Cell(60, 10, utf8_decode('TÉCNICO RESPONSABLE'), 0, 0, 'C');
 $pdf->Cell(60, 10, 'USUARIO ATENDIDO', 0, 0, 'C');
 
-$pdf->Ln(10);
+$pdf->Ln(20);
 $pdf->SetX($margenIzquierdo);
 $pdf->Cell(60, 10, '....................', 0, 0, 'C');
 $pdf->Cell(60, 10, '....................', 0, 0, 'C');
 $pdf->Cell(60, 10, '....................', 0, 0, 'C');
 
-$pdf->Ln(10);
+$pdf->Ln(5);
 $pdf->SetX($margenIzquierdo);
 $pdf->Cell(60, 10, utf8_decode('Ing. Claudio Freire'), 0, 0, 'C');
 $pdf->Cell(60, 10, 'Firma', 0, 0, 'C');
