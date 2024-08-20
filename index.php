@@ -609,9 +609,11 @@ if (!empty($mac)) {
                 tipoSolicitud = $("#opcion").val();
                 encargado = $("#encargado option:selected").data("nombre");
                 tipoMantenimiento = [];
+                alert(tipoMantenimiento);
                 $("input[name='tipoMantenimiento']:checked").each(function () {
                     tipoMantenimiento.push($(this).val());
                 });
+                alert(tipoMantenimiento);
                 responsableBien = $("#responsableBien").val();
                 departamento = $("#departamento").val();
                 cedula = $("#cedulaTec").val();
