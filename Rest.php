@@ -106,7 +106,7 @@ switch ($op) {
                 $solicitudID = filter_var($data['solicitudID'], FILTER_SANITIZE_STRING);
                 $tipoMantenimientoString = implode(',', $tipoMantenimiento);
                 $impresoraString = implode(',', $impresora);
-                if ($tipoSolicitud === "Preventiva") {
+                /* if ($tipoSolicitud === "Preventiva") { */
                     PDF::GenerarPDFPreventivo(
                         $solicitudID,
                         $codigo,
@@ -123,7 +123,7 @@ switch ($op) {
                         $detalles,
                         $impresoraString
                     );
-                }
+               /*  } */
                 if ($tipoSolicitud === "Correctiva") {
                     PDF::GenerarPDFCorrectivo(
                         $solicitudID,
