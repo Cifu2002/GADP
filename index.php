@@ -726,7 +726,7 @@ if (!empty($mac)) {
                                             title: 'Éxito',
                                             text: 'Al generar el pdf'
                                         }).then(function () {
-                                            /* window.location.href = 'index.php'; */
+                                            window.location.href = 'generar.php';
                                         })
                                     },
                                     error: function (xhr, status, error) {
