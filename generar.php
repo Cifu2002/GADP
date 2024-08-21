@@ -27,13 +27,15 @@ $tipoMantenimiento = json_decode($tipoMantenimiento, true);
 $componentes = json_decode($componentes, true);
 $cambios = json_decode($cambios, true);
 $impresora = json_decode($impresora, true);
+$tipoMantenimientoString = implode(',', $tipoMantenimiento);
+$tipoMantenimientoString = implode(',', $impresora);
 // Generar PDF usando la función PDF::GenerarPDFPreventivo
 PDF::GenerarPDFPreventivo(
     $solicitudID,
     $codigo,
     $mac,
     $tipoSolicitud,
-    $tipoMantenimiento,
+    $tipoMantenimientoString,
     $responsableBien,
     $departamento,
     $encargado,
@@ -42,7 +44,7 @@ PDF::GenerarPDFPreventivo(
     $fechaSolicitudF,
     $horaSolicitudF,
     $detalles,
-    $impresora
+    $impresoraString
 );
 // Ejemplo de cómo podrías utilizar estos valores
 echo "Operación: $op<br>";
@@ -67,4 +69,5 @@ echo "Fecha Final: $fechaSolicitudF<br>";
 echo "Hora Final: $horaSolicitudF<br>";
 echo "Detalles: $detalles<br>";
 echo "Impresora: " . implode(", ", $impresora) . "<br>";
+echo "Detalles: $impresora<br>";
 ?>
