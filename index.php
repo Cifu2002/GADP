@@ -691,6 +691,8 @@ if (!empty($mac)) {
                             }).then(function () {
                                 op = 2;
                                 solicitudID = data.data;
+                                alert(cedula);
+                                alert(fechaSolicitud);
                                 $.ajax({
                                     url: "Rest.php",
                                     type: "POST",
