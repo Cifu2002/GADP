@@ -13,24 +13,24 @@ $departamento = isset($_GET['departamento']) ? $_GET['departamento'] : '';
 $cedula = isset($_GET['cedula']) ? $_GET['cedula'] : '';
 $cargo = isset($_GET['cargo']) ? $_GET['cargo'] : '';
 $encargado = isset($_GET['encargado']) ? $_GET['encargado'] : '';
-$componentes = isset($_GET['componentes']) ? $_GET['componentes'] : '';
-$cambios = isset($_GET['cambios']) ? $_GET['cambios'] : '';
 $fechaSolicitud = isset($_GET['fechaSolicitud']) ? $_GET['fechaSolicitud'] : '';
 $horaSolicitud = isset($_GET['horaSolicitud']) ? $_GET['horaSolicitud'] : '';
 $fechaSolicitudF = isset($_GET['fechaSolicitudF']) ? $_GET['fechaSolicitudF'] : '';
 $horaSolicitudF = isset($_GET['horaSolicitudF']) ? $_GET['horaSolicitudF'] : '';
 $detalles = isset($_GET['detalles']) ? $_GET['detalles'] : '';
 $impresora = isset($_GET['impresora']) ? $_GET['impresora'] : '';
+$componentes = json_decode(isset($_GET['componentes']) ? $_GET['componentes'] : '[]', true);
+$cambios = json_decode(isset($_GET['cambios']) ? $_GET['cambios'] : '[]', true);
 
 // Decodificar los valores JSON
 $tipoMantenimiento = json_decode($tipoMantenimiento, true);
 $componentes = json_decode($componentes, true);
 $cambios = json_decode($cambios, true);
 $impresora = json_decode($impresora, true);
+$impresoraString = implode(',', $impresora);
 
 if ($tipoSolicitud === 'Preventiva') {
     $tipoMantenimientoString = implode(',', $tipoMantenimiento);
-    $impresoraString = implode(',', $impresora);
     // Generar PDF usando la función PDF::GenerarPDFPreventivo
     PDF::GenerarPDFPreventivo(
         $solicitudID,
@@ -47,6 +47,28 @@ if ($tipoSolicitud === 'Preventiva') {
         $horaSolicitudF,
         $detalles,
         $impresoraString
+    );
+}
+
+if ($tipoSolicitud === 'Correctiva') {
+
+    // Generar PDF usando la función PDF::GenerarPDFPreventivo
+    PDF::GenerarPDFCorrectivo(
+        $solicitudID,
+        $codigo,
+        $mac,
+        $tipoSolicitud,
+        $responsableBien,
+        $departamento,
+        $encargado,
+        $fechaSolicitud,
+        $horaSolicitud,
+        $fechaSolicitudF,
+        $horaSolicitudF,
+        $detalles,
+        $impresoraString,
+        $componentes,
+        $cambios
     );
 }
 
