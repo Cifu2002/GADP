@@ -374,18 +374,15 @@ class Consultas
                 }
             }
             oci_commit($conexion);
-            /* if ($tipoSolicitud === "Preventiva") {
+            if ($tipoSolicitud === "Preventiva") {
                 PDF::GenerarPDFPreventivo(
                     $solicitudID,
                     $codigo,
                     $mac,
-                    $ip,
                     $tipoSolicitud,
                     $tipoMantenimientoString,
                     $responsableBien,
                     $departamento,
-                    $cedula,
-                    $cargo,
                     $encargado,
                     $fechaSolicitud,
                     $horaSolicitud,
@@ -396,8 +393,24 @@ class Consultas
                 );
             }
             if ($tipoSolicitud === "Correctiva") {
-                PDF::GenerarPDFCorrectivo();
-            } */
+                PDF::GenerarPDFCorrectivo(
+                    $solicitudID,
+                    $codigo,
+                    $mac,
+                    $tipoSolicitud,
+                    $responsableBien,
+                    $departamento,
+                    $encargado,
+                    $fechaSolicitud,
+                    $horaSolicitud,
+                    $fechaSolicitudF,
+                    $horaSolicitudF,
+                    $detalles,
+                    $impresoraString,
+                    $componentes,
+                    $cambios
+                );
+            }
 
             return $solicitudID;
 
