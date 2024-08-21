@@ -688,6 +688,7 @@ if (!empty($mac)) {
                                 icon: 'success',
                                 title: 'Éxito',
                                 text: 'Solicitud ingresada con éxito. ID: ' + data.data
+                                footer: '<button id="button-descarga" class="btn btn-primary">Descargar PDF</button>'
                             }).then(function () {
                                 op = 2;
                                 solicitudID = data.data;
@@ -756,156 +757,207 @@ if (!empty($mac)) {
                 });
             });
 
-            $("#encargado").change(function () {
-                let Encargadoid = $(this).val();
-                $("#encargado option[value='']").remove();
-
-                let op = 1;
+            $("#button-descarga").on('click', function (event) {
+                event.preventDefault();
+                op = 2;
+                solicitudID = data.data;
+                alert(cedula);
+                alert(fechaSolicitud);
                 $.ajax({
                     url: "Rest.php",
-                    type: "GET",
-                    data: { op: op, encargado_id: Encargadoid },
-                    success: function (response) {
-                        let resultado = JSON.parse(response);
-                        $("#cedulaTec").val(resultado.NOM01CEDUAL);
-                        $("#cargo").val(resultado.NOMBRE_CARGO);
-                    }, error: function (xhr, status, error) {
-                        console.error("Error en la solicitud AJAX:", status, error);
-                    }
-                });
-            });
-
-            $("#departamento").on('change', function () {
-                $("#departamento option[value='']").remove();
-                let departamento = $(this).val().trim();
-                let op = 2;
-                $.ajax({
-                    url: "Rest.php",
-                    type: "GET",
-                    data: {
+                    type: "POST",
+                    contentType: 'application/json',
+                    data: JSON.stringify({
                         op: op,
-                        departamento: departamento
-                    },
+                        solicitudID: solicitudID,
+                        codigo: codigo,
+                        mac: mac,
+                        ip: ip,
+                        tipoSolicitud: tipoSolicitud,
+                        tipoMantenimiento: JSON.stringify(tipoMantenimiento),
+                        responsableBien: responsableBien,
+                        departamento: departamento,
+                        cedula: cedula,
+                        cargo: cargo,
+                        encargado: encargado,
+                        componentes: componentes,
+                        cambios: cambios,
+                        fechaSolicitud: fechaSolicitud,
+                        horaSolicitud: horaSolicitud,
+                        fechaSolicitudF: fechaSolicitudF,
+                        horaSolicitudF: horaSolicitudF,
+                        detalles: detalles,
+                        impresora: JSON.stringify(impresora)
+                    }),
                     success: function (response) {
-                        $("#responsableBien").html(response);
-                    }, error: function (xhr, status, error) {
-                        console.error("Error en la solicitud AJAX:", status, error);
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Éxito',
+                            text: 'Al generar el pdf'
+                        }).then(function () {
+                            /* window.location.href = 'index.php'; */
+                        })
+                    },
+                    error: function (xhr, status, error) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'No se pudo generar el PDF. Intente nuevamente más tarde.'
+                        });
+
+                    }
+                })
+                $("#encargado").change(function () {
+                    let Encargadoid = $(this).val();
+                    $("#encargado option[value='']").remove();
+
+                    let op = 1;
+                    $.ajax({
+                        url: "Rest.php",
+                        type: "GET",
+                        data: { op: op, encargado_id: Encargadoid },
+                        success: function (response) {
+                            let resultado = JSON.parse(response);
+                            $("#cedulaTec").val(resultado.NOM01CEDUAL);
+                            $("#cargo").val(resultado.NOMBRE_CARGO);
+                        }, error: function (xhr, status, error) {
+                            console.error("Error en la solicitud AJAX:", status, error);
+                        }
+                    });
+                });
+
+                $("#departamento").on('change', function () {
+                    $("#departamento option[value='']").remove();
+                    let departamento = $(this).val().trim();
+                    let op = 2;
+                    $.ajax({
+                        url: "Rest.php",
+                        type: "GET",
+                        data: {
+                            op: op,
+                            departamento: departamento
+                        },
+                        success: function (response) {
+                            $("#responsableBien").html(response);
+                        }, error: function (xhr, status, error) {
+                            console.error("Error en la solicitud AJAX:", status, error);
+                        }
+                    });
+                });
+
+                /* Validar ip */
+                $("#ip").on('input', function () {
+                    var ip = $(this).val();
+                    var mensajeIP = document.getElementById('ip-mensaje');
+
+                    if (esIpValida(ip) || ip === '') {
+                        mensajeIP.innerText = '';
+                    } else {
+                        mensajeIP.innerText = 'IP no válida.';
                     }
                 });
-            });
 
-            /* Validar ip */
-            $("#ip").on('input', function () {
-                var ip = $(this).val();
-                var mensajeIP = document.getElementById('ip-mensaje');
-
-                if (esIpValida(ip) || ip === '') {
-                    mensajeIP.innerText = '';
-                } else {
-                    mensajeIP.innerText = 'IP no válida.';
+                function esIpValida(ip) {
+                    var regex = /^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}$/;
+                    return regex.test(ip);
                 }
             });
-
-            function esIpValida(ip) {
-                var regex = /^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}$/;
-                return regex.test(ip);
-            }
-        });
 
     </script>
 
     <script>
 
 
-        $("#codigo").on('input', function () {
-            this.value = this.value.replace(/[^0-9.]/g, '');
+            $("#codigo").on('input', function () {
+                this.value = this.value.replace(/[^0-9.]/g, '');
 
-            if (this.value && this.value.includes('.')) {
-                $("#btn-cargar-codigo").addClass("habilitado");
-            } else {
-                $("#btn-cargar-codigo").removeClass("habilitado");
-            }
-        });
+                if (this.value && this.value.includes('.')) {
+                    $("#btn-cargar-codigo").addClass("habilitado");
+                } else {
+                    $("#btn-cargar-codigo").removeClass("habilitado");
+                }
+            });
     </script>
 
     <!-- Agregar nueva fila Componentes del bien-->
     <script>
-        function agregarFila() {
-            var tablaBody = document.getElementById("componentes-body");
-            var rowCount = tablaBody.rows.length;
-            var row = tablaBody.insertRow(-1);
+            function agregarFila() {
+                var tablaBody = document.getElementById("componentes-body");
+                var rowCount = tablaBody.rows.length;
+                var row = tablaBody.insertRow(-1);
 
-            for (var i = 0; i < 5; i++) {
-                var cell = row.insertCell(i);
-                var input = document.createElement("input");
-                input.type = "text";
-                if (i === 0) {
-                    input.value = rowCount + 1;
-                    input.disabled = true;
+                for (var i = 0; i < 5; i++) {
+                    var cell = row.insertCell(i);
+                    var input = document.createElement("input");
+                    input.type = "text";
+                    if (i === 0) {
+                        input.value = rowCount + 1;
+                        input.disabled = true;
+                    }
+                    cell.appendChild(input);
                 }
-                cell.appendChild(input);
             }
-        }
 
-        function eliminarFila() {
-            var tablaBody = document.getElementById("componentes-body");
-            if (tablaBody.rows.length > 1) {
-                tablaBody.deleteRow(-1);
+            function eliminarFila() {
+                var tablaBody = document.getElementById("componentes-body");
+                if (tablaBody.rows.length > 1) {
+                    tablaBody.deleteRow(-1);
+                }
             }
-        }
     </script>
 
     <!-- Agregar nueva fila cambios de componentes-->
     <script>
-        function agregarFilaCambios() {
-            var tablaBody = document.getElementById("componentes-Cambio-body");
-            var rowCount = tablaBody.rows.length;
-            var row = tablaBody.insertRow(-1);
+            function agregarFilaCambios() {
+                var tablaBody = document.getElementById("componentes-Cambio-body");
+                var rowCount = tablaBody.rows.length;
+                var row = tablaBody.insertRow(-1);
 
-            for (var i = 0; i < 5; i++) {
-                var cell = row.insertCell(i);
-                var input = document.createElement("input");
-                if (i === 0) {
-                    input.type = "text";
-                    input.value = rowCount + 1;
-                    input.disabled = true;
-                } else if (i === 1) {
-                    input.type = "text";
-                    input.classList.add("date-input");
-                    input.readOnly = true;
-                    input.required = true;
-                } else {
-                    input.type = "text";
+                for (var i = 0; i < 5; i++) {
+                    var cell = row.insertCell(i);
+                    var input = document.createElement("input");
+                    if (i === 0) {
+                        input.type = "text";
+                        input.value = rowCount + 1;
+                        input.disabled = true;
+                    } else if (i === 1) {
+                        input.type = "text";
+                        input.classList.add("date-input");
+                        input.readOnly = true;
+                        input.required = true;
+                    } else {
+                        input.type = "text";
+                    }
+
+                    cell.appendChild(input);
                 }
-
-                cell.appendChild(input);
+                inicializarDatePicker();
             }
-            inicializarDatePicker();
-        }
 
-        function eliminarFilaCambios() {
-            var tablaBody = document.getElementById("componentes-Cambio-body");
-            if (tablaBody.rows.length > 1) {
-                tablaBody.deleteRow(-1);
+            function eliminarFilaCambios() {
+                var tablaBody = document.getElementById("componentes-Cambio-body");
+                if (tablaBody.rows.length > 1) {
+                    tablaBody.deleteRow(-1);
+                }
             }
-        }
 
-        function inicializarDatePicker() {
-            $(".date-input").datepicker({
-                loseText: 'Cerrar',
-                prevText: '<Ant',
-                nextText: 'Sig>',
-                currentText: 'Hoy',
-                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
-                dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
-                dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
-                dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
-                weekHeader: 'Sm',
-                minDate: 0,
-                beforeShowDay: $.datepicker.noWeekends
-            });
-        }
+            function inicializarDatePicker() {
+                $(".date-input").datepicker({
+                    loseText: 'Cerrar',
+                    prevText: '<Ant',
+                    nextText: 'Sig>',
+                    currentText: 'Hoy',
+                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                    dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                    dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Juv', 'Vie', 'Sáb'],
+                    dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sá'],
+                    weekHeader: 'Sm',
+                    minDate: 0,
+                    beforeShowDay: $.datepicker.noWeekends
+                });
+            }
     </script>
 </body>
 
