@@ -283,7 +283,7 @@ class Consultas
             $solicitudID = $result['SOL_ID'];
             oci_free_statement($stid);
             $tipoMantenimientoString = implode(',', $tipoMantenimiento);
-            $impresoraString = implode(',', $impresora);
+            
             $consulta = "
             INSERT INTO SolicitudMantSistemas (
                 SOL_ID, SOL_COD, SOL_MAC, SOL_IP, SOL_TIPOSOLICITUD, SOL_ENCARGADO,

@@ -652,6 +652,7 @@ if (!empty($mac)) {
                 fechaSolicitudF = $("#fechaF").val();
                 horaSolicitudF = $("#horaF").val();
                 impresora = [];
+                op = 1;
                 $("input[name='impresora']:checked").each(function () {
                     impresora.push($(this).val());
                 });
@@ -660,6 +661,7 @@ if (!empty($mac)) {
                     type: "POST",
                     contentType: 'application/json',
                     data: JSON.stringify({
+                        op: op,
                         codigo: codigo,
                         mac: mac,
                         ip: ip,
@@ -687,7 +689,45 @@ if (!empty($mac)) {
                                 title: 'Éxito',
                                 text: 'Solicitud ingresada con éxito. ID: ' + data.data
                             }).then(function () {
-                                window.location.href = 'index.php';
+                                op = 2;
+                                solicitudID = data.data;
+                                $.ajax({
+                                    url: "Rest.php",
+                                    type: "POST",
+                                    contentType: 'application/json',
+                                    data: JSON.stringify({
+                                        op: op,
+                                        solicitudID: solicitudID,
+                                        codigo: codigo,
+                                        mac: mac,
+                                        ip: ip,
+                                        tipoSolicitud: tipoSolicitud,
+                                        tipoMantenimiento: JSON.stringify(tipoMantenimiento),
+                                        responsableBien: responsableBien,
+                                        departamento: departamento,
+                                        cedula: cedula,
+                                        cargo: cargo,
+                                        encargado: encargado,
+                                        componentes: componentes,
+                                        cambios: cambios,
+                                        fechaSolicitud: fechaSolicitud,
+                                        horaSolicitud: horaSolicitud,
+                                        fechaSolicitudF: fechaSolicitudF,
+                                        horaSolicitudF: horaSolicitudF,
+                                        detalles: detalles,
+                                        impresora: JSON.stringify(impresora)
+                                    }),
+                                    success: function (response) {
+                                        window.location.href = 'index.php';
+                                    },
+                                    error: function (xhr, status, error) {
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Error',
+                                            text: 'No se pudo generar el PDF. Intente nuevamente más tarde.'
+                                        });
+                                    }
+                                });
                             });
                         } else {
                             Swal.fire({
