@@ -217,18 +217,18 @@ class PDF extends FPDF
         // Verificar si ambos arrays tienen el mismo número de elementos
         $maxLength = max(count($componentes), count($cambios));
 
-        // Itera a través de los elementos de los arrays, utilizando $i como índice
-        for ($i = 0; $i < $maxLength; $i++) {
-            // Si el índice $i existe en el array $componentes, toma el valor de 'nombre', si no, usa un valor predeterminado
-            $componenteText = isset($componentes[$i]['nombre']) ? '- ' . utf8_decode($componentes[$i]['nombre']) : '- ';
+// Itera a través de los elementos de los arrays, utilizando $i como índice
+for ($i = 0; $i < $maxLength; $i++) {
+    // Si el índice $i existe en el array $componentes, toma el valor de 'nombre', si no, usa un valor predeterminado
+    $componenteText = isset($componentes[$i]['nombre']) ? '- ' . utf8_decode($componentes[$i]['nombre']) : '- ';
 
-            // Si el índice $i existe en el array $cambios, toma el valor de 'nombreComponente', si no, usa un valor predeterminado
-            $cambioText = isset($cambios[$i]['nombreComponente']) ? '- ' . utf8_decode($cambios[$i]['nombreComponente']) : '- ';
+    // Si el índice $i existe en el array $cambios, toma el valor de 'nombreComponente', si no, usa un valor predeterminado
+    $cambioText = isset($cambios[$i]['nombreComponente']) ? '- ' . utf8_decode($cambios[$i]['nombreComponente']) : '- ';
 
-            // Imprime las celdas en el PDF utilizando los valores obtenidos
-            $pdf->Cell(100, 10, $componenteText, 0, 0, 'L');
-            $pdf->Cell(0, 10, $cambioText, 0, 1, 'L');
-        }
+    // Imprime las celdas en el PDF utilizando los valores obtenidos
+    $pdf->Cell(100, 10, $componenteText, 0, 0, 'L');
+    $pdf->Cell(0, 10, $cambioText, 0, 1, 'L');
+}
 
 
         // Detalles

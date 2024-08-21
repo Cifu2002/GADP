@@ -29,7 +29,7 @@ $tipoMantenimiento = json_decode($tipoMantenimiento, true);
 $impresora = json_decode($impresora, true);
 $impresoraString = implode(',', $impresora);
 
-/* if ($tipoSolicitud === 'Preventiva') {
+if ($tipoSolicitud === 'Preventiva') {
     $tipoMantenimientoString = implode(',', $tipoMantenimiento);
     // Generar PDF usando la función PDF::GenerarPDFPreventivo
     PDF::GenerarPDFPreventivo(
@@ -69,7 +69,7 @@ if ($tipoSolicitud === 'Correctiva') {
         $componentes,
         $cambios
     );
-} */
+}
 
 // Ejemplo de cómo podrías utilizar estos valores
 echo "Operación: $op<br>";
