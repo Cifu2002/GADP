@@ -1,7 +1,7 @@
 <?php
 include_once("Consultas.php");
 $encargados = Consultas::listarEncargados();
-
+include_once('pdf_copy.php');
 
 /* $ip = isset($_GET['ip']) ? $_GET['ip'] : null;*/
 $mac = isset($_GET['mac']) ? $_GET['mac'] : null;
@@ -689,61 +689,22 @@ if (!empty($mac)) {
                                 title: 'Éxito',
                                 text: 'Solicitud ingresada con éxito. ID: ' + data.data
                             }).then(function () {
-                                $.ajax({
-                                    url: "generar.php", // Un archivo PHP intermedio para procesar los datos y redirigir
-                                    type: "POST",
-                                    contentType: 'application/json',
-                                    data: JSON.stringify({
-                                        op: op,
-                                        solicitudID: solicitudID,
-                                        codigo: codigo,
-                                        mac: mac,
-                                        ip: ip,
-                                        tipoSolicitud: tipoSolicitud,
-                                        tipoMantenimiento: JSON.stringify(tipoMantenimiento),
-                                        responsableBien: responsableBien,
-                                        departamento: departamento,
-                                        cedula: cedula,
-                                        cargo: cargo,
-                                        encargado: encargado,
-                                        componentes: componentes,
-                                        cambios: cambios,
-                                        fechaSolicitud: fechaSolicitud,
-                                        horaSolicitud: horaSolicitud,
-                                        fechaSolicitudF: fechaSolicitudF,
-                                        horaSolicitudF: horaSolicitudF,
-                                        detalles: detalles,
-                                        impresora: JSON.stringify(impresora)
-                                    }),
-                                    success: function (response) {
-                                        // Redirige al usuario a generar.php con los parámetros necesarios
-                                        window.location.href = 'generar.php?' + $.param({
-                                            op: op,
-                                            solicitudID: solicitudID,
-                                            codigo: codigo,
-                                            mac: mac,
-                                            ip: ip,
-                                            tipoSolicitud: tipoSolicitud,
-                                            tipoMantenimiento: JSON.stringify(tipoMantenimiento),
-                                            responsableBien: responsableBien,
-                                            departamento: departamento,
-                                            cedula: cedula,
-                                            cargo: cargo,
-                                            encargado: encargado,
-                                            componentes: componentes,
-                                            cambios: cambios,
-                                            fechaSolicitud: fechaSolicitud,
-                                            horaSolicitud: horaSolicitud,
-                                            fechaSolicitudF: fechaSolicitudF,
-                                            horaSolicitudF: horaSolicitudF,
-                                            detalles: detalles,
-                                            impresora: JSON.stringify(impresora)
-                                        });
-                                    },
-                                    error: function (xhr, status, error) {
-                                        console.error('Error en la solicitud AJAX:', status, error);
-                                    }
-                                });
+                                $pdfContent = PDF:: GenerarPDFPreventivo(
+                                    $solicitudID,
+                                    $codigo,
+                                    $mac,
+                                    $tipoSolicitud,
+                                    $tipoMantenimiento,
+                                    $responsableBien,
+                                    $departamento,
+                                    $encargado,
+                                    $fechaSolicitud,
+                                    $horaSolicitud,
+                                    $fechaSolicitudF,
+                                    $horaSolicitudF,
+                                    $detalles,
+                                    $impresora
+                                );
 
 
                             });
