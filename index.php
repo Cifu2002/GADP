@@ -689,39 +689,64 @@ if (!empty($mac)) {
                                 title: 'Éxito',
                                 text: 'Solicitud ingresada con éxito. ID: ' + data.data
                             }).then(function () {
-                                op = 2;
-                                solicitudID = data.data;
-                                alert(cedula);
-                                alert(fechaSolicitud);
-
-                                // Crear una cadena de consulta con los parámetros necesarios
-                                var queryString = $.param({
-                                    op: op,
-                                    solicitudID: solicitudID,
-                                    codigo: codigo,
-                                    mac: mac,
-                                    ip: ip,
-                                    tipoSolicitud: tipoSolicitud,
-                                    tipoMantenimiento: JSON.stringify(tipoMantenimiento),
-                                    responsableBien: responsableBien,
-                                    departamento: departamento,
-                                    cedula: cedula,
-                                    cargo: cargo,
-                                    encargado: encargado,
-                                    componentes: componentes,
-                                    cambios: cambios,
-                                    fechaSolicitud: fechaSolicitud,
-                                    horaSolicitud: horaSolicitud,
-                                    fechaSolicitudF: fechaSolicitudF,
-                                    horaSolicitudF: horaSolicitudF,
-                                    detalles: detalles,
-                                    impresora: JSON.stringify(impresora)
+                                $.ajax({
+                                    url: "generar.php", // Un archivo PHP intermedio para procesar los datos y redirigir
+                                    type: "POST",
+                                    contentType: 'application/json',
+                                    data: JSON.stringify({
+                                        op: op,
+                                        solicitudID: solicitudID,
+                                        codigo: codigo,
+                                        mac: mac,
+                                        ip: ip,
+                                        tipoSolicitud: tipoSolicitud,
+                                        tipoMantenimiento: JSON.stringify(tipoMantenimiento),
+                                        responsableBien: responsableBien,
+                                        departamento: departamento,
+                                        cedula: cedula,
+                                        cargo: cargo,
+                                        encargado: encargado,
+                                        componentes: componentes,
+                                        cambios: cambios,
+                                        fechaSolicitud: fechaSolicitud,
+                                        horaSolicitud: horaSolicitud,
+                                        fechaSolicitudF: fechaSolicitudF,
+                                        horaSolicitudF: horaSolicitudF,
+                                        detalles: detalles,
+                                        impresora: JSON.stringify(impresora)
+                                    }),
+                                    success: function (response) {
+                                        // Redirige al usuario a generar.php con los parámetros necesarios
+                                        window.location.href = 'generar.php?' + $.param({
+                                            op: op,
+                                            solicitudID: solicitudID,
+                                            codigo: codigo,
+                                            mac: mac,
+                                            ip: ip,
+                                            tipoSolicitud: tipoSolicitud,
+                                            tipoMantenimiento: JSON.stringify(tipoMantenimiento),
+                                            responsableBien: responsableBien,
+                                            departamento: departamento,
+                                            cedula: cedula,
+                                            cargo: cargo,
+                                            encargado: encargado,
+                                            componentes: componentes,
+                                            cambios: cambios,
+                                            fechaSolicitud: fechaSolicitud,
+                                            horaSolicitud: horaSolicitud,
+                                            fechaSolicitudF: fechaSolicitudF,
+                                            horaSolicitudF: horaSolicitudF,
+                                            detalles: detalles,
+                                            impresora: JSON.stringify(impresora)
+                                        });
+                                    },
+                                    error: function (xhr, status, error) {
+                                        console.error('Error en la solicitud AJAX:', status, error);
+                                    }
                                 });
 
-                                // Redirigir a 'generar.php' con los parámetros de consulta
-                                window.location.href = 'generar.php?' + queryString;
-                            });
 
+                            });
                         } else {
                             Swal.fire({
                                 icon: 'error',

@@ -1,34 +1,31 @@
 <?php
 include_once('pdf_copy.php');
 
-// Obtener los datos enviados por POST
-$json_input = file_get_contents('php://input');
-$data = json_decode($json_input, true);
+// Obtener los datos de la URL
+$opP = filter_input(INPUT_GET, 'op', FILTER_SANITIZE_STRING);
+$codigo = filter_input(INPUT_GET, 'codigo', FILTER_SANITIZE_STRING);
+$mac = filter_input(INPUT_GET, 'mac', FILTER_SANITIZE_STRING);
+$ip = filter_input(INPUT_GET, 'ip', FILTER_SANITIZE_STRING);
+$tipoSolicitud = filter_input(INPUT_GET, 'tipoSolicitud', FILTER_SANITIZE_STRING);
+$responsableBien = filter_input(INPUT_GET, 'responsableBien', FILTER_SANITIZE_STRING);
+$departamento = filter_input(INPUT_GET, 'departamento', FILTER_SANITIZE_STRING);
+$cedula = filter_input(INPUT_GET, 'cedula', FILTER_SANITIZE_STRING);
+$cargo = filter_input(INPUT_GET, 'cargo', FILTER_SANITIZE_STRING);
+$encargado = filter_input(INPUT_GET, 'encargado', FILTER_SANITIZE_STRING);
+$fechaSolicitud = filter_input(INPUT_GET, 'fechaSolicitud', FILTER_SANITIZE_STRING);
+$horaSolicitud = filter_input(INPUT_GET, 'horaSolicitud', FILTER_SANITIZE_STRING);
+$fechaSolicitudF = filter_input(INPUT_GET, 'fechaSolicitudF', FILTER_SANITIZE_STRING);
+$horaSolicitudF = filter_input(INPUT_GET, 'horaSolicitudF', FILTER_SANITIZE_STRING);
+$detalles = filter_input(INPUT_GET, 'detalles', FILTER_SANITIZE_STRING);
+$tipoMantenimiento = filter_input(INPUT_GET, 'tipoMantenimiento', FILTER_SANITIZE_STRING);
+$impresora = filter_input(INPUT_GET, 'impresora', FILTER_SANITIZE_STRING);
+$solicitudID = filter_input(INPUT_GET, 'solicitudID', FILTER_SANITIZE_STRING);
 
-// Sanitizar y extraer datos
-$opP = filter_var($data['op'], FILTER_SANITIZE_STRING);
-$componentes = isset($data['componentes']) ? $data['componentes'] : [];
-$cambios = isset($data['cambios']) ? $data['cambios'] : [];
-$codigo = filter_var($data['codigo'], FILTER_SANITIZE_STRING);
-$mac = filter_var($data['mac'], FILTER_SANITIZE_STRING);
-$ip = filter_var($data['ip'], FILTER_SANITIZE_STRING);
-$tipoSolicitud = filter_var($data['tipoSolicitud'], FILTER_SANITIZE_STRING);
-$responsableBien = filter_var($data['responsableBien'], FILTER_SANITIZE_STRING);
-$departamento = filter_var($data['departamento'], FILTER_SANITIZE_STRING);
-$cedula = filter_var($data['cedula'], FILTER_SANITIZE_STRING);
-$cargo = filter_var($data['cargo'], FILTER_SANITIZE_STRING);
-$encargado = filter_var($data['encargado'], FILTER_SANITIZE_STRING);
-$fechaSolicitud = filter_var($data['fechaSolicitud'], FILTER_SANITIZE_STRING);
-$horaSolicitud = filter_var($data['horaSolicitud'], FILTER_SANITIZE_STRING);
-$fechaSolicitudF = filter_var($data['fechaSolicitudF'], FILTER_SANITIZE_STRING);
-$horaSolicitudF = filter_var($data['horaSolicitudF'], FILTER_SANITIZE_STRING);
-$detalles = filter_var($data['detalles'], FILTER_SANITIZE_STRING);
-$tipoMantenimiento = isset($data['tipoMantenimiento']) ? json_decode($data['tipoMantenimiento'], true) : [];
-$impresora = isset($data['impresora']) ? json_decode($data['impresora'], true) : [];
-$solicitudID = filter_var($data['solicitudID'], FILTER_SANITIZE_STRING);
+$tipoMantenimientoArray = json_decode($tipoMantenimiento, true);
+$impresoraArray = json_decode($impresora, true);
 
-$tipoMantenimientoString = implode(',', $tipoMantenimiento);
-$impresoraString = implode(',', $impresora);
+$tipoMantenimientoString = implode(',', $tipoMantenimientoArray);
+$impresoraString = implode(',', $impresoraArray);
 
 // Generar PDF usando la función PDF::GenerarPDFPreventivo
 $pdfContent = PDF::GenerarPDFPreventivo(
