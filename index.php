@@ -691,7 +691,7 @@ if (!empty($mac)) {
 
                                 solicitudID = data.data;
 
-                                var url = 'generar.php?op=' + encodeURIComponent(op) +
+                                var url = 'generar.php?op=' +
                                     '&solicitudID=' + encodeURIComponent(solicitudID) +
                                     '&codigo=' + encodeURIComponent(codigo) +
                                     '&mac=' + encodeURIComponent(mac) +
