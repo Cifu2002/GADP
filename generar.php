@@ -1,5 +1,5 @@
 <?php
-include_once('pdf.php');
+include_once('pdf copy.php');
 
 $solicitudID = $_POST['solicitudID'];
 $codigo = $_POST['codigo'];
@@ -21,6 +21,6 @@ $impresoraString = $_POST['impresoraString'];
 
 // Llamada a la función GenerarPDFPreventivo
 PDF::GenerarPDFPreventivo(
-  
+    
 );
 ?>
