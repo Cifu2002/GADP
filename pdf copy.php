@@ -214,26 +214,34 @@ class PDF extends FPDF
         // Lista 
         $pdf->SetFont('Arial', '', 12);
 
-        // Verificar si ambos arrays tienen el mismo número de elementos
         $maxLength = max(count($componentes), count($cambios));
 
         // Itera a través de los elementos de los arrays, utilizando $i como índice
         for ($i = 0; $i < $maxLength; $i++) {
             // Verifica si el índice $i existe en el array $componentes y si 'nombre' no es null o vacío
             $componenteNombre = isset($componentes[$i]['nombre']) ? $componentes[$i]['nombre'] : null;
-            $componenteText = !empty($componenteNombre) ? '- ' . utf8_decode($componenteNombre) : null;
+            if ($componenteNombre !== null && trim($componenteNombre) !== '') {
+                $componenteText = '- ' . utf8_decode($componenteNombre);
+            } else {
+                $componenteText = null;
+            }
 
             // Verifica si el índice $i existe en el array $cambios y si 'nombreComponente' y 'fechaCambio' no son null o vacíos
             $cambioNombre = isset($cambios[$i]['nombreComponente']) ? $cambios[$i]['nombreComponente'] : null;
             $cambioFecha = isset($cambios[$i]['fechaCambio']) ? $cambios[$i]['fechaCambio'] : null;
-            $cambioText = (!empty($cambioNombre) && !empty($cambioFecha)) ? '- ' . utf8_decode($cambioNombre) : null;
+            if ($cambioNombre !== null && trim($cambioNombre) !== '' && $cambioFecha !== null && trim($cambioFecha) !== '') {
+                $cambioText = '- ' . utf8_decode($cambioNombre);
+            } else {
+                $cambioText = null;
+            }
 
-            // Solo imprime si hay texto válido para ambos componentes y cambios
+            // Solo imprime si hay texto válido para componentes o cambios
             if ($componenteText || $cambioText) {
                 $pdf->Cell(100, 10, $componenteText ?: '- ', 0, 0, 'L');
                 $pdf->Cell(0, 10, $cambioText ?: '- ', 0, 1, 'L');
             }
         }
+
 
 
 
