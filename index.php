@@ -693,51 +693,35 @@ if (!empty($mac)) {
                                 solicitudID = data.data;
                                 alert(cedula);
                                 alert(fechaSolicitud);
-                                $.ajax({
-                                    url: "generar.php",
-                                    type: "POST",
-                                    contentType: 'application/json',
-                                    data: JSON.stringify({
-                                        op: op,
-                                        solicitudID: solicitudID,
-                                        codigo: codigo,
-                                        mac: mac,
-                                        ip: ip,
-                                        tipoSolicitud: tipoSolicitud,
-                                        tipoMantenimiento: JSON.stringify(tipoMantenimiento),
-                                        responsableBien: responsableBien,
-                                        departamento: departamento,
-                                        cedula: cedula,
-                                        cargo: cargo,
-                                        encargado: encargado,
-                                        componentes: componentes,
-                                        cambios: cambios,
-                                        fechaSolicitud: fechaSolicitud,
-                                        horaSolicitud: horaSolicitud,
-                                        fechaSolicitudF: fechaSolicitudF,
-                                        horaSolicitudF: horaSolicitudF,
-                                        detalles: detalles,
-                                        impresora: JSON.stringify(impresora)
-                                    }),
-                                    success: function (response) {
 
-                                        Swal.fire({
-                                            icon: 'success',
-                                            title: 'Éxito',
-                                            text: 'Al generar el pdf'
-                                        }).then(function () {
-                                            window.location.href = 'generar.php';
-                                        })
-                                    },
-                                    error: function (xhr, status, error) {
-                                        Swal.fire({
-                                            icon: 'error',
-                                            title: 'Error',
-                                            text: 'No se pudo generar el PDF. Intente nuevamente más tarde.'
-                                        });
-                                    }
+                                // Crear una cadena de consulta con los parámetros necesarios
+                                var queryString = $.param({
+                                    op: op,
+                                    solicitudID: solicitudID,
+                                    codigo: codigo,
+                                    mac: mac,
+                                    ip: ip,
+                                    tipoSolicitud: tipoSolicitud,
+                                    tipoMantenimiento: JSON.stringify(tipoMantenimiento),
+                                    responsableBien: responsableBien,
+                                    departamento: departamento,
+                                    cedula: cedula,
+                                    cargo: cargo,
+                                    encargado: encargado,
+                                    componentes: componentes,
+                                    cambios: cambios,
+                                    fechaSolicitud: fechaSolicitud,
+                                    horaSolicitud: horaSolicitud,
+                                    fechaSolicitudF: fechaSolicitudF,
+                                    horaSolicitudF: horaSolicitudF,
+                                    detalles: detalles,
+                                    impresora: JSON.stringify(impresora)
                                 });
+
+                                // Redirigir a 'generar.php' con los parámetros de consulta
+                                window.location.href = 'generar.php?' + queryString;
                             });
+
                         } else {
                             Swal.fire({
                                 icon: 'error',

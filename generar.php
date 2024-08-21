@@ -1,7 +1,11 @@
 <?php
-include_once('pdf copy.php');
+include_once('pdf_copy.php');
+
+// Obtener los datos enviados por POST
 $json_input = file_get_contents('php://input');
 $data = json_decode($json_input, true);
+
+// Sanitizar y extraer datos
 $opP = filter_var($data['op'], FILTER_SANITIZE_STRING);
 $componentes = isset($data['componentes']) ? $data['componentes'] : [];
 $cambios = isset($data['cambios']) ? $data['cambios'] : [];
@@ -20,14 +24,14 @@ $fechaSolicitudF = filter_var($data['fechaSolicitudF'], FILTER_SANITIZE_STRING);
 $horaSolicitudF = filter_var($data['horaSolicitudF'], FILTER_SANITIZE_STRING);
 $detalles = filter_var($data['detalles'], FILTER_SANITIZE_STRING);
 $tipoMantenimiento = isset($data['tipoMantenimiento']) ? json_decode($data['tipoMantenimiento'], true) : [];
-
 $impresora = isset($data['impresora']) ? json_decode($data['impresora'], true) : [];
 $solicitudID = filter_var($data['solicitudID'], FILTER_SANITIZE_STRING);
+
 $tipoMantenimientoString = implode(',', $tipoMantenimiento);
 $impresoraString = implode(',', $impresora);
 
-// Llamada a la función GenerarPDFPreventivo
-PDF::GenerarPDFPreventivo(
+// Generar PDF usando la función PDF::GenerarPDFPreventivo
+$pdfContent = PDF::GenerarPDFPreventivo(
     $solicitudID,
     $codigo,
     $mac,
@@ -43,4 +47,13 @@ PDF::GenerarPDFPreventivo(
     $detalles,
     $impresoraString
 );
+
+// Establecer las cabeceras para la descarga del PDF
+header('Content-Type: application/pdf');
+header('Content-Disposition: attachment; filename="archivo.pdf"');
+header('Content-Length: ' . strlen($pdfContent));
+
+// Enviar el contenido del PDF
+echo $pdfContent;
+exit;
 ?>
