@@ -217,18 +217,24 @@ class PDF extends FPDF
         // Verificar si ambos arrays tienen el mismo número de elementos
         $maxLength = max(count($componentes), count($cambios));
 
-// Itera a través de los elementos de los arrays, utilizando $i como índice
-for ($i = 0; $i < $maxLength; $i++) {
-    // Si el índice $i existe en el array $componentes, toma el valor de 'nombre', si no, usa un valor predeterminado
-    $componenteText = isset($componentes[$i]['nombre']) ? '- ' . utf8_decode($componentes[$i]['nombre']) : '- ';
+        // Itera a través de los elementos de los arrays, utilizando $i como índice
+        for ($i = 0; $i < $maxLength; $i++) {
+            // Verifica si el índice $i existe en el array $componentes y si 'nombre' no es null o vacío
+            $componenteNombre = isset($componentes[$i]['nombre']) ? $componentes[$i]['nombre'] : null;
+            $componenteText = !empty($componenteNombre) ? '- ' . utf8_decode($componenteNombre) : null;
 
-    // Si el índice $i existe en el array $cambios, toma el valor de 'nombreComponente', si no, usa un valor predeterminado
-    $cambioText = isset($cambios[$i]['nombreComponente']) ? '- ' . utf8_decode($cambios[$i]['nombreComponente']) : '- ';
+            // Verifica si el índice $i existe en el array $cambios y si 'nombreComponente' y 'fechaCambio' no son null o vacíos
+            $cambioNombre = isset($cambios[$i]['nombreComponente']) ? $cambios[$i]['nombreComponente'] : null;
+            $cambioFecha = isset($cambios[$i]['fechaCambio']) ? $cambios[$i]['fechaCambio'] : null;
+            $cambioText = (!empty($cambioNombre) && !empty($cambioFecha)) ? '- ' . utf8_decode($cambioNombre) : null;
 
-    // Imprime las celdas en el PDF utilizando los valores obtenidos
-    $pdf->Cell(100, 10, $componenteText, 0, 0, 'L');
-    $pdf->Cell(0, 10, $cambioText, 0, 1, 'L');
-}
+            // Solo imprime si hay texto válido para ambos componentes y cambios
+            if ($componenteText || $cambioText) {
+                $pdf->Cell(100, 10, $componenteText ?: '- ', 0, 0, 'L');
+                $pdf->Cell(0, 10, $cambioText ?: '- ', 0, 1, 'L');
+            }
+        }
+
 
 
         // Detalles
