@@ -718,7 +718,14 @@ if (!empty($mac)) {
                                         impresora: JSON.stringify(impresora)
                                     }),
                                     success: function (response) {
-                                        window.location.href = 'index.php';
+
+                                        Swal.fire({
+                                            icon: 'success',
+                                            title: 'Éxito',
+                                            text: 'Al generar el pdf'
+                                        }).then(function () {
+                                            window.location.href = 'index.php';
+                                        })
                                     },
                                     error: function (xhr, status, error) {
                                         Swal.fire({
