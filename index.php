@@ -1,7 +1,7 @@
 <?php
 include_once("Consultas.php");
 $encargados = Consultas::listarEncargados();
-include_once('pdf_copy.php');
+
 
 /* $ip = isset($_GET['ip']) ? $_GET['ip'] : null;*/
 $mac = isset($_GET['mac']) ? $_GET['mac'] : null;
@@ -661,7 +661,6 @@ if (!empty($mac)) {
                     type: "POST",
                     contentType: 'application/json',
                     data: JSON.stringify({
-                        op: op,
                         codigo: codigo,
                         mac: mac,
                         ip: ip,
@@ -689,24 +688,35 @@ if (!empty($mac)) {
                                 title: 'Éxito',
                                 text: 'Solicitud ingresada con éxito. ID: ' + data.data
                             }).then(function () {
-                                $pdfContent = PDF:: GenerarPDFPreventivo(
-                                    $solicitudID,
-                                    $codigo,
-                                    $mac,
-                                    $tipoSolicitud,
-                                    $tipoMantenimiento,
-                                    $responsableBien,
-                                    $departamento,
-                                    $encargado,
-                                    $fechaSolicitud,
-                                    $horaSolicitud,
-                                    $fechaSolicitudF,
-                                    $horaSolicitudF,
-                                    $detalles,
-                                    $impresora
-                                );
 
+                                solicitudID = data.data;
 
+                                var url = 'generar.php?op=' + encodeURIComponent(op) +
+                                    '&solicitudID=' + encodeURIComponent(solicitudID) +
+                                    '&codigo=' + encodeURIComponent(codigo) +
+                                    '&mac=' + encodeURIComponent(mac) +
+                                    '&ip=' + encodeURIComponent(ip) +
+                                    '&tipoSolicitud=' + encodeURIComponent(tipoSolicitud) +
+                                    '&tipoMantenimiento=' + encodeURIComponent(JSON.stringify(tipoMantenimiento)) +
+                                    '&responsableBien=' + encodeURIComponent(responsableBien) +
+                                    '&departamento=' + encodeURIComponent(departamento) +
+                                    '&cedula=' + encodeURIComponent(cedula) +
+                                    '&cargo=' + encodeURIComponent(cargo) +
+                                    '&encargado=' + encodeURIComponent(encargado) +
+                                    '&componentes=' + encodeURIComponent(JSON.stringify(componentes)) +
+                                    '&cambios=' + encodeURIComponent(JSON.stringify(cambios)) +
+                                    '&fechaSolicitud=' + encodeURIComponent(fechaSolicitud) +
+                                    '&horaSolicitud=' + encodeURIComponent(horaSolicitud) +
+                                    '&fechaSolicitudF=' + encodeURIComponent(fechaSolicitudF) +
+                                    '&horaSolicitudF=' + encodeURIComponent(horaSolicitudF) +
+                                    '&detalles=' + encodeURIComponent(detalles) +
+                                    '&impresora=' + encodeURIComponent(JSON.stringify(impresora));
+                                window.location.href = url;
+
+                                // Redirigir a index.php después de 2 segundos
+                                setTimeout(function () {
+                                    window.location.href = 'index.php';
+                                }, 2000);
                             });
                         } else {
                             Swal.fire({
