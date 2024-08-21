@@ -27,25 +27,29 @@ $tipoMantenimiento = json_decode($tipoMantenimiento, true);
 $componentes = json_decode($componentes, true);
 $cambios = json_decode($cambios, true);
 $impresora = json_decode($impresora, true);
-$tipoMantenimientoString = implode(',', $tipoMantenimiento);
-$tipoMantenimientoString = implode(',', $impresora);
-// Generar PDF usando la función PDF::GenerarPDFPreventivo
-PDF::GenerarPDFPreventivo(
-    $solicitudID,
-    $codigo,
-    $mac,
-    $tipoSolicitud,
-    $tipoMantenimientoString,
-    $responsableBien,
-    $departamento,
-    $encargado,
-    $fechaSolicitud,
-    $horaSolicitud,
-    $fechaSolicitudF,
-    $horaSolicitudF,
-    $detalles,
-    $impresoraString
-);
+
+if ($tipoSolicitud === 'Preventiva') {
+    $tipoMantenimientoString = implode(',', $tipoMantenimiento);
+    $impresoraString = implode(',', $impresora);
+    // Generar PDF usando la función PDF::GenerarPDFPreventivo
+    PDF::GenerarPDFPreventivo(
+        $solicitudID,
+        $codigo,
+        $mac,
+        $tipoSolicitud,
+        $tipoMantenimientoString,
+        $responsableBien,
+        $departamento,
+        $encargado,
+        $fechaSolicitud,
+        $horaSolicitud,
+        $fechaSolicitudF,
+        $horaSolicitudF,
+        $detalles,
+        $impresoraString
+    );
+}
+
 // Ejemplo de cómo podrías utilizar estos valores
 echo "Operación: $op<br>";
 echo "Solicitud ID: $solicitudID<br>";
