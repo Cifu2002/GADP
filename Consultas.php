@@ -1,6 +1,6 @@
 <?php
 include_once("conexion.php");
-include_once("pdf.php");
+
 class Consultas
 {
     /* Listar */
@@ -250,8 +250,6 @@ class Consultas
             return json_encode(['error' => 'Ocurrió un error al procesar la solicitud.']);
         }
     }
-
-
 
     /* INSERTAR */
     public static function insertarRegistro(
