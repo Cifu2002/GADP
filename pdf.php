@@ -132,7 +132,8 @@ class PDF extends FPDF
         $pdf->Cell(0, 10, utf8_decode($responsableBien), 0, 0, 'L');
 
         // Generar el PDF
-        $pdf->Output('D', 'Asistencia Tecnica ' . $solicitudID . '.pdf');
+        $pdf->Output('I', 'Asistencia Tecnica ' . $solicitudID . '.pdf');
+
     }
 
     public static function GenerarPDFCorrectivo(
@@ -282,7 +283,8 @@ class PDF extends FPDF
         $pdf->Cell(0, 10, utf8_decode($responsableBien), 0, 0, 'L');
 
         // Generar el PDF
-        $pdf->Output('D', 'Asistencia Tecnica ' . $solicitudID . '.pdf');
+        $pdf->Output('I', 'Asistencia Tecnica ' . $solicitudID . '.pdf');
+
     }
 
     // Header
