@@ -19,17 +19,17 @@ $fechaSolicitudF = isset($_GET['fechaSolicitudF']) ? $_GET['fechaSolicitudF'] : 
 $horaSolicitudF = isset($_GET['horaSolicitudF']) ? $_GET['horaSolicitudF'] : '';
 $detalles = isset($_GET['detalles']) ? $_GET['detalles'] : '';
 $impresora = isset($_GET['impresora']) ? $_GET['impresora'] : '';
+
 $componentes = json_decode(isset($_GET['componentes']) ? $_GET['componentes'] : '[]', true);
 $cambios = json_decode(isset($_GET['cambios']) ? $_GET['cambios'] : '[]', true);
 
 // Decodificar los valores JSON
 $tipoMantenimiento = json_decode($tipoMantenimiento, true);
-$componentes = json_decode($componentes, true);
-$cambios = json_decode($cambios, true);
+
 $impresora = json_decode($impresora, true);
 $impresoraString = implode(',', $impresora);
 
-if ($tipoSolicitud === 'Preventiva') {
+/* if ($tipoSolicitud === 'Preventiva') {
     $tipoMantenimientoString = implode(',', $tipoMantenimiento);
     // Generar PDF usando la función PDF::GenerarPDFPreventivo
     PDF::GenerarPDFPreventivo(
@@ -52,7 +52,6 @@ if ($tipoSolicitud === 'Preventiva') {
 
 if ($tipoSolicitud === 'Correctiva') {
 
-    // Generar PDF usando la función PDF::GenerarPDFPreventivo
     PDF::GenerarPDFCorrectivo(
         $solicitudID,
         $codigo,
@@ -70,7 +69,7 @@ if ($tipoSolicitud === 'Correctiva') {
         $componentes,
         $cambios
     );
-}
+} */
 
 // Ejemplo de cómo podrías utilizar estos valores
 echo "Operación: $op<br>";
