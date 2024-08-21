@@ -238,7 +238,7 @@ class PDF extends FPDF
             // Solo imprime si hay texto válido para componentes o cambios
             if ($componenteText || $cambioText) {
                 $pdf->Cell(100, 10, $componenteText ?: '- ', 0, 0, 'L');
-                $pdf->Cell(0, 10, $cambioText ?: '- ', 0, 1, 'L');
+                $pdf->Cell(0, 10, $cambioText ?: '- ', 0, 0, 'L');
             }
         }
 
@@ -246,7 +246,7 @@ class PDF extends FPDF
 
 
         // Detalles
-        $pdf->Ln(15);
+        $pdf->Ln(10);
         $pdf->SetFont('Arial', 'B', 12);
         $pdf->Cell(0, 10, 'Detalles:', 0, 1, 'L');
         $pdf->SetFont('Arial', '', 12);
