@@ -1,4 +1,5 @@
 <?php
+include_once('pdf_copy.php');
 // Obtener los valores de la URL
 $op = isset($_GET['op']) ? $_GET['op'] : '';
 $solicitudID = isset($_GET['solicitudID']) ? $_GET['solicitudID'] : '';
@@ -26,7 +27,23 @@ $tipoMantenimiento = json_decode($tipoMantenimiento, true);
 $componentes = json_decode($componentes, true);
 $cambios = json_decode($cambios, true);
 $impresora = json_decode($impresora, true);
-
+// Generar PDF usando la función PDF::GenerarPDFPreventivo
+$pdfContent = PDF::GenerarPDFPreventivo(
+    $solicitudID,
+    $codigo,
+    $mac,
+    $tipoSolicitud,
+    $tipoMantenimientoString,
+    $responsableBien,
+    $departamento,
+    $encargado,
+    $fechaSolicitud,
+    $horaSolicitud,
+    $fechaSolicitudF,
+    $horaSolicitudF,
+    $detalles,
+    $impresoraString
+);
 // Ejemplo de cómo podrías utilizar estos valores
 echo "Operación: $op<br>";
 echo "Solicitud ID: $solicitudID<br>";
