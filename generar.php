@@ -1,51 +1,26 @@
 <?php
-include_once("pdf.php");
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Recibir datos de la solicitud
-    $data = json_decode(file_get_contents('php://input'), true);
-    
-    if (!$data) {
-        // Manejar el error si no se pueden decodificar los datos JSON
-        header('HTTP/1.1 400 Bad Request');
-        echo json_encode(['error' => 'Invalid JSON']);
-        exit;
-    }
+include_once('pdf.php');
 
-    // Filtrar y asignar los valores como antes
-    $componentes = isset($data['componentes']) ? $data['componentes'] : [];
-    $cambios = isset($data['cambios']) ? $data['cambios'] : [];
-    $codigo = filter_var($data['codigo'], FILTER_SANITIZE_STRING);
-    $mac = filter_var($data['mac'], FILTER_SANITIZE_STRING);
-    $ip = filter_var($data['ip'], FILTER_SANITIZE_STRING);
-    $tipoSolicitud = filter_var($data['tipoSolicitud'], FILTER_SANITIZE_STRING);
-    $responsableBien = filter_var($data['responsableBien'], FILTER_SANITIZE_STRING);
-    $departamento = filter_var($data['departamento'], FILTER_SANITIZE_STRING);
-    $cedula = filter_var($data['cedula'], FILTER_SANITIZE_STRING);
-    $cargo = filter_var($data['cargo'], FILTER_SANITIZE_STRING);
-    $encargado = filter_var($data['encargado'], FILTER_SANITIZE_STRING);
-    $fechaSolicitud = filter_var($data['fechaSolicitud'], FILTER_SANITIZE_STRING);
-    $horaSolicitud = filter_var($data['horaSolicitud'], FILTER_SANITIZE_STRING);
-    $fechaSolicitudF = filter_var($data['fechaSolicitudF'], FILTER_SANITIZE_STRING);
-    $horaSolicitudF = filter_var($data['horaSolicitudF'], FILTER_SANITIZE_STRING);
-    $detalles = filter_var($data['detalles'], FILTER_SANITIZE_STRING);
-    $tipoMantenimiento = isset($data['tipoMantenimiento']) ? json_decode($data['tipoMantenimiento'], true) : [];
-    $impresora = isset($data['impresora']) ? json_decode($data['impresora'], true) : [];
-    $solicitudID = filter_var($data['solicitudID'], FILTER_SANITIZE_STRING);
-    $tipoMantenimientoString = implode(',', $tipoMantenimiento);
-    $impresoraString = implode(',', $impresora);
+$solicitudID = $_POST['solicitudID'];
+$codigo = $_POST['codigo'];
+$mac = $_POST['mac'];
+$ip = isset($_POST['ip']) ? $_POST['ip'] : ''; // Si no se pasa, puedes dejarlo vacío
+$tipoSolicitud = $_POST['tipoSolicitud'];
+$tipoMantenimientoString = $_POST['tipoMantenimientoString'];
+$responsableBien = $_POST['responsableBien'];
+$departamento = $_POST['departamento'];
+$cedula = isset($_POST['cedula']) ? $_POST['cedula'] : ''; // Si no se pasa, puedes dejarlo vacío
+$cargo = isset($_POST['cargo']) ? $_POST['cargo'] : ''; // Si no se pasa, puedes dejarlo vacío
+$encargado = $_POST['encargado'];
+$fechaSolicitud = $_POST['fechaSolicitud'];
+$horaSolicitud = $_POST['horaSolicitud'];
+$fechaSolicitudF = $_POST['fechaSolicitudF'];
+$horaSolicitudF = $_POST['horaSolicitudF'];
+$detalles = $_POST['detalles'];
+$impresoraString = $_POST['impresoraString'];
 
-    // Generar PDF según el tipo de solicitud
-   
-        PDF::GenerarPDFPreventivo();
-
-
-    // Terminar el script después de generar y enviar el PDF
-    exit;
-} else {
-    // Manejar el caso de que no sea una solicitud POST
-    header('HTTP/1.1 405 Method Not Allowed');
-    echo json_encode(['error' => 'Method Not Allowed']);
-    exit;
-}
-
+// Llamada a la función GenerarPDFPreventivo
+PDF::GenerarPDFPreventivo(
+  
+);
 ?>

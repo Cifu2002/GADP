@@ -374,43 +374,6 @@ class Consultas
                 }
             }
             oci_commit($conexion);
-            /* if ($tipoSolicitud === "Preventiva") {
-                PDF::GenerarPDFPreventivo(
-                    $solicitudID,
-                    $codigo,
-                    $mac,
-                    $tipoSolicitud,
-                    $tipoMantenimientoString,
-                    $responsableBien,
-                    $departamento,
-                    $encargado,
-                    $fechaSolicitud,
-                    $horaSolicitud,
-                    $fechaSolicitudF,
-                    $horaSolicitudF,
-                    $detalles,
-                    $impresoraString
-                );
-            }
-            if ($tipoSolicitud === "Correctiva") {
-                PDF::GenerarPDFCorrectivo(
-                    $solicitudID,
-                    $codigo,
-                    $mac,
-                    $tipoSolicitud,
-                    $responsableBien,
-                    $departamento,
-                    $encargado,
-                    $fechaSolicitud,
-                    $horaSolicitud,
-                    $fechaSolicitudF,
-                    $horaSolicitudF,
-                    $detalles,
-                    $impresoraString,
-                    $componentes,
-                    $cambios
-                );
-            } */
 
             return $solicitudID;
 
