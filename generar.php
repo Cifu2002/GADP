@@ -35,42 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $impresoraString = implode(',', $impresora);
 
     // Generar PDF según el tipo de solicitud
-    if ($tipoSolicitud === "Preventiva") {
-        PDF::GenerarPDFPreventivo(
-            $solicitudID,
-            $codigo,
-            $mac,
-            $tipoSolicitud,
-            $tipoMantenimientoString,
-            $responsableBien,
-            $departamento,
-            $encargado,
-            $fechaSolicitud,
-            $horaSolicitud,
-            $fechaSolicitudF,
-            $horaSolicitudF,
-            $detalles,
-            $impresoraString
-        );
-    } elseif ($tipoSolicitud === "Correctiva") {
-        PDF::GenerarPDFCorrectivo(
-            $solicitudID,
-            $codigo,
-            $mac,
-            $tipoSolicitud,
-            $responsableBien,
-            $departamento,
-            $encargado,
-            $fechaSolicitud,
-            $horaSolicitud,
-            $fechaSolicitudF,
-            $horaSolicitudF,
-            $detalles,
-            $impresoraString,
-            $componentes,
-            $cambios
-        );
-    }
+   
+        PDF::GenerarPDFPreventivo();
+
 
     // Terminar el script después de generar y enviar el PDF
     exit;
