@@ -288,9 +288,6 @@ if (!empty($mac)) {
 
                 <div id="submit-mensaje" class="detalle-mensaje"></div>
                 <input type="submit" value="Enviar">
-                <button onclick="window.location.href='pdf.php'">Descargar PDF</button>
-
-
             </form>
         <?php endif; ?>
     </div>

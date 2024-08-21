@@ -238,7 +238,7 @@ class PDF extends FPDF
             // Solo imprime si hay texto válido para componentes o cambios
             if ($componenteText || $cambioText) {
                 $pdf->Cell(100, 10, $componenteText ?: '- ', 0, 0, 'L');
-                $pdf->Cell(0, 10, $cambioText ?: '- ', 0, 0, 'L');
+                $pdf->Cell(0, 10, $cambioText ?: '- ', 0, 1, 'L');
             }
         }
 
