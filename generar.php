@@ -28,7 +28,7 @@ $componentes = json_decode($componentes, true);
 $cambios = json_decode($cambios, true);
 $impresora = json_decode($impresora, true);
 // Generar PDF usando la función PDF::GenerarPDFPreventivo
-PDF::GenerarPDFPreventivo(
+/* PDF::GenerarPDFPreventivo(
     $solicitudID,
     $codigo,
     $mac,
@@ -43,7 +43,7 @@ PDF::GenerarPDFPreventivo(
     $horaSolicitudF,
     $detalles,
     $impresoraString
-);
+); */
 // Ejemplo de cómo podrías utilizar estos valores
 echo "Operación: $op<br>";
 echo "Solicitud ID: $solicitudID<br>";
