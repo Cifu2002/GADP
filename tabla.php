@@ -37,7 +37,7 @@
                             <input type="date" id="max-date">
 
                             <div>
-                                <!-- Filtro por Encargado -->
+                                <!-- Encargado -->
                                 <div>
                                     <label for="encargado">Encargado:</label>
                                     <select id="encargado" class="form-control">
@@ -45,8 +45,7 @@
                                         <!-- Opciones serán agregadas dinámicamente -->
                                     </select>
                                 </div>
-
-                                <!-- Filtro por Responsable -->
+                                <!-- Responsable -->
                                 <div>
                                     <label for="responsable">Responsable:</label>
                                     <select id="responsable" class="form-control">
@@ -54,8 +53,7 @@
                                         <!-- Opciones serán agregadas dinámicamente -->
                                     </select>
                                 </div>
-
-                                <!-- Filtro por Tipo de Solicitud -->
+                                <!-- Tipos de solicitud -->
                                 <div>
                                     <label for="tipo-solicitud">Tipo de Solicitud:</label>
                                     <select id="tipo-solicitud" class="form-control">
@@ -63,8 +61,17 @@
                                         <!-- Opciones serán agregadas dinámicamente -->
                                     </select>
                                 </div>
+                                <!-- Cambio -->
+                                <div>
+                                    <label for="cambio">Cambio:</label>
+                                    <select id="cambio" class="form-control">
+                                        <option value="">Todos</option>
+                                        <!-- Opciones serán agregadas dinámicamente -->
+                                    </select>
+                                </div>
                             </div>
                         </div>
+
 
                         <table class="table table-bordered table-hover table-striped" id="tablaSolicitud" width="100%"
                             cellspacing="0">
@@ -99,165 +106,194 @@
     </div>
     <script>
         $(document).ready(function () {
-    let tablaSolicitud = $("#tablaSolicitud").DataTable({
-        dom: '<"d-flex flex-row justify-content-between"lf>rtip',
-        language: {
-            "decimal": "",
-            "emptyTable": "No hay información",
-            "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
-            "infoEmpty": "Mostrando 0 a 0 de 0 entradas",
-            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-            "infoPostFix": "",
-            "thousands": ",",
-            "lengthMenu": "Mostrar _MENU_ registros por página",
-            "loadingRecords": "Cargando...",
-            "processing": "Procesando...",
-            "search": "Buscar:",
-            "zeroRecords": "Sin resultados encontrados",
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            }
-        },
-        ajax: {
-            url: 'RestTabla.php',
-            type: 'GET',
-            dataSrc: function (json) {
-                // Poblamos los selects con los valores únicos
-                let tiposSolicitud = [];
-                let encargados = [];
-                let responsables = [];
-                
-                json.forEach(row => {
-                    if (!tiposSolicitud.includes(row.SOLICITUD)) {
-                        tiposSolicitud.push(row.SOLICITUD);
+            let tablaSolicitud = $("#tablaSolicitud").DataTable({
+                dom: '<"d-flex flex-row justify-content-between"lf>rtip',
+                language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
                     }
-                    if (!encargados.includes(row.ENCARGADO)) {
-                        encargados.push(row.ENCARGADO);
+                },
+                ajax: {
+                    url: 'RestTabla.php',
+                    type: 'GET',
+                    dataSrc: function (json) {
+                        // Poblamos los selects con los valores únicos
+                        let tiposSolicitud = [];
+                        let encargados = [];
+                        let responsables = [];
+                        let cambios = [];
+
+                        json.forEach(row => {
+                            if (!tiposSolicitud.includes(row.SOLICITUD)) {
+                                tiposSolicitud.push(row.SOLICITUD);
+                            }
+                            if (!encargados.includes(row.ENCARGADO)) {
+                                encargados.push(row.ENCARGADO);
+                            }
+                            if (!responsables.includes(row.RESPONSABLE)) {
+                                responsables.push(row.RESPONSABLE);
+                            }
+                            if (!cambios.includes(row.CAMBIO_NOMBRE_COMPONENTE)) {
+                                cambios.push(row.CAMBIO_NOMBRE_COMPONENTE);
+                            }
+                        });
+
+                        // Poblar select de Tipo de Solicitud
+                        let selectSolicitud = $('#tipo-solicitud');
+                        selectSolicitud.empty().append('<option value="">Todos</option>');
+                        tiposSolicitud.forEach(tipo => {
+                            selectSolicitud.append(`<option value="${tipo}">${tipo}</option>`);
+                        });
+
+                        // Poblar select de Encargado
+                        let selectEncargado = $('#encargado');
+                        selectEncargado.empty().append('<option value="">Todos</option>');
+                        encargados.forEach(encargado => {
+                            selectEncargado.append(`<option value="${encargado}">${encargado}</option>`);
+                        });
+
+                        // Poblar select de Responsable
+                        let selectResponsable = $('#responsable');
+                        selectResponsable.empty().append('<option value="">Todos</option>');
+                        responsables.forEach(responsable => {
+                            selectResponsable.append(`<option value="${responsable}">${responsable}</option>`);
+                        });
+
+                        // Poblar el select de cambio
+                        let selectCambio = $('#cambio');
+                        selectCambio.empty().append('<option value="">Todos</option>');
+                        cambios.forEach(cambio => {
+                            selectCambio.append(`<option value="${cambio}">${cambio}</option>`);
+                        });
+
+                        return json;
                     }
-                    if (!responsables.includes(row.RESPONSABLE)) {
-                        responsables.push(row.RESPONSABLE);
+                },
+                columns: [
+                    { data: 'FECHA' },    // Columna Fecha de solicitud
+                    { data: 'ID' },       // Columna ID
+                    { data: 'CAMBIO_NOMBRE_COMPONENTE' },  // Columna Cambio
+                    { data: 'RESPONSABLE' },   // Columna Responsable
+                    { data: 'ENCARGADO' },     // Columna Encargado
+                    { data: 'SOLICITUD' }   // Columna Tipo de solicitud
+                ]
+            });
+
+            // Filtro por fechas
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                    let min = $('#min-date').val();
+                    let max = $('#max-date').val();
+                    let date = new Date(data[0].split('-').reverse().join('-'));
+
+                    if (
+                        (min === '' || new Date(min) <= date) &&
+                        (max === '' || date <= new Date(max))
+                    ) {
+                        return true;
                     }
-                });
+                    return false;
+                }
+            );
 
-                // Poblar select de Tipo de Solicitud
-                let selectSolicitud = $('#tipo-solicitud');
-                selectSolicitud.empty().append('<option value="">Todos</option>');
-                tiposSolicitud.forEach(tipo => {
-                    selectSolicitud.append(`<option value="${tipo}">${tipo}</option>`);
-                });
+            $('#min-date, #max-date').change(function () {
+                tablaSolicitud.draw();
+            });
 
-                // Poblar select de Encargado
-                let selectEncargado = $('#encargado');
-                selectEncargado.empty().append('<option value="">Todos</option>');
-                encargados.forEach(encargado => {
-                    selectEncargado.append(`<option value="${encargado}">${encargado}</option>`);
-                });
+            // Filtro por Encargado
+            $('#encargado').change(function () {
+                tablaSolicitud.draw();
+            });
 
-                // Poblar select de Responsable
-                let selectResponsable = $('#responsable');
-                selectResponsable.empty().append('<option value="">Todos</option>');
-                responsables.forEach(responsable => {
-                    selectResponsable.append(`<option value="${responsable}">${responsable}</option>`);
-                });
+            // Filtro por Responsable
+            $('#responsable').change(function () {
+                tablaSolicitud.draw();
+            });
 
-                return json;
-            }
-        },
-        columns: [
-            { data: 'FECHA' },    // Columna Fecha de solicitud
-            { data: 'ID' },       // Columna ID
-            { data: 'CAMBIO_NOMBRE_COMPONENTE' },  // Columna Cambio
-            { data: 'RESPONSABLE' },   // Columna Responsable
-            { data: 'ENCARGADO' },     // Columna Encargado
-            { data: 'SOLICITUD' }   // Columna Tipo de solicitud
-        ]
-    });
+            // Filtro por Tipo de Solicitud
+            $('#tipo-solicitud').change(function () {
+                tablaSolicitud.draw();
+            });
 
-    // Filtro por fechas
-    $.fn.dataTable.ext.search.push(
-        function (settings, data, dataIndex) {
-            let min = $('#min-date').val();
-            let max = $('#max-date').val();
-            let date = new Date(data[0].split('-').reverse().join('-'));
+            // Filtro por Cambio
+            $('#cambio').change(function () {
+                tablaSolicitud.draw();
+            });
 
-            if (
-                (min === '' || new Date(min) <= date) &&
-                (max === '' || date <= new Date(max))
-            ) {
-                return true;
-            }
-            return false;
-        }
-    );
+            // Configuración del botón de filtro de fechas
+            $('.dataTables_filter').append('<button class="btn-filtro" id="btn-filtroFecha"><i class="fa-duotone fa-solid fa-filter"></i></button>');
 
-    $('#min-date, #max-date').change(function () {
-        tablaSolicitud.draw();
-    });
+            $('#btn-filtroFecha').click(function () {
+                $('.date-filter').toggle();
+            });
 
-    // Filtro por Encargado
-    $('#encargado').change(function () {
-        tablaSolicitud.draw();
-    });
+            // Aplicar filtro por Encargado
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                    let tipoEncargado = $('#encargado').val();
+                    let tipoEncargadoData = data[4]; // Índice de la columna 'Encargado'
 
-    // Filtro por Responsable
-    $('#responsable').change(function () {
-        tablaSolicitud.draw();
-    });
+                    if (tipoEncargado === '' || tipoEncargadoData === tipoEncargado) {
+                        return true;
+                    }
+                    return false;
+                }
+            );
 
-    // Filtro por Tipo de Solicitud
-    $('#tipo-solicitud').change(function () {
-        tablaSolicitud.draw();
-    });
+            // Aplicar filtro por Responsable
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                    let tipoResponsable = $('#responsable').val();
+                    let tipoResponsableData = data[3]; // Índice de la columna 'Responsable'
 
-    // Configuración del botón de filtro de fechas
-    $('.dataTables_filter').append('<button class="btn-filtro" id="btn-filtroFecha"><i class="fa-duotone fa-solid fa-filter"></i></button>');
+                    if (tipoResponsable === '' || tipoResponsableData === tipoResponsable) {
+                        return true;
+                    }
+                    return false;
+                }
+            );
 
-    $('#btn-filtroFecha').click(function () {
-        $('.date-filter').toggle();
-    });
+            // Aplicar filtro por Tipo de Solicitud
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                    let tipoSolicitud = $('#tipo-solicitud').val();
+                    let tipoSolicitudData = data[5]; // Índice de la columna 'SOLICITUD'
 
-    // Aplicar filtro por Encargado
-    $.fn.dataTable.ext.search.push(
-        function (settings, data, dataIndex) {
-            let tipoEncargado = $('#encargado').val();
-            let tipoEncargadoData = data[4]; // Índice de la columna 'Encargado'
+                    if (tipoSolicitud === '' || tipoSolicitudData === tipoSolicitud) {
+                        return true;
+                    }
+                    return false;
+                }
+            );
 
-            if (tipoEncargado === '' || tipoEncargadoData === tipoEncargado) {
-                return true;
-            }
-            return false;
-        }
-    );
+            // Aplicar filtro por cambio
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                    let tipoCambio = $('#cambio').val();
+                    let tipoCambioData = data[2]; // Índice de la columna 'Cambio'
 
-    // Aplicar filtro por Responsable
-    $.fn.dataTable.ext.search.push(
-        function (settings, data, dataIndex) {
-            let tipoResponsable = $('#responsable').val();
-            let tipoResponsableData = data[3]; // Índice de la columna 'Responsable'
-
-            if (tipoResponsable === '' || tipoResponsableData === tipoResponsable) {
-                return true;
-            }
-            return false;
-        }
-    );
-
-    // Aplicar filtro por Tipo de Solicitud
-    $.fn.dataTable.ext.search.push(
-        function (settings, data, dataIndex) {
-            let tipoSolicitud = $('#tipo-solicitud').val();
-            let tipoSolicitudData = data[5]; // Índice de la columna 'SOLICITUD'
-
-            if (tipoSolicitud === '' || tipoSolicitudData === tipoSolicitud) {
-                return true;
-            }
-            return false;
-        }
-    );
-});
+                    if (tipoCambio === '' || tipoCambioData === tipoCambio) {
+                        return true;
+                    }
+                    return false;
+                }
+            );
+        });
 
     </script>
 </body>
