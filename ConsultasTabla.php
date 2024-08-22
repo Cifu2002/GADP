@@ -1,6 +1,5 @@
 <?php
 include_once("conexion.php");
-
 class ConsultasTabla
 {
     public static function obtenerDatosTabla()
@@ -9,16 +8,21 @@ class ConsultasTabla
             // Obtener la conexión
             $conexion = Conexion::getInstance()->getConexion();
 
-            // Consulta SQL para obtener los datos solo de SOLICITUDMANTSISTEMAS
+            // Consulta SQL para obtener los datos de las tablas SOLICITUDMANTSISTEMAS y MANTSISTEMASCAMBIOS
             $consulta = "
                 SELECT 
-                    SOL_ID AS ID, 
-                    SOL_ENCARGADO AS ENCARGADO, 
-                    SOL_RESPONSABLEBIEN AS RESPONSABLE, 
-                    SOL_TIPOSOLICITUD AS SOLICITUD, 
-                    TO_CHAR(SOL_FECSOLICITUD, 'DD-MM-YYYY') AS FECHA
+                    s.SOL_ID AS ID, 
+                    s.SOL_ENCARGADO AS ENCARGADO, 
+                    s.SOL_RESPONSABLEBIEN AS RESPONSABLE, 
+                    s.SOL_TIPOSOLICITUD AS SOLICITUD, 
+                    s.SOL_FECSOLICITUD AS FECHA,
+                    c.CAMB_NOM_COMP AS CAMBIO_NOMBRE_COMPONENTE
                 FROM 
-                    SOLICITUDMANTSISTEMAS";
+                    SOLICITUDMANTSISTEMAS s
+                LEFT JOIN 
+                    MANTSISTEMASCAMBIOS c
+                ON 
+                    s.SOL_ID = c.SOL_ID";
 
             // Preparar y ejecutar la consulta
             $stid = oci_parse($conexion, $consulta);
@@ -29,7 +33,14 @@ class ConsultasTabla
 
             // Recorrer los resultados de la consulta
             while ($fila = oci_fetch_assoc($stid)) {
-                $resultados[] = $fila;
+                $resultados[] = [
+                    'ID' => $fila['ID'],
+                    'ENCARGADO' => $fila['ENCARGADO'],
+                    'RESPONSABLE' => $fila['RESPONSABLE'],
+                    'SOLICITUD' => $fila['SOLICITUD'],
+                    'FECHA' => $fila['FECHA'],
+                    'CAMBIO_NOMBRE_COMPONENTE' => $fila['CAMBIO_NOMBRE_COMPONENTE']
+                ];
             }
 
             // Liberar los recursos y cerrar la conexión
