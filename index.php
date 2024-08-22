@@ -486,8 +486,8 @@ if (!empty($mac)) {
             mensaje.innerText = '';  // Inicialmente sin mensaje
 
             var tiempoEnMinutos = (parseInt(hora) * 60) + parseInt(minutos);
-            var tiempoMinimo = (9 * 60) + 30;  // 9:30 AM
-    var tiempoMaximo = (17 * 60);      // 5:00 PM
+            var tiempoMinimo = (8 * 60) + 40;  // 9:30 AM
+            var tiempoMaximo = (17 * 60);      // 5:00 PM
             alert("sd");
             if (tiempoEnMinutos < tiempoMinimo || tiempoEnMinutos > tiempoMaximo) {
                 mensaje.innerText = 'El horario de atención es de 7:30 a 17:00';
