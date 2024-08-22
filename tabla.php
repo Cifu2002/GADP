@@ -36,40 +36,40 @@
                             <label for="max-date">Fecha Fin:</label>
                             <input type="date" id="max-date">
 
-                            <div style="display: flex; gap: 10px; align-items: flex-start;">
-                                <!-- Encargado -->
-                                <div>
-                                    <label for="encargado">Encargado:</label>
-                                    <select id="encargado" class="form-control">
-                                        <option value="">Todos</option>
-                                        <!-- Opciones serán agregadas dinámicamente -->
-                                    </select>
-                                </div>
-                                <!-- Responsable -->
-                                <div>
-                                    <label for="responsable">Responsable:</label>
-                                    <select id="responsable" class="form-control">
-                                        <option value="">Todos</option>
-                                        <!-- Opciones serán agregadas dinámicamente -->
-                                    </select>
-                                </div>
-                                <!-- Tipos de solicitud -->
-                                <div>
-                                    <label for="tipo-solicitud">Tipo de Solicitud:</label>
-                                    <select id="tipo-solicitud" class="form-control">
-                                        <option value="">Todos</option>
-                                        <!-- Opciones serán agregadas dinámicamente -->
-                                    </select>
-                                </div>
-                                <!-- Cambio -->
-                                <div>
-                                    <label for="cambio">Cambio:</label>
-                                    <select id="cambio" class="form-control">
-                                        <option value="">Todos</option>
-                                        <!-- Opciones serán agregadas dinámicamente -->
-                                    </select>
-                                </div>
-                            </div>
+                            <div style="display: flex; justify-content: center; gap: 10px; align-items: flex-start; margin: 20px 0;">
+    <!-- Encargado -->
+    <div>
+        <label for="encargado">Encargado:</label>
+        <select id="encargado" class="form-control">
+            <option value="">Todos</option>
+            <!-- Opciones serán agregadas dinámicamente -->
+        </select>
+    </div>
+    <!-- Responsable -->
+    <div>
+        <label for="responsable">Responsable:</label>
+        <select id="responsable" class="form-control">
+            <option value="">Todos</option>
+            <!-- Opciones serán agregadas dinámicamente -->
+        </select>
+    </div>
+    <!-- Tipos de solicitud -->
+    <div>
+        <label for="tipo-solicitud">Tipo de Solicitud:</label>
+        <select id="tipo-solicitud" class="form-control">
+            <option value="">Todos</option>
+            <!-- Opciones serán agregadas dinámicamente -->
+        </select>
+    </div>
+    <!-- Cambio -->
+    <div>
+        <label for="cambio">Cambio:</label>
+        <select id="cambio" class="form-control">
+            <option value="">Todos</option>
+            <!-- Opciones serán agregadas dinámicamente -->
+        </select>
+    </div>
+</div>
 
                         </div>
 
