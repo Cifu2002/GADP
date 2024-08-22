@@ -36,7 +36,7 @@
                             <label for="max-date">Fecha Fin:</label>
                             <input type="date" id="max-date">
 
-                            <div>
+                            <div style="display: flex; gap: 10px; align-items: flex-start;">
                                 <!-- Encargado -->
                                 <div>
                                     <label for="encargado">Encargado:</label>
@@ -70,6 +70,7 @@
                                     </select>
                                 </div>
                             </div>
+
                         </div>
 
 
