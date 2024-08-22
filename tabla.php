@@ -24,8 +24,8 @@
 
     <div class="content-wrapper contenedor-principal">
         <div class="container-fluid py-4">
-            <a href="http://localhost/GAD/mac/index.php"><button type="button" class="btn btn-primary btn-sm agregar"><i
-                        class="fa-solid fa-plus icono-agregar" style="color: #ffffff;"></i> Nueva Solicitud</button></a>
+            <!-- <a href="http://localhost/GAD/mac/index.php"><button type="button" class="btn btn-primary btn-sm agregar"><i
+                        class="fa-solid fa-plus icono-agregar" style="color: #ffffff;"></i> Nueva Solicitud</button></a> -->
             <div class="card shadow mb-4 contenedor">
                 <div class="card-body">
                     <div class="table-responsive tabla">
@@ -35,6 +35,13 @@
                             <input type="date" id="min-date">
                             <label for="max-date">Fecha Fin:</label>
                             <input type="date" id="max-date">
+
+                            <!-- Agrega el nuevo filtro aquí -->
+                            <label for="tipo-solicitud">Tipo de Solicitud:</label>
+                            <select id="tipo-solicitud" class="form-control">
+                                <option value="">Todos</option>
+                                <!-- Opciones serán agregadas dinámicamente -->
+                            </select>
                         </div>
                         <table class="table table-bordered table-hover table-striped" id="tablaSolicitud" width="100%"
                             cellspacing="0">
@@ -49,7 +56,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                
+
                             </tbody>
                             <tfoot>
                                 <tr>
@@ -69,70 +76,107 @@
     </div>
     <script>
         $(document).ready(function () {
-    let tablaSolicitud = $("#tablaSolicitud").DataTable({
-        dom: '<"d-flex flex-row justify-content-between"lf>rtip',
-        language: {
-            "decimal": "",
-            "emptyTable": "No hay información",
-            "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
-            "infoEmpty": "Mostrando 0 a 0 de 0 entradas",
-            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-            "infoPostFix": "",
-            "thousands": ",",
-            "lengthMenu": "Mostrar _MENU_ registros por página",
-            "loadingRecords": "Cargando...",
-            "processing": "Procesando...",
-            "search": "Buscar:",
-            "zeroRecords": "Sin resultados encontrados",
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            }
-        },
-        ajax: {
-            url: 'RestTabla.php', // Cambia esta URL por la ruta a tu archivo PHP
-            type: 'GET',  // Cambiado a GET para obtener datos
-            dataSrc: '' // DataTables espera un array de objetos en la respuesta
-        },
-        columns: [
-            { data: 'FECHA' },    // Columna Fecha de solicitud
-            { data: 'ID' },       // Columna ID
-            { data: 'CAMBIO_NOMBRE_COMPONENTE' },  // Columna Cambio
-            { data: 'RESPONSABLE' },   // Columna Responsable
-            { data: 'ENCARGADO' },     // Columna Encargado
-            { data: 'SOLICITUD' }   // Columna Tipo de solicitud
-        ]
-    });
+            let tablaSolicitud = $("#tablaSolicitud").DataTable({
+                dom: '<"d-flex flex-row justify-content-between"lf>rtip',
+                language: {
+                    "decimal": "",
+                    "emptyTable": "No hay información",
+                    "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+                    "infoEmpty": "Mostrando 0 a 0 de 0 entradas",
+                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+                    "infoPostFix": "",
+                    "thousands": ",",
+                    "lengthMenu": "Mostrar _MENU_ registros por página",
+                    "loadingRecords": "Cargando...",
+                    "processing": "Procesando...",
+                    "search": "Buscar:",
+                    "zeroRecords": "Sin resultados encontrados",
+                    "paginate": {
+                        "first": "Primero",
+                        "last": "Último",
+                        "next": "Siguiente",
+                        "previous": "Anterior"
+                    }
+                },
+                /* Cargar datos de la tabla */
+                ajax: {
+                    url: 'RestTabla.php',
+                    type: 'GET',
+                    dataSrc: function (json) {
+                        // Poblamos el select con los tipos de solicitud únicos
+                        let tiposSolicitud = [];
+                        json.forEach(row => {
+                            if (!tiposSolicitud.includes(row.SOLICITUD)) {
+                                tiposSolicitud.push(row.SOLICITUD);
+                            }
+                        });
 
-    // Filtro por fechas (mantén tu lógica de filtro)
-    $.fn.dataTable.ext.search.push(
-        function (settings, data, dataIndex) {
-            let min = $('#min-date').val();
-            let max = $('#max-date').val();
-            let date = new Date(data[0].split('-').reverse().join('-'));
+                        let select = $('#tipo-solicitud');
+                        select.empty().append('<option value="">Todos</option>');
+                        tiposSolicitud.forEach(tipo => {
+                            select.append(`<option value="${tipo}">${tipo}</option>`);
+                        });
 
-            if (
-                (min === '' || new Date(min) <= date) &&
-                (max === '' || date <= new Date(max))
-            ) {
-                return true;
-            }
-            return false;
-        }
-    );
+                        return json;
+                    }
+                },
+                columns: [
+                    { data: 'FECHA' },    // Columna Fecha de solicitud
+                    { data: 'ID' },       // Columna ID
+                    { data: 'CAMBIO_NOMBRE_COMPONENTE' },  // Columna Cambio
+                    { data: 'RESPONSABLE' },   // Columna Responsable
+                    { data: 'ENCARGADO' },     // Columna Encargado
+                    { data: 'SOLICITUD' }   // Columna Tipo de solicitud
+                ]
+            });
 
-    $('#min-date, #max-date').change(function () {
-        tablaSolicitud.draw();
-    });
+            // Filtro por fechas
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                    let min = $('#min-date').val();
+                    let max = $('#max-date').val();
+                    let date = new Date(data[0].split('-').reverse().join('-'));
 
-    $('.dataTables_filter').append('<button class="btn-filtro" id="btn-filtroFecha"><i class="fa-duotone fa-solid fa-filter"></i></button>');
+                    if (
+                        (min === '' || new Date(min) <= date) &&
+                        (max === '' || date <= new Date(max))
+                    ) {
+                        return true;
+                    }
+                    return false;
+                }
+            );
 
-    $('#btn-filtroFecha').click(function () {
-        $('.date-filter').toggle();
-    });
-});
+            $('#min-date, #max-date').change(function () {
+                tablaSolicitud.draw();
+            });
+
+            // Filtro por tipo de solicitud
+            $('#tipo-solicitud').change(function () {
+                tablaSolicitud.draw();
+            });
+
+            // Configuración del botón de filtro de fechas
+            $('.dataTables_filter').append('<button class="btn-filtro" id="btn-filtroFecha"><i class="fa-duotone fa-solid fa-filter"></i></button>');
+
+            $('#btn-filtroFecha').click(function () {
+                $('.date-filter').toggle();
+            });
+
+            // Aplicar el filtro de tipo de solicitud
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                    let tipoSolicitud = $('#tipo-solicitud').val();
+                    let tipoSolicitudData = data[5]; // Índice de la columna 'SOLICITUD'
+
+                    if (tipoSolicitud === '' || tipoSolicitudData === tipoSolicitud) {
+                        return true;
+                    }
+                    return false;
+                }
+            );
+        });
+
 
     </script>
 </body>
