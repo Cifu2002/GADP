@@ -1,5 +1,6 @@
 <?php
 include_once("conexion.php");
+
 class ConsultasTabla
 {
     public static function obtenerDatosTabla()
@@ -15,7 +16,7 @@ class ConsultasTabla
                     s.SOL_ENCARGADO AS ENCARGADO, 
                     s.SOL_RESPONSABLEBIEN AS RESPONSABLE, 
                     s.SOL_TIPOSOLICITUD AS SOLICITUD, 
-                    s.SOL_FECSOLICITUD AS FECHA,
+                    TO_CHAR(s.SOL_FECSOLICITUD, 'DD-MM-YYYY') AS FECHA,
                     c.CAMB_NOM_COMP AS CAMBIO_NOMBRE_COMPONENTE
                 FROM 
                     SOLICITUDMANTSISTEMAS s
