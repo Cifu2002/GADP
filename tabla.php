@@ -49,7 +49,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-
+                                
                             </tbody>
                             <tfoot>
                                 <tr>
@@ -69,70 +69,71 @@
     </div>
     <script>
         $(document).ready(function () {
-            let tablaSolicitud = $("#tablaSolicitud").DataTable({
-                dom: '<"d-flex flex-row justify-content-between"lf>rtip',
-                language: {
-                    "decimal": "",
-                    "emptyTable": "No hay información",
-                    "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
-                    "infoEmpty": "Mostrando 0 to 0 of 0 entradas",
-                    "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-                    "infoPostFix": "",
-                    "thousands": ",",
-                    "lengthMenu": "Mostrar _MENU_ registros por página",
-                    "loadingRecords": "Cargando...",
-                    "processing": "Procesando...",
-                    "search": "Buscar:",
-                    "zeroRecords": "Sin resultados encontrados",
-                    "paginate": {
-                        "first": "Primero",
-                        "last": "Último",
-                        "next": "Siguiente",
-                        "previous": "Anterior"
-                    }
-                },
-                ajax: {
-                    url: 'ruta_al_archivo_php_que_contiene_la_funcion', // Cambia esta URL por la ruta a tu archivo PHP
-                    type: 'POST',
-                    dataSrc: '' // DataTables espera un array de objetos en la respuesta
-                },
-                columns: [
-                    { data: 'FECHA' },    // Columna Fecha de solicitud
-                    { data: 'ID' },       // Columna ID
-                    { data: 'CAMBIO_NOMBRE_COMPONENTE' },  // Columna Cambio
-                    { data: 'RESPONSABLE' },   // Columna Responsable
-                    { data: 'ENCARGADO' },     // Columna Encargado
-                    { data: 'SOLICITUD' }   // Columna Tipo de solicitud
-                ]
-            });
+    let tablaSolicitud = $("#tablaSolicitud").DataTable({
+        dom: '<"d-flex flex-row justify-content-between"lf>rtip',
+        language: {
+            "decimal": "",
+            "emptyTable": "No hay información",
+            "info": "Mostrando _START_ a _END_ de _TOTAL_ entradas",
+            "infoEmpty": "Mostrando 0 a 0 de 0 entradas",
+            "infoFiltered": "(Filtrado de _MAX_ total entradas)",
+            "infoPostFix": "",
+            "thousands": ",",
+            "lengthMenu": "Mostrar _MENU_ registros por página",
+            "loadingRecords": "Cargando...",
+            "processing": "Procesando...",
+            "search": "Buscar:",
+            "zeroRecords": "Sin resultados encontrados",
+            "paginate": {
+                "first": "Primero",
+                "last": "Último",
+                "next": "Siguiente",
+                "previous": "Anterior"
+            }
+        },
+        ajax: {
+            url: 'RestTabla.php', // Cambia esta URL por la ruta a tu archivo PHP
+            type: 'GET',  // Cambiado a GET para obtener datos
+            dataSrc: '' // DataTables espera un array de objetos en la respuesta
+        },
+        columns: [
+            { data: 'FECHA' },    // Columna Fecha de solicitud
+            { data: 'ID' },       // Columna ID
+            { data: 'CAMBIO_NOMBRE_COMPONENTE' },  // Columna Cambio
+            { data: 'RESPONSABLE' },   // Columna Responsable
+            { data: 'ENCARGADO' },     // Columna Encargado
+            { data: 'SOLICITUD' }   // Columna Tipo de solicitud
+        ]
+    });
 
-            // Filtro por fechas (mantén tu lógica de filtro)
-            $.fn.dataTable.ext.search.push(
-                function (settings, data, dataIndex) {
-                    let min = $('#min-date').val();
-                    let max = $('#max-date').val();
-                    let date = new Date(data[0].split('-').reverse().join('-'));
+    // Filtro por fechas (mantén tu lógica de filtro)
+    $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+            let min = $('#min-date').val();
+            let max = $('#max-date').val();
+            let date = new Date(data[0].split('-').reverse().join('-'));
 
-                    if (
-                        (min === '' || new Date(min) <= date) &&
-                        (max === '' || date <= new Date(max))
-                    ) {
-                        return true;
-                    }
-                    return false;
-                }
-            );
+            if (
+                (min === '' || new Date(min) <= date) &&
+                (max === '' || date <= new Date(max))
+            ) {
+                return true;
+            }
+            return false;
+        }
+    );
 
-            $('#min-date, #max-date').change(function () {
-                tablaSolicitud.draw();
-            });
+    $('#min-date, #max-date').change(function () {
+        tablaSolicitud.draw();
+    });
 
-            $('.dataTables_filter').append('<button class="btn-filtro" id="btn-filtroFecha"><i class="fa-duotone fa-solid fa-filter"></i></button>');
+    $('.dataTables_filter').append('<button class="btn-filtro" id="btn-filtroFecha"><i class="fa-duotone fa-solid fa-filter"></i></button>');
 
-            $('#btn-filtroFecha').click(function () {
-                $('.date-filter').toggle();
-            });
-        });
+    $('#btn-filtroFecha').click(function () {
+        $('.date-filter').toggle();
+    });
+});
+
     </script>
 </body>
 
