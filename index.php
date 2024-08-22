@@ -465,7 +465,7 @@ if (!empty($mac)) {
             });
 
             /*Controlador de hora*/
-            /* $("#hora").on('input', function (event) {
+            $("#hora").on('input', function (event) {
                 var valor = $(this).val();
                 var mensaje = document.getElementById('hora-mensaje');
                 mensaje.innerText = '';
@@ -478,21 +478,7 @@ if (!empty($mac)) {
                     mensaje.innerText = 'El horario de atencion es de 7:30 a 17:00';
                     event.preventDefault();
                 }
-            }); */
-
-
-            /* Validar horario de atención */
-            var mensaje = document.getElementById('hora-mensaje');
-            mensaje.innerText = '';  // Inicialmente sin mensaje
-
-            var tiempoEnMinutos = (parseInt(hora) * 60) + parseInt(minutos);
-            var tiempoMinimo = (10 * 60) + 30;
-            var tiempoMaximo = (17 * 60);
-            alert(mensaje);
-            if (tiempoEnMinutos < tiempoMinimo || tiempoEnMinutos > tiempoMaximo) {
-                mensaje.innerText = 'El horario de atención es de 7:30 a 17:00';
-            }
-            alert(mensaje);
+            });
 
             $("#horaF").on('input', function (event) {
                 var valor = $(this).val();
@@ -501,7 +487,7 @@ if (!empty($mac)) {
                 var hora = parseInt(valor.split(':')[0]);
                 var minutos = parseInt(valor.split(':')[1]);
                 var tiempoEnMinutos = (hora * 60) + minutos;
-                var tiempoMinimo = (9 * 60) + 30;
+                var tiempoMinimo = (7 * 60) + 30;
                 var tiempoMaximo = (17 * 60);
                 if (tiempoEnMinutos < tiempoMinimo || tiempoEnMinutos > tiempoMaximo) {
                     mensaje.innerText = 'El horario de atencion es de 7:30 a 17:00';
