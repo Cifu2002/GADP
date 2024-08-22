@@ -14,7 +14,7 @@ class ConsultasTabla
                 SELECT 
                     SOL_ID AS ID, 
                     SOL_ENCARGADO AS ENCARGADO, 
-                    SOL_RESBONSABLEBIEN AS RESPONSABLE, 
+                    SOL_RESPONSABLEBIEN AS RESPONSABLE, 
                     SOL_TIPOSOLICITUD AS SOLICITUD, 
                     TO_CHAR(SOL_FECSOLICITUD, 'DD-MM-YYYY') AS FECHA
                 FROM 
