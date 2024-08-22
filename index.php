@@ -465,7 +465,7 @@ if (!empty($mac)) {
             });
 
             /*Controlador de hora*/
-            $("#hora").on('input', function (event) {
+            /* $("#hora").on('input', function (event) {
                 var valor = $(this).val();
                 var mensaje = document.getElementById('hora-mensaje');
                 mensaje.innerText = '';
@@ -478,7 +478,21 @@ if (!empty($mac)) {
                     mensaje.innerText = 'El horario de atencion es de 7:30 a 17:00';
                     event.preventDefault();
                 }
-            });
+            }); */
+
+
+            /* Validar horario de atención */
+            var mensaje = document.getElementById('hora-mensaje');
+            mensaje.innerText = '';  // Inicialmente sin mensaje
+
+            var tiempoEnMinutos = (parseInt(hora) * 60) + parseInt(minutos);
+            var tiempoMinimo = (9 * 60) + 30;  // 9:30 AM
+    var tiempoMaximo = (17 * 60);      // 5:00 PM
+            alert("sd");
+            if (tiempoEnMinutos < tiempoMinimo || tiempoEnMinutos > tiempoMaximo) {
+                mensaje.innerText = 'El horario de atención es de 7:30 a 17:00';
+                alert("si");
+            }
 
             $("#horaF").on('input', function (event) {
                 var valor = $(this).val();
