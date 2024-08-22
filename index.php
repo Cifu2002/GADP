@@ -501,7 +501,7 @@ if (!empty($mac)) {
                 var hora = parseInt(valor.split(':')[0]);
                 var minutos = parseInt(valor.split(':')[1]);
                 var tiempoEnMinutos = (hora * 60) + minutos;
-                var tiempoMinimo = (7 * 60) + 30;
+                var tiempoMinimo = (9 * 60) + 30;
                 var tiempoMaximo = (17 * 60);
                 if (tiempoEnMinutos < tiempoMinimo || tiempoEnMinutos > tiempoMaximo) {
                     mensaje.innerText = 'El horario de atencion es de 7:30 a 17:00';
