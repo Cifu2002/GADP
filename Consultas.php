@@ -188,7 +188,7 @@ class Consultas
         }
     }
 
-
+    /* Obtener datos por codigo */
     public static function obtenerDatosMacDepartamentoUsuario($pcCodAf): string
     {
         try {
@@ -220,7 +220,7 @@ class Consultas
         }
     }
 
-
+    /* Obtener datos por MAC */
     public static function obtenerDatosporMac($mac)
     {
         try {
@@ -318,6 +318,7 @@ class Consultas
             oci_execute($stid);
             oci_free_statement($stid);
 
+            /* Insertar si es correctiva */
             if ($tipoSolicitud === "Correctiva") {
                 if (is_array($componentes) && !empty($componentes)) {
                     $consulta = "

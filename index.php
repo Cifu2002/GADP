@@ -13,6 +13,7 @@ $valido = false;
 $causa = '';
 $departamentos = Consultas::listarDepartamentos(trim($departamento));
 
+/* Valida que los valores existan en la base de datos*/
 if ($usuario !== null || $departamento !== null || $codigo !== null) {
     if ($usuario !== null && Consultas::validarUsuario((string) $usuario) === null) {
         $valido = false;
@@ -31,6 +32,7 @@ if ($usuario !== null || $departamento !== null || $codigo !== null) {
         }
     }
 
+    /* Si no encuentra el usuario, departamento o codigo del equipo no deja continuar */
     if (!$valido) {
         header("Location: index.php?error=$causa&val=$valido");
         die();
@@ -350,7 +352,7 @@ if (!empty($mac)) {
                 });
             });
 
-            /* CODIGO POR MAC */
+            /* Datos cargados por MAC */
 
             if ($("#mac").val() && porCodigo === false) {
                 let cargarporMac = '<?php echo $mac ?>';
@@ -380,6 +382,7 @@ if (!empty($mac)) {
                         $("#departamento").val(departamentoR);
                         let departamento = $("#departamento").val();
                         let usuario = usuarioR;
+                        /* Cargar usuarios por departamentos */
                         if (departamento && usuario) {
                             op = 2;
                             $.ajax({
@@ -408,6 +411,7 @@ if (!empty($mac)) {
                 });
             }
 
+            /* Cargar datos de usuario por departamento si existe el codigo */
             if ($("#departamento").val() !== "" && porCodigo === true) {
                 let departamento = $("#departamento").val();
                 let usuario = '<?php echo $usuario ?>';
@@ -427,6 +431,7 @@ if (!empty($mac)) {
                     }
                 });
             };
+
             configurarFechaMinima();
             let $esCorrectivo = false;
             /* Inicializar datepicker */
@@ -464,7 +469,7 @@ if (!empty($mac)) {
                 }
             });
 
-            /*Controlador de hora*/
+            /*Controladores de hora*/
             /* $("#hora").on('input', function (event) {
                 var valor = $(this).val();
                 var mensaje = document.getElementById('hora-mensaje');
@@ -483,15 +488,13 @@ if (!empty($mac)) {
 
             /* Validar horario de atención */
             var mensaje = document.getElementById('hora-mensaje');
-            mensaje.innerText = '';  // Inicialmente sin mensaje
+            mensaje.innerText = '';
 
             var tiempoEnMinutos = (parseInt(hora) * 60) + parseInt(minutos);
-            var tiempoMinimo = (8 * 60) + 41;  // 9:30 AM
-            var tiempoMaximo = (17 * 60);      // 5:00 PM
-            alert("sd");
+            var tiempoMinimo = (7 * 60) + 30;
+            var tiempoMaximo = (17 * 60);
             if (tiempoEnMinutos < tiempoMinimo || tiempoEnMinutos > tiempoMaximo) {
                 mensaje.innerText = 'El horario de atención es de 7:30 a 17:00';
-                alert("si");
             }
 
             $("#horaF").on('input', function (event) {
@@ -604,18 +607,21 @@ if (!empty($mac)) {
                 var isChecked = Array.prototype.slice.call(checkboxes).some(function (checkbox) {
                     return checkbox.checked;
                 });
+
+                /* Marcar checkbox obligatorio */
                 if (!isChecked) {
                     enviarMensaje.innerText = 'Por favor, seleccione si la impresora esta funcionando.';
                     event.preventDefault();
                     return;
                 }
 
+                /* Evitar el envio del formulario con alertas */
                 if (detalles.length > 255 || horaMensaje || fechaMensaje || fechaMensajeF || horaMensajeF || ipMensaje) {
                     enviarMensaje.innerText = 'Por favor, corrige los errores en el formulario antes de enviarlo.';
                     event.preventDefault();
                 }
 
-
+                /* Obtener los valores para enviar */
                 codigo = $("#codigoCargar").val();
                 mac = $("#mac").val();
                 ip = $("#ip").val();
@@ -631,6 +637,7 @@ if (!empty($mac)) {
                 cargo = $("#cargo").val();
                 let componentes = [];
 
+                /* Obtener datos de los componentes */
                 $("#componentes-body tr").each(function () {
                     let fila = $(this);
                     let componente = {
@@ -645,7 +652,7 @@ if (!empty($mac)) {
 
                 let cambios = [];
 
-                // Iterar sobre cada fila en el tbody
+                // Obtener datos de los cambios
                 $("#componentes-Cambio-body tr").each(function () {
                     let fila = $(this);
                     let cambio = {
@@ -663,7 +670,6 @@ if (!empty($mac)) {
                 fechaSolicitudF = $("#fechaF").val();
                 horaSolicitudF = $("#horaF").val();
                 impresora = [];
-                op = 1;
                 $("input[name='impresora']:checked").each(function () {
                     impresora.push($(this).val());
                 });
@@ -700,6 +706,7 @@ if (!empty($mac)) {
                                 text: 'Solicitud ingresada con éxito. ID: ' + data.data
                             }).then(function () {
 
+                                /* Pasar datos para la generacion del PDF */
                                 solicitudID = data.data;
 
                                 var url = 'generar.php?op=' +
@@ -724,7 +731,7 @@ if (!empty($mac)) {
                                     '&impresora=' + encodeURIComponent(JSON.stringify(impresora));
                                 window.location.href = url;
 
-                                // Redirigir a index.php después de 2 segundos
+                                // Redirigir a index.php después de 2 segundose generar el PDF
                                 setTimeout(function () {
                                     window.location.href = 'index.php';
                                 }, 2000);
@@ -747,6 +754,7 @@ if (!empty($mac)) {
                 });
             });
 
+            /* Obtener datos del encargado */
             $("#encargado").change(function () {
                 let Encargadoid = $(this).val();
                 $("#encargado option[value='']").remove();
@@ -766,6 +774,7 @@ if (!empty($mac)) {
                 });
             });
 
+            /* Obtener datos de los usuarios del departamento */
             $("#departamento").on('change', function () {
                 $("#departamento option[value='']").remove();
                 let departamento = $(this).val().trim();
@@ -806,8 +815,7 @@ if (!empty($mac)) {
     </script>
 
     <script>
-
-
+        /* Validar el ingreso solo de numeros en el codigo del equipo */
         $("#codigo").on('input', function () {
             this.value = this.value.replace(/[^0-9.]/g, '');
 
@@ -838,6 +846,7 @@ if (!empty($mac)) {
             }
         }
 
+        /* Eliminar fila de los componentes */
         function eliminarFila() {
             var tablaBody = document.getElementById("componentes-body");
             if (tablaBody.rows.length > 1) {
@@ -874,6 +883,7 @@ if (!empty($mac)) {
             inicializarDatePicker();
         }
 
+        /* Eliminar fila de los cambios */
         function eliminarFilaCambios() {
             var tablaBody = document.getElementById("componentes-Cambio-body");
             if (tablaBody.rows.length > 1) {
@@ -881,6 +891,7 @@ if (!empty($mac)) {
             }
         }
 
+        /* Iniciar la fecha en cambios */
         function inicializarDatePicker() {
             $(".date-input").datepicker({
                 loseText: 'Cerrar',

@@ -3,6 +3,7 @@ require('assets/fpdf/fpdf.php');
 
 class PDF extends FPDF
 {
+    /* Generar pdf de la solicitud Preventiva */
     public static function GenerarPDFPreventivo(
         $solicitudID,
         $codigo,
@@ -135,6 +136,7 @@ class PDF extends FPDF
         $pdf->Output('D', 'Asistencia Tecnica ' . $solicitudID . '.pdf');
     }
 
+    /* Generar pdf de la solicitud Correctiva */
     public static function GenerarPDFCorrectivo(
         $solicitudID,
         $codigo,
@@ -216,9 +218,8 @@ class PDF extends FPDF
 
         $maxLength = max(count($componentes), count($cambios));
 
-        // Itera a través de los elementos de los arrays, utilizando $i como índice
         for ($i = 0; $i < $maxLength; $i++) {
-            // Verifica si el índice $i existe en el array $componentes y si 'nombre' no es null o vacío
+            // Verificar si hay componentes
             $componenteNombre = isset($componentes[$i]['nombre']) ? $componentes[$i]['nombre'] : null;
             if ($componenteNombre !== null && trim($componenteNombre) !== '') {
                 $componenteText = '- ' . utf8_decode($componenteNombre);
@@ -226,7 +227,7 @@ class PDF extends FPDF
                 $componenteText = null;
             }
 
-            // Verifica si el índice $i existe en el array $cambios y si 'nombreComponente' y 'fechaCambio' no son null o vacíos
+            // Verificar si hay cambios
             $cambioNombre = isset($cambios[$i]['nombreComponente']) ? $cambios[$i]['nombreComponente'] : null;
             $cambioFecha = isset($cambios[$i]['fechaCambio']) ? $cambios[$i]['fechaCambio'] : null;
             if ($cambioNombre !== null && trim($cambioNombre) !== '' && $cambioFecha !== null && trim($cambioFecha) !== '') {
@@ -235,15 +236,12 @@ class PDF extends FPDF
                 $cambioText = null;
             }
 
-            // Solo imprime si hay texto válido para componentes o cambios
+            // Imprimir si hay texto válido para componentes o cambios
             if ($componenteText || $cambioText) {
                 $pdf->Cell(100, 10, $componenteText ?: '- ', 0, 0, 'L');
                 $pdf->Cell(0, 10, $cambioText ?: '- ', 0, 1, 'L');
             }
         }
-
-
-
 
         // Detalles
         $pdf->SetFont('Arial', 'B', 12);

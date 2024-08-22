@@ -23,15 +23,15 @@ $impresora = isset($_GET['impresora']) ? $_GET['impresora'] : '';
 $componentes = json_decode(isset($_GET['componentes']) ? $_GET['componentes'] : '[]', true);
 $cambios = json_decode(isset($_GET['cambios']) ? $_GET['cambios'] : '[]', true);
 
-// Decodificar los valores JSON
+
 $tipoMantenimiento = json_decode($tipoMantenimiento, true);
 
 $impresora = json_decode($impresora, true);
 $impresoraString = implode(',', $impresora);
 
+/* Generar PDF preventivo */
 if ($tipoSolicitud === 'Preventiva') {
     $tipoMantenimientoString = implode(',', $tipoMantenimiento);
-    // Generar PDF usando la función PDF::GenerarPDFPreventivo
     PDF::GenerarPDFPreventivo(
         $solicitudID,
         $codigo,
@@ -50,8 +50,8 @@ if ($tipoSolicitud === 'Preventiva') {
     );
 }
 
+/* Generar PDF correctivo */
 if ($tipoSolicitud === 'Correctiva') {
-
     PDF::GenerarPDFCorrectivo(
         $solicitudID,
         $codigo,
@@ -70,29 +70,4 @@ if ($tipoSolicitud === 'Correctiva') {
         $cambios
     );
 }
-
-// Ejemplo de cómo podrías utilizar estos valores
-echo "Operación: $op<br>";
-echo "Solicitud ID: $solicitudID<br>";
-echo "Código: $codigo<br>";
-echo "MAC: $mac<br>";
-echo "IP: $ip<br>";
-echo "Tipo de Solicitud: $tipoSolicitud<br>";
-echo "Tipo de Mantenimiento: " . implode(", ", $tipoMantenimiento) . "<br>";
-echo "Responsable del Bien: $responsableBien<br>";
-echo "Departamento: $departamento<br>";
-echo "Cédula: $cedula<br>";
-echo "Cargo: $cargo<br>";
-echo "Encargado: $encargado<br>";
-echo "Componentes: ";
-print_r($componentes);
-echo "<br>Cambios: ";
-print_r($cambios);
-echo "<br>Fecha de Solicitud: $fechaSolicitud<br>";
-echo "Hora de Solicitud: $horaSolicitud<br>";
-echo "Fecha Final: $fechaSolicitudF<br>";
-echo "Hora Final: $horaSolicitudF<br>";
-echo "Detalles: $detalles<br>";
-echo "Impresora: " . implode(", ", $impresora) . "<br>";
-echo "Detalles: $impresora<br>";
 ?>
