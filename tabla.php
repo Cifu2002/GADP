@@ -17,51 +17,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
         integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        .contenedor {
-            border-radius: 10px;
-        }
-
-        .agregar {
-            background-color: #2e8b57;
-            border-radius: 7px;
-            margin-bottom: 10px;
-            border: #29764a;
-        }
-
-        .agregar:hover {
-            background-color: #29764a;
-        }
-
-        .date-filter {
-            margin-bottom: 10px;
-        }
-
-        .btn-filtro {
-            border-radius: 5px;
-            margin-left: 3px;
-            border: 1px solid #ced4da;
-            height: 31px;
-            background-color: white;
-        }
-
-        .date-filter {
-            display: none;
-            text-align: center;
-        }
-
-        .date-filter input {
-            margin-bottom: 10px;
-            border-radius: 5px;
-            padding: 5px;
-            border: 1px solid #ced4da;
-        }
-
-        .contenedor-principal {
-            border: 1px solid #ced4da;
-            border-radius: 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/tabla.css">
 </head>
 
 <body>
@@ -85,126 +41,23 @@
                             <thead>
                                 <tr>
                                     <th>Fecha de solicitud</th>
-                                    <th>Mac</th>
-                                    <th>IP</th>
+                                    <th>ID</th>
+                                    <th>Cambio</th>
+                                    <th>Responsable</th>
+                                    <th>Encargado</th>
                                     <th>Tipo de solicitud</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>23-07-2024</td>
-                                    <td>mac</td>
-                                    <td>ip</td>
-                                    <td>Preventiva</td>
-                                </tr>
-                                <tr>
-                                    <td>23-07-2024</td>
-                                    <td>mac 1</td>
-                                    <td>ip 2</td>
-                                    <td>Preventiva</td>
-                                </tr>
-                                <tr>
-                                    <td>23-07-2024</td>
-                                    <td>mac</td>
-                                    <td>ip</td>
-                                    <td>Preventiva</td>
-                                </tr>
-                                <tr>
-                                    <td>23-07-2024</td>
-                                    <td>mac 1</td>
-                                    <td>ip 2</td>
-                                    <td>Preventiva</td>
-                                </tr>
-                                <tr>
-                                    <td>23-07-2022</td>
-                                    <td>mac 1</td>
-                                    <td>ip 2</td>
-                                    <td>Preventiva</td>
-                                </tr>
-                                <tr>
-                                    <td>23-07-2024</td>
-                                    <td>mac 1</td>
-                                    <td>ip 2</td>
-                                    <td>Preventiva</td>
-                                </tr>
-                                <tr>
-                                    <td>23-07-2024</td>
-                                    <td>mac</td>
-                                    <td>ip</td>
-                                    <td>Preventiva</td>
-                                </tr>
-                                <tr>
-                                    <td>23-07-2024</td>
-                                    <td>mac 1</td>
-                                    <td>ip 2</td>
-                                    <td>Preventiva</td>
-                                </tr>
-                                <tr>
-                                    <td>23-07-2024</td>
-                                    <td>mac</td>
-                                    <td>ip</td>
-                                    <td>Preventiva</td>
-                                </tr>
-                                <tr>
-                                    <td>23-07-2024</td>
-                                    <td>mac 1</td>
-                                    <td>ip 2</td>
-                                    <td>Preventiva</td>
-                                </tr>
-                                <tr>
-                                    <td>23-07-2024</td>
-                                    <td>mac 1</td>
-                                    <td>ip 2</td>
-                                    <td>Preventiva</td>
-                                </tr>
-                                <tr>
-                                    <td>23-07-2024</td>
-                                    <td>mac 1</td>
-                                    <td>ip 2</td>
-                                    <td>Preventiva</td>
-                                </tr>
-                                <tr>
-                                    <td>23-07-2024</td>
-                                    <td>mac</td>
-                                    <td>ip</td>
-                                    <td>Preventiva</td>
-                                </tr>
-                                <tr>
-                                    <td>23-07-2024</td>
-                                    <td>mac 1</td>
-                                    <td>ip 2</td>
-                                    <td>Preventiva</td>
-                                </tr>
-                                <tr>
-                                    <td>23-07-2024</td>
-                                    <td>mac</td>
-                                    <td>ip</td>
-                                    <td>Preventiva</td>
-                                </tr>
-                                <tr>
-                                    <td>23-07-2024</td>
-                                    <td>mac 1</td>
-                                    <td>ip 2</td>
-                                    <td>Preventiva</td>
-                                </tr>
-                                <tr>
-                                    <td>23-07-2024</td>
-                                    <td>mac 1</td>
-                                    <td>ip 2</td>
-                                    <td>Preventiva</td>
-                                </tr>
-                                <tr>
-                                    <td>23-07-2024</td>
-                                    <td>mac 1</td>
-                                    <td>ip 2</td>
-                                    <td>Preventiva</td>
-                                </tr>
+
                             </tbody>
                             <tfoot>
                                 <tr>
                                     <th>Fecha de solicitud</th>
-                                    <th>Mac</th>
-                                    <th>IP</th>
+                                    <th>ID</th>
+                                    <th>Cambio</th>
+                                    <th>Responsable</th>
+                                    <th>Encargado</th>
                                     <th>Tipo de solicitud</th>
                                 </tr>
                             </tfoot>
@@ -237,10 +90,23 @@
                         "next": "Siguiente",
                         "previous": "Anterior"
                     }
-                }
+                },
+                ajax: {
+                    url: 'ruta_al_archivo_php_que_contiene_la_funcion', // Cambia esta URL por la ruta a tu archivo PHP
+                    type: 'POST',
+                    dataSrc: '' // DataTables espera un array de objetos en la respuesta
+                },
+                columns: [
+                    { data: 'FECHA' },    // Columna Fecha de solicitud
+                    { data: 'ID' },       // Columna ID
+                    { data: 'CAMBIO_NOMBRE_COMPONENTE' },  // Columna Cambio
+                    { data: 'RESPONSABLE' },   // Columna Responsable
+                    { data: 'ENCARGADO' },     // Columna Encargado
+                    { data: 'SOLICITUD' }   // Columna Tipo de solicitud
+                ]
             });
 
-            /* Filtro por fechas */
+            // Filtro por fechas (mantén tu lógica de filtro)
             $.fn.dataTable.ext.search.push(
                 function (settings, data, dataIndex) {
                     let min = $('#min-date').val();
@@ -266,7 +132,6 @@
             $('#btn-filtroFecha').click(function () {
                 $('.date-filter').toggle();
             });
-
         });
     </script>
 </body>

@@ -1,0 +1,43 @@
+.contenedor {
+    border-radius: 10px;
+}
+
+.agregar {
+    background-color: #2e8b57;
+    border-radius: 7px;
+    margin-bottom: 10px;
+    border: #29764a;
+}
+
+.agregar:hover {
+    background-color: #29764a;
+}
+
+.date-filter {
+    margin-bottom: 10px;
+}
+
+.btn-filtro {
+    border-radius: 5px;
+    margin-left: 3px;
+    border: 1px solid #ced4da;
+    height: 31px;
+    background-color: white;
+}
+
+.date-filter {
+    display: none;
+    text-align: center;
+}
+
+.date-filter input {
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding: 5px;
+    border: 1px solid #ced4da;
+}
+
+.contenedor-principal {
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+}
