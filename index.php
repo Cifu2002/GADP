@@ -486,12 +486,13 @@ if (!empty($mac)) {
             mensaje.innerText = '';  // Inicialmente sin mensaje
 
             var tiempoEnMinutos = (parseInt(hora) * 60) + parseInt(minutos);
-            var tiempoMinimo = (9 * 60) + 30;
+            var tiempoMinimo = (10 * 60) + 30;
             var tiempoMaximo = (17 * 60);
-
+            alert(mensaje);
             if (tiempoEnMinutos < tiempoMinimo || tiempoEnMinutos > tiempoMaximo) {
                 mensaje.innerText = 'El horario de atención es de 7:30 a 17:00';
             }
+            alert(mensaje);
 
             $("#horaF").on('input', function (event) {
                 var valor = $(this).val();
