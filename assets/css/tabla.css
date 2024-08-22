@@ -41,3 +41,11 @@
     border: 1px solid #ced4da;
     border-radius: 5px;
 }
+
+.filtros-select {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    align-items: flex-start;
+    margin: 20px 0;
+}
