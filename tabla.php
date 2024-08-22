@@ -80,6 +80,7 @@
                                     <th>Fecha de solicitud</th>
                                     <th>ID</th>
                                     <th>Cambio</th>
+                                    <th>Serie</th>
                                     <th>Responsable</th>
                                     <th>Encargado</th>
                                     <th>Tipo de solicitud</th>
@@ -93,6 +94,7 @@
                                     <th>Fecha de solicitud</th>
                                     <th>ID</th>
                                     <th>Cambio</th>
+                                    <th>Serie</th>
                                     <th>Responsable</th>
                                     <th>Encargado</th>
                                     <th>Tipo de solicitud</th>
@@ -188,6 +190,7 @@
                     { data: 'FECHA' },    // Columna Fecha de solicitud
                     { data: 'ID' },       // Columna ID
                     { data: 'CAMBIO_NOMBRE_COMPONENTE' },  // Columna Cambio
+                    { data: 'SERIE' }, // Serie del componente
                     { data: 'RESPONSABLE' },   // Columna Responsable
                     { data: 'ENCARGADO' },     // Columna Encargado
                     { data: 'SOLICITUD' }   // Columna Tipo de solicitud
@@ -246,7 +249,7 @@
             $.fn.dataTable.ext.search.push(
                 function (settings, data, dataIndex) {
                     let tipoEncargado = $('#encargado').val();
-                    let tipoEncargadoData = data[4]; // Índice de la columna 'Encargado'
+                    let tipoEncargadoData = data[5]; // Índice de la columna 'Encargado'
 
                     if (tipoEncargado === '' || tipoEncargadoData === tipoEncargado) {
                         return true;
@@ -259,7 +262,7 @@
             $.fn.dataTable.ext.search.push(
                 function (settings, data, dataIndex) {
                     let tipoResponsable = $('#responsable').val();
-                    let tipoResponsableData = data[3]; // Índice de la columna 'Responsable'
+                    let tipoResponsableData = data[4]; // Índice de la columna 'Responsable'
 
                     if (tipoResponsable === '' || tipoResponsableData === tipoResponsable) {
                         return true;
@@ -272,7 +275,7 @@
             $.fn.dataTable.ext.search.push(
                 function (settings, data, dataIndex) {
                     let tipoSolicitud = $('#tipo-solicitud').val();
-                    let tipoSolicitudData = data[5]; // Índice de la columna 'SOLICITUD'
+                    let tipoSolicitudData = data[6]; // Índice de la columna 'SOLICITUD'
 
                     if (tipoSolicitud === '' || tipoSolicitudData === tipoSolicitud) {
                         return true;

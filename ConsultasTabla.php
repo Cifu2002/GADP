@@ -18,6 +18,7 @@ class ConsultasTabla
                     s.SOL_TIPOSOLICITUD AS SOLICITUD, 
                     TO_CHAR(s.SOL_FECSOLICITUD, 'DD-MM-YYYY') AS FECHA,
                     c.CAMB_NOM_COMP AS CAMBIO_NOMBRE_COMPONENTE
+                    c.CAMB_SERIE AS SERIE
                 FROM 
                     SOLICITUDMANTSISTEMAS s
                 LEFT JOIN 
@@ -40,7 +41,8 @@ class ConsultasTabla
                     'RESPONSABLE' => $fila['RESPONSABLE'],
                     'SOLICITUD' => $fila['SOLICITUD'],
                     'FECHA' => $fila['FECHA'],
-                    'CAMBIO_NOMBRE_COMPONENTE' => $fila['CAMBIO_NOMBRE_COMPONENTE']
+                    'CAMBIO_NOMBRE_COMPONENTE' => $fila['CAMBIO_NOMBRE_COMPONENTE'],
+                    'SERIE' => $fila['SERIE']
                 ];
             }
 
