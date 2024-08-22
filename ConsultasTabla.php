@@ -17,7 +17,7 @@ class ConsultasTabla
                     s.SOL_RESPONSABLEBIEN AS RESPONSABLE, 
                     s.SOL_TIPOSOLICITUD AS SOLICITUD, 
                     TO_CHAR(s.SOL_FECSOLICITUD, 'DD-MM-YYYY') AS FECHA,
-                    c.CAMB_NOM_COMP AS CAMBIO_NOMBRE_COMPONENTE
+                    c.CAMB_NOM_COMP AS CAMBIO_NOMBRE_COMPONENTE,
                     c.CAMB_SERIE AS SERIE
                 FROM 
                     SOLICITUDMANTSISTEMAS s
