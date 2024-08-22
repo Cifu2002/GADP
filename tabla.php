@@ -150,7 +150,8 @@
                             if (!responsables.includes(row.RESPONSABLE)) {
                                 responsables.push(row.RESPONSABLE);
                             }
-                            if (!cambios.includes(row.CAMBIO_NOMBRE_COMPONENTE)) {
+
+                            if (row.CAMBIO_NOMBRE_COMPONENTE && !cambios.includes(row.CAMBIO_NOMBRE_COMPONENTE)) {
                                 cambios.push(row.CAMBIO_NOMBRE_COMPONENTE);
                             }
                         });
