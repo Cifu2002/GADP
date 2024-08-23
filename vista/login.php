@@ -58,7 +58,7 @@
                         }
 
                         $.ajax({
-                            url: "recibirUsuario.php",
+                            url: "../controlador/recibirUsuario.php",
                             type: "POST",
                             contentType: 'application/json',
                             data: JSON.stringify({
