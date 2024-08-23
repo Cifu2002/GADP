@@ -60,7 +60,8 @@ class Consultas
     {
         try {
             $conexion = Conexion::getInstance()->getConexion();
-            $consulta = "SELECT USUARIO FROM INVENTARIOEQUIPOS WHERE USUARIO = :nombreUsuario";
+            $nombreUsuario=trim($nombreUsuario);
+            $consulta = "SELECT USUARIO FROM INVENTARIOEQUIPOS WHERE TRIM(USUARIO) = :nombreUsuario";
             $stid = oci_parse($conexion, $consulta);
 
             oci_bind_by_name($stid, ':nombreUsuario', $nombreUsuario);
@@ -72,7 +73,7 @@ class Consultas
             oci_free_statement($stid);
             oci_close($conexion);
 
-            return $usuario ? $usuario['USUARIO'] : null;
+            return $usuario ? trim($usuario['USUARIO']) : null;
         } catch (Exception $e) {
             error_log('Error al validar usuario: ' . $e->getMessage());
             return null;
@@ -83,19 +84,20 @@ class Consultas
     {
         try {
             $conexion = Conexion::getInstance()->getConexion();
-            $consulta = "SELECT DEPARTAMENTO FROM INVENTARIOEQUIPOS WHERE DEPARTAMENTO = :departamento";
+            $departamento = trim($departamento);
+            $consulta = "SELECT DEPARTAMENTO FROM INVENTARIOEQUIPOS WHERE TRIM(DEPARTAMENTO) = :departamento";
             $stid = oci_parse($conexion, $consulta);
 
             oci_bind_by_name($stid, ':departamento', $departamento);
 
             oci_execute($stid);
 
-            $departamento = oci_fetch_assoc($stid);
+            $resultado = oci_fetch_assoc($stid);
 
             oci_free_statement($stid);
             oci_close($conexion);
 
-            return $departamento ? $departamento['DEPARTAMENTO'] : null;
+            return $resultado ? trim($resultado['DEPARTAMENTO']) : null;
         } catch (Exception $e) {
             error_log('Error al validar el departamento: ' . $e->getMessage());
             return null;
@@ -106,19 +108,20 @@ class Consultas
     {
         try {
             $conexion = Conexion::getInstance()->getConexion();
-            $consulta = "SELECT PC_COD_AF FROM INVENTARIOEQUIPOS WHERE PC_COD_AF = :codigo";
+            $codigo = trim($codigo);
+            $consulta = "SELECT PC_COD_AF FROM INVENTARIOEQUIPOS WHERE TRIM(PC_COD_AF) = :codigo";
             $stid = oci_parse($conexion, $consulta);
 
             oci_bind_by_name($stid, ':codigo', $codigo);
 
             oci_execute($stid);
 
-            $codigo = oci_fetch_assoc($stid);
+            $resultado = oci_fetch_assoc($stid);
 
             oci_free_statement($stid);
             oci_close($conexion);
 
-            return $codigo ? $codigo['PC_COD_AF'] : null;
+            return $resultado ? trim($resultado['PC_COD_AF']) : null;
         } catch (Exception $e) {
             error_log('Error al validar el codigo: ' . $e->getMessage());
             return null;
