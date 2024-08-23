@@ -1,3 +1,13 @@
+<?php
+include_once('../modelo/Sesion.php');
+$sesion = Sesion::getInstance();
+$nombreUsuario = $sesion->getSesion('usuario_nombre');
+
+if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) {
+    header('Location: login.php');
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 

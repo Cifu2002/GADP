@@ -1,5 +1,13 @@
 <?php
 include_once("modelo/Consultas.php");
+include_once('modelo/Sesion.php');
+$sesion = Sesion::getInstance();
+$nombreUsuario = $sesion->getSesion('usuario_nombre');
+
+if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) {
+    header('Location: vista/login.php');
+    exit();
+}
 $encargados = Consultas::listarEncargados();
 
 
