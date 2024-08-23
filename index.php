@@ -78,6 +78,14 @@ if (!empty($mac)) {
 </head>
 
 <body>
+    <nav class="navbar">
+        <div class="user">
+            <span> <?php echo $nombreUsuario; ?> <i class="fa-solid fa-user" style="color: #ffffff;"></i></span>
+            <div class="dropdown">
+                <a href="../controlador/cerrarSesion.php">Cerrar sesión</a>
+            </div>
+        </div>
+    </nav>
     <div class="container">
         <h1 class="titulo">Formulario de asistencia técnica</h1>
         <img src="assets/images/cantonescudo1.png" alt="Escudo del Cantón" class="corner-image">

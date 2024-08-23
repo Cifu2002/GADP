@@ -21,11 +21,19 @@
 </head>
 
 <body>
-
+    <nav class="navbar">
+        <div class="user">
+            <span> <?php echo $nombreUsuario; ?> <i class="fa-solid fa-user" style="color: #ffffff;"></i></span>
+            <div class="dropdown">
+                <a href="../controlador/cerrarSesion.php">Cerrar sesión</a>
+            </div>
+        </div>
+    </nav>
     <div class="content-wrapper contenedor-principal">
         <div class="container-fluid py-4">
             <a href="http://localhost/GAD/mac/index.php"><button type="button" class="btn btn-primary btn-sm agregar"><i
-                        class="fa-solid fa-plus icono-agregar" style="color: #ffffff;"></i> Generar reportes</button></a>
+                        class="fa-solid fa-plus icono-agregar" style="color: #ffffff;"></i> Generar
+                    reportes</button></a>
             <div class="card shadow mb-4 contenedor">
                 <div class="card-body">
                     <div class="table-responsive tabla">
