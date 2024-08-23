@@ -1,5 +1,5 @@
 <?php
-require('../assets/fpdf/fpdf.php');
+require('assets/fpdf/fpdf.php');
 
 class PDF extends FPDF
 {

@@ -1,6 +1,5 @@
 <?php
-include_once('../modelo/pdf.php');
-
+include_once('pdf.php');
 // Obtener los valores de la URL
 $op = isset($_GET['op']) ? $_GET['op'] : '';
 $solicitudID = isset($_GET['solicitudID']) ? $_GET['solicitudID'] : '';

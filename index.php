@@ -709,8 +709,7 @@ if (!empty($mac)) {
                                 /* Pasar datos para la generacion del PDF */
                                 solicitudID = data.data;
 
-                                var url = 'controlador/generar.php?op=' +
-                                    '&solicitudID=' + encodeURIComponent(solicitudID) +
+                                var url = 'generar.php?&solicitudID=' + encodeURIComponent(solicitudID) +
                                     '&codigo=' + encodeURIComponent(codigo) +
                                     '&mac=' + encodeURIComponent(mac) +
                                     '&ip=' + encodeURIComponent(ip) +
@@ -733,7 +732,7 @@ if (!empty($mac)) {
 
                                 // Redirigir a index.php después de 2 segundose generar el PDF
                                 setTimeout(function () {
-                                    window.location.href = '../index.php';
+                                    window.location.href = 'index.php';
                                 }, 2000);
                             });
                         } else {
