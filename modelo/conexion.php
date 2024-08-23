@@ -17,7 +17,7 @@ class Conexion
                 throw new Exception($e['message']);
             }
         } catch (Exception $e) {
-            header("Location: /vista/respuesta.php");
+            header("Location: respuesta.php");
             exit();
         }
     }
