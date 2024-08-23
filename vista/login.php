@@ -47,8 +47,6 @@
 
                         const usuario = $('#usuario').val();
                         const clave = $('#clave').val();
-                        alert(usuario);
-                        alert(clave);
                         if (usuario === '' || clave === '') {
                             Swal.fire({
                                 icon: 'warning',

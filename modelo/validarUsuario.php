@@ -18,9 +18,9 @@ function validarUsuario($usuario, $clave)
 
     if ($row) {
 
-        $sesion = Sesion::getInstance();
+        /* $sesion = Sesion::getInstance();
         $sesion->setSesion('usuario_id', $row['ID']);
-        $sesion->setSesion('usuario_nombre', $row['NOM_APE']);
+        $sesion->setSesion('usuario_nombre', $row['NOM_APE']); */
 
         oci_free_statement($stmt);
 

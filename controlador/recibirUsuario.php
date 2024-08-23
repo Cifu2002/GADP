@@ -1,6 +1,5 @@
 <?php
 include_once('../modelo/validarUsuario.php');
-include_once('../modelo/conexion.php');
 
 // Verificar que la solicitud es POST
 if ($_SERVER["REQUEST_METHOD"] === 'POST') {
