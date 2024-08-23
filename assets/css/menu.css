@@ -9,18 +9,29 @@ body {
     background-color: #07856D;
     color: white;
     padding: 10px;
+    width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
-    position: relative;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
 }
 
-.navbar .user {
+.nav-left {
+    display: flex;
+    align-items: center;
+}
+
+/* Estilo para el área del usuario y su dropdown */
+.user {
     position: relative;
     cursor: pointer;
 }
 
-.navbar .user .dropdown {
+.user .dropdown {
     display: none;
     position: absolute;
     right: 0;
@@ -33,20 +44,21 @@ body {
     white-space: nowrap;
 }
 
-.navbar .user:hover .dropdown {
+.user:hover .dropdown {
     display: block;
 }
 
-.navbar .user .dropdown a {
+.user .dropdown a {
     display: block;
     padding: 8px 12px;
     text-decoration: none;
     color: black;
 }
 
-.navbar .user .dropdown a:hover {
+.user .dropdown a:hover {
     background-color: #f1f1f1;
 }
+
 
 /* Imagen de las tarjetas */
 .card-img-top {
