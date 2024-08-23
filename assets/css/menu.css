@@ -8,7 +8,7 @@ body {
 .navbar {
     background-color: #07856D;
     color: white;
-    padding: 9px;
+    padding: 10px;
     display: flex;
     justify-content: space-between; /* Alinea el contenido a los extremos */
     align-items: center;

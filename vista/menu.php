@@ -28,7 +28,7 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
 <body>
     <nav class="navbar">
         <div class="nav-left">
-            <i class="fa-solid fa-house" style="color: #ffffff;"></i>
+            <a href="menu.php"><i class="fa-solid fa-house" style="color: #ffffff;"></i></a>
         </div>
         <div class="user">
             <span><?php echo $nombreUsuario; ?> <i class="fa-solid fa-user" style="color: #ffffff;"></i></span>
