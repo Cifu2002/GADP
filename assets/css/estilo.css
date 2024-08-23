@@ -4,10 +4,9 @@ body {
     color: #333;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column; /* Cambio para que el navbar esté centrado en la parte superior */
-    align-items: center;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Barra de navegación */
@@ -15,25 +14,18 @@ body {
     background-color: #07856D;
     color: white;
     padding: 10px;
-    width: 100%; /* Asegura que la barra ocupe todo el ancho disponible */
-    max-width: 1200px; /* Limita el ancho máximo para que no se extienda demasiado */
+    width: 100%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    box-sizing: border-box; /* Incluye el padding en el ancho total */
+    box-sizing: border-box;
+    position: fixed; /* Fija la barra de navegación en la parte superior */
+    top: 0;
+    left: 0;
+    z-index: 1000;
 }
 
-.contenedor {
-    background-color: white; /* O cualquier otro color de fondo que prefieras */
-    width: 100%;
-    max-width: 1200px; /* Ajusta el ancho máximo según tus necesidades */
-    padding: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 20px; /* Espacio entre la barra de navegación y el contenedor */
-    box-sizing: border-box; /* Asegura que el padding se incluya en el ancho total */
-}
-
-/* Estilos para el usuario en la navbar */
+/* Dropdown del usuario */
 .navbar .user {
     position: relative;
     cursor: pointer;
@@ -67,8 +59,7 @@ body {
     background-color: #f1f1f1;
 }
 
-
-
+/* Contenedor centrado */
 .container {
     background-color: white;
     padding: 20px;
@@ -76,9 +67,24 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     max-width: 800px;
     width: 80%;
-    position: relative;
+    margin: auto;
     box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
+
+/* Wrapper para centrar horizontal y verticalmente */
+.wrapper {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 60px; /* Margen para evitar que el contenido quede debajo del navbar */
+}
+
 
 .corner-image {
     position: absolute;
