@@ -60,7 +60,7 @@ body {
 }
 
 /* Contenedor centrado */
-/* .container {
+.container {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
@@ -73,9 +73,9 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-} */
+}
 
-.container {
+/* .container {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
@@ -84,11 +84,8 @@ body {
     width: 80%;
     position: relative;
     box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
+    
+} */
 
 .corner-image {
     position: absolute;
