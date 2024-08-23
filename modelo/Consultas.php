@@ -228,7 +228,7 @@ class Consultas
     {
         try {
             $conexion = Conexion::getInstance()->getConexion();
-            $consulta = "SELECT USUARIO, DEPARTAMENTO, PC_COD_AF FROM INVENTARIOEQUIPOS WHERE MAC = :mac";
+            $consulta = "SELECT USUARIO, DEPARTAMENTO, PC_COD_AF FROM INVENTARIOEQUIPOS WHERE TRIM(MAC) = :mac";
             $stid = oci_parse($conexion, $consulta);
             oci_bind_by_name($stid, ':mac', $mac);
             oci_execute($stid);
