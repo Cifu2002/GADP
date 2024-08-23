@@ -196,7 +196,7 @@ class Consultas
     {
         try {
             $conexion = Conexion::getInstance()->getConexion();
-            $consulta = "SELECT USUARIO, DEPARTAMENTO, MAC FROM INVENTARIOEQUIPOS WHERE PC_COD_AF = :pcCodAf";
+            $consulta = "SELECT USUARIO, DEPARTAMENTO, MAC FROM INVENTARIOEQUIPOS WHERE TRIM(PC_COD_AF) = :pcCodAf";
             $stid = oci_parse($conexion, $consulta);
             oci_bind_by_name($stid, ':pcCodAf', $pcCodAf);
             oci_execute($stid);
@@ -209,8 +209,8 @@ class Consultas
 
             if ($resultado) {
                 return json_encode([
-                    'usuario' => $resultado['USUARIO'] ?? null,
-                    'departamento' => $resultado['DEPARTAMENTO'] ?? null,
+                    'usuario' => trim($resultado['USUARIO'] )?? null,
+                    'departamento' => trim($resultado['DEPARTAMENTO']) ?? null,
                     'mac' => $resultado['MAC'] ?? null
                 ], JSON_UNESCAPED_UNICODE);
             } else {
