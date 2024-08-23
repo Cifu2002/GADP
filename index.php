@@ -94,226 +94,224 @@ if (!empty($mac)) {
             </div>
         </div>
     </nav>
-    <div class="wrapper">
-        <div class="container">
-            <h1 class="titulo">Formulario de asistencia técnica</h1>
-            <img src="assets/images/cantonescudo1.png" alt="Escudo del Cantón" class="corner-image">
-            <?php if (empty($mac) && $valido === false): ?>
-                <div class="form-group">
-                    <input type="text" id="codigo" name="codigo" required>
-                    <button type="button" id="btn-cargar-codigo" class="btn-cargar-codigo">Cargar
-                        por
-                        código</button>
+    <div class="container">
+        <h1 class="titulo">Formulario de asistencia técnica</h1>
+        <img src="assets/images/cantonescudo1.png" alt="Escudo del Cantón" class="corner-image">
+        <?php if (empty($mac) && $valido === false): ?>
+            <div class="form-group">
+                <input type="text" id="codigo" name="codigo" required>
+                <button type="button" id="btn-cargar-codigo" class="btn-cargar-codigo">Cargar
+                    por
+                    código</button>
+            </div>
+        <?php endif; ?>
+        <?php /* if (!empty($mac) && !empty($ip)): */
+        if ($valido === true): ?>
+            <label for="">Código:</label>
+            <input type="text" name="codigoCargar" id="codigoCargar" value="<?php echo htmlspecialchars($codigo); ?>"
+                readonly>
+            <form method="" id="formSolicitud">
+                <div class="form-group-col-2">
+                    <div class="labels">
+                        <label for="mac">Mac de la PC:</label>
+                        <label for="ip">IP de la PC:</label>
+                    </div>
+                    <div class="inputs margen">
+                        <input type="text" id="mac" name="mac" value="<?php echo htmlspecialchars($mac); ?>" readonly>
+                        <input type="text" id="ip" name="ip">
+                    </div>
+                    <div id="ip-mensaje" class="detalle-mensaje"></div>
                 </div>
-            <?php endif; ?>
-            <?php /* if (!empty($mac) && !empty($ip)): */
-            if ($valido === true): ?>
-                <label for="">Código:</label>
-                <input type="text" name="codigoCargar" id="codigoCargar" value="<?php echo htmlspecialchars($codigo); ?>"
-                    readonly>
-                <form method="" id="formSolicitud">
-                    <div class="form-group-col-2">
-                        <div class="labels">
-                            <label for="mac">Mac de la PC:</label>
-                            <label for="ip">IP de la PC:</label>
-                        </div>
-                        <div class="inputs margen">
-                            <input type="text" id="mac" name="mac" value="<?php echo htmlspecialchars($mac); ?>" readonly>
-                            <input type="text" id="ip" name="ip">
-                        </div>
-                        <div id="ip-mensaje" class="detalle-mensaje"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="opcion">Seleccione el tipo de solicitud:</label>
-                        <select id="opcion" name="opcion" required>
-                            <option value="">Seleccione una opción</option>
-                            <option value="Preventiva">Preventiva</option>
-                            <option value="Correctiva">Correctiva</option>
-                        </select>
-                    </div>
+                <div class="form-group">
+                    <label for="opcion">Seleccione el tipo de solicitud:</label>
+                    <select id="opcion" name="opcion" required>
+                        <option value="">Seleccione una opción</option>
+                        <option value="Preventiva">Preventiva</option>
+                        <option value="Correctiva">Correctiva</option>
+                    </select>
+                </div>
 
-                    <div class="form-group">
-                        <label for="opcion">Seleccionar encargado:</label>
-                        <select name="encargado" required id="encargado" required>
+                <div class="form-group">
+                    <label for="opcion">Seleccionar encargado:</label>
+                    <select name="encargado" required id="encargado" required>
+                        <option value="">Seleccione una opción</option>
+                        <?php
+                        echo $encargados;
+                        ?>
+                    </select>
+                </div>
+
+                <div class="form-group-col-2">
+                    <div class="labels">
+                        <label>Datos del Técnico:</label>
+                        <label>Datos del responsable del bien:</label>
+                    </div>
+                    <div class="labels-inputs">
+                        <label for="cedulaTec" class="ocultar">Cédula:</label>
+                        <input type="text" id="cedulaTec" name="cedulaTec" placeholder="Cédula del Técnico" readonly>
+                        <label for="departamento" class="ocultar">Departamento:</label>
+                        <select id="departamento" name="departamento" placeholder="Departamento" required>
                             <option value="">Seleccione una opción</option>
                             <?php
-                            echo $encargados;
+                            echo $departamentos;
                             ?>
                         </select>
                     </div>
+                </div>
 
-                    <div class="form-group-col-2">
-                        <div class="labels">
-                            <label>Datos del Técnico:</label>
-                            <label>Datos del responsable del bien:</label>
-                        </div>
-                        <div class="labels-inputs">
-                            <label for="cedulaTec" class="ocultar">Cédula:</label>
-                            <input type="text" id="cedulaTec" name="cedulaTec" placeholder="Cédula del Técnico" readonly>
-                            <label for="departamento" class="ocultar">Departamento:</label>
-                            <select id="departamento" name="departamento" placeholder="Departamento" required>
-                                <option value="">Seleccione una opción</option>
-                                <?php
-                                echo $departamentos;
-                                ?>
-                            </select>
-                        </div>
-                    </div>
+                <div class="form-group-col-2">
+                    <div class="labels-inputs">
+                        <label for="cargo" class="ocultar">Cargo:</label>
+                        <input type="text" id="cargo" name="cargo" placeholder="Cargo del Técnico" readonly>
+                        <label for="nombresResp" class="ocultar">Nombres:</label>
+                        <select id="responsableBien" name="responsableBien" placeholder="Nombres" required>
+                            <option value="">Seleccione una opción</option>
 
-                    <div class="form-group-col-2">
-                        <div class="labels-inputs">
-                            <label for="cargo" class="ocultar">Cargo:</label>
-                            <input type="text" id="cargo" name="cargo" placeholder="Cargo del Técnico" readonly>
-                            <label for="nombresResp" class="ocultar">Nombres:</label>
-                            <select id="responsableBien" name="responsableBien" placeholder="Nombres" required>
-                                <option value="">Seleccione una opción</option>
-
-                            </select>
-                        </div>
+                        </select>
                     </div>
-                    <!-- PREVENTIVO -->
-                    <div class="tipoOcultar" id="preventivo">
-                        <div class="form-group">
-                            <label for="opcion">Marcar el tipo de mantenimiento:</label>
-                            <div class="form-group-checbox">
-                                <div class="form-group">
-                                    <label for="checkbox1">
-                                        <input type="checkbox" id="software" name="tipoMantenimiento" value="Software">
-                                        Software
-                                    </label>
-                                </div>
-                                <div class="form-group">
-                                    <label for="checkbox2">
-                                        <input type="checkbox" id="hardware" name="tipoMantenimiento" value="Hardware">
-                                        Hardware
-                                    </label>
-                                </div>
-                                <div class="form-group">
-                                    <label for="checkbox3">
-                                        <input type="checkbox" id="ambos" name="tipoMantenimiento" value="Ambos">
-                                        Ambos
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- CORRECTIVO -->
-                    <div class="tipoOcultar" id="correctivo">
-                        <!-- TABLA 1 -->
-                        <div class="form-group-col-2">
-                            <label class="T_tabla">Componentes del bien</label>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Nombre del Componente</th>
-                                        <th>Descripción</th>
-                                        <th>Serie</th>
-                                        <th>Observación</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="componentes-body">
-                                    <tr>
-                                        <td><input type="text" value="1" disabled></td>
-                                        <td><input type="text"></td>
-                                        <td><input type="text"></td>
-                                        <td><input type="text"></td>
-                                        <td><input type="text"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="form-group-2 centrar-btn">
-                                <button class="btn-tabla" type="button" onclick="agregarFila()"><i
-                                        class="fa-solid fa-plus fa-2xl" style="color: #3f9d51;"></i></button>
-                                <button class="btn-tabla" type="button" onclick="eliminarFila()"><i
-                                        class="fa-solid fa-minus fa-2xl" style="color: #d52029;"></i></button>
-                            </div>
-                        </div>
-                        <!-- Tabla 2 -->
-                        <div class="form-group-col-2">
-                            <label class="T_tabla">Cambiamos de los componentes del bien</label>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Fecha Cambio</th>
-                                        <th>Nombre del componente</th>
-                                        <th>Descripción</th>
-                                        <th>Serie</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="componentes-Cambio-body">
-                                    <tr>
-                                        <td><input type="text" value="1" disabled></td>
-                                        <td><input type='text' class="date-input" readonly required /></td>
-                                        <td><input type="text"></td>
-                                        <td><input type="text"></td>
-                                        <td><input type="text"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="form-group-2 centrar-btn">
-                                <button class="btn-tabla" type="button" onclick="agregarFilaCambios()"><i
-                                        class="fa-solid fa-plus fa-2xl" style="color: #3f9d51;"></i></button>
-                                <button class="btn-tabla" type="button" onclick="eliminarFilaCambios()"><i
-                                        class="fa-solid fa-minus fa-2xl" style="color: #d52029;"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Fecha de la solicitud -->
-                    <div class="form-group-2 form-group-col-2">
-                        <div class="labels">
-                            <label for="datetime">Fecha de la solicitud:</label>
-                            <label for="datetime">Hora de la solicitud:</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="date" id="fecha" name="fecha" readonly>
-                            <input type="time" id="hora" name="hora" readonly>
-                        </div>
-                        <div id="hora-mensaje" class="detalle-mensaje"></div>
-                        <div id="fecha-mensaje" class="detalle-mensaje"></div>
-                    </div>
-                    <!-- Fecha de finalizacion -->
-                    <div class="form-group-2 form-group-col-2">
-                        <div class="labels">
-                            <label for="datetime">Fecha de finalización:</label>
-                            <label for="datetime">Hora de finalización:</label>
-                        </div>
-                        <div class="input-group">
-                            <input type="date" id="fechaF" name="fechaF" required>
-                            <input type="time" id="horaF" name="horaF" required>
-                        </div>
-                        <div id="hora-mensajeF" class="detalle-mensaje"></div>
-                        <div id="fecha-mensajeF" class="detalle-mensaje"></div>
-                    </div>
+                </div>
+                <!-- PREVENTIVO -->
+                <div class="tipoOcultar" id="preventivo">
                     <div class="form-group">
-                        <label for="detalles">Detalles:</label>
-                        <textarea id="detalles" name="detalles" rows="4" maxlength="255" required></textarea>
-                        <div id="detalle-mensaje" class="detalle-mensaje"></div>
-                    </div>
-                    <div class="form-group">
-                        <label for="impresora">¿La impresora funciona?</label>
-                        <div class="form-group-checbox-impresora">
+                        <label for="opcion">Marcar el tipo de mantenimiento:</label>
+                        <div class="form-group-checbox">
                             <div class="form-group">
                                 <label for="checkbox1">
-                                    <input type="checkbox" id="funcionaSi" name="impresora" value="Si">
-                                    Si
+                                    <input type="checkbox" id="software" name="tipoMantenimiento" value="Software">
+                                    Software
                                 </label>
                             </div>
                             <div class="form-group">
                                 <label for="checkbox2">
-                                    <input type="checkbox" id="funcionaNo" name="impresora" value="No">
-                                    No
+                                    <input type="checkbox" id="hardware" name="tipoMantenimiento" value="Hardware">
+                                    Hardware
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label for="checkbox3">
+                                    <input type="checkbox" id="ambos" name="tipoMantenimiento" value="Ambos">
+                                    Ambos
                                 </label>
                             </div>
                         </div>
                     </div>
+                </div>
+                <!-- CORRECTIVO -->
+                <div class="tipoOcultar" id="correctivo">
+                    <!-- TABLA 1 -->
+                    <div class="form-group-col-2">
+                        <label class="T_tabla">Componentes del bien</label>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre del Componente</th>
+                                    <th>Descripción</th>
+                                    <th>Serie</th>
+                                    <th>Observación</th>
+                                </tr>
+                            </thead>
+                            <tbody id="componentes-body">
+                                <tr>
+                                    <td><input type="text" value="1" disabled></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="form-group-2 centrar-btn">
+                            <button class="btn-tabla" type="button" onclick="agregarFila()"><i
+                                    class="fa-solid fa-plus fa-2xl" style="color: #3f9d51;"></i></button>
+                            <button class="btn-tabla" type="button" onclick="eliminarFila()"><i
+                                    class="fa-solid fa-minus fa-2xl" style="color: #d52029;"></i></button>
+                        </div>
+                    </div>
+                    <!-- Tabla 2 -->
+                    <div class="form-group-col-2">
+                        <label class="T_tabla">Cambiamos de los componentes del bien</label>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Fecha Cambio</th>
+                                    <th>Nombre del componente</th>
+                                    <th>Descripción</th>
+                                    <th>Serie</th>
+                                </tr>
+                            </thead>
+                            <tbody id="componentes-Cambio-body">
+                                <tr>
+                                    <td><input type="text" value="1" disabled></td>
+                                    <td><input type='text' class="date-input" readonly required /></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="form-group-2 centrar-btn">
+                            <button class="btn-tabla" type="button" onclick="agregarFilaCambios()"><i
+                                    class="fa-solid fa-plus fa-2xl" style="color: #3f9d51;"></i></button>
+                            <button class="btn-tabla" type="button" onclick="eliminarFilaCambios()"><i
+                                    class="fa-solid fa-minus fa-2xl" style="color: #d52029;"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Fecha de la solicitud -->
+                <div class="form-group-2 form-group-col-2">
+                    <div class="labels">
+                        <label for="datetime">Fecha de la solicitud:</label>
+                        <label for="datetime">Hora de la solicitud:</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="date" id="fecha" name="fecha" readonly>
+                        <input type="time" id="hora" name="hora" readonly>
+                    </div>
+                    <div id="hora-mensaje" class="detalle-mensaje"></div>
+                    <div id="fecha-mensaje" class="detalle-mensaje"></div>
+                </div>
+                <!-- Fecha de finalizacion -->
+                <div class="form-group-2 form-group-col-2">
+                    <div class="labels">
+                        <label for="datetime">Fecha de finalización:</label>
+                        <label for="datetime">Hora de finalización:</label>
+                    </div>
+                    <div class="input-group">
+                        <input type="date" id="fechaF" name="fechaF" required>
+                        <input type="time" id="horaF" name="horaF" required>
+                    </div>
+                    <div id="hora-mensajeF" class="detalle-mensaje"></div>
+                    <div id="fecha-mensajeF" class="detalle-mensaje"></div>
+                </div>
+                <div class="form-group">
+                    <label for="detalles">Detalles:</label>
+                    <textarea id="detalles" name="detalles" rows="4" maxlength="255" required></textarea>
+                    <div id="detalle-mensaje" class="detalle-mensaje"></div>
+                </div>
+                <div class="form-group">
+                    <label for="impresora">¿La impresora funciona?</label>
+                    <div class="form-group-checbox-impresora">
+                        <div class="form-group">
+                            <label for="checkbox1">
+                                <input type="checkbox" id="funcionaSi" name="impresora" value="Si">
+                                Si
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="checkbox2">
+                                <input type="checkbox" id="funcionaNo" name="impresora" value="No">
+                                No
+                            </label>
+                        </div>
+                    </div>
+                </div>
 
-                    <div id="submit-mensaje" class="detalle-mensaje"></div>
-                    <input type="submit" value="Enviar">
-                </form>
-            <?php endif; ?>
-        </div>
+                <div id="submit-mensaje" class="detalle-mensaje"></div>
+                <input type="submit" value="Enviar">
+            </form>
+        <?php endif; ?>
     </div>
     <script>
         $(document).ready(function () {
