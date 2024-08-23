@@ -1,0 +1,35 @@
+.contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* background-color: #181818; */
+    background-image: url('../images/tenaren.jpg');
+    background-size: cover; 
+    background-position: center; 
+}
+
+.login-form {
+    width: 100%;
+    max-width: 400px;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.799);
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-form label {
+    font-weight: bold;
+}
+
+.enviar {
+    background-color: #2e8b57;
+    border-color: #45a049;
+    color: white;
+}
+
+.enviar:hover {
+    background-color: #277448;
+    border-color:  #277448;
+    color: white;
+}

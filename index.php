@@ -1,5 +1,5 @@
 <?php
-include_once("Consultas.php");
+include_once("modelo/Consultas.php");
 $encargados = Consultas::listarEncargados();
 
 
@@ -318,7 +318,7 @@ if (!empty($mac)) {
                 }
 
                 $.ajax({
-                    url: "Rest.php",
+                    url: "controlador/Rest.php",
                     type: "GET",
                     data: {
                         op: op,
@@ -358,7 +358,7 @@ if (!empty($mac)) {
                 let cargarporMac = '<?php echo $mac ?>';
                 op = 4;
                 $.ajax({
-                    url: "Rest.php",
+                    url: "controlador/Rest.php",
                     type: "GET",
                     data: {
                         op: op,
@@ -386,7 +386,7 @@ if (!empty($mac)) {
                         if (departamento && usuario) {
                             op = 2;
                             $.ajax({
-                                url: "Rest.php",
+                                url: "controlador/Rest.php",
                                 type: "GET",
                                 data: {
                                     op: op,
@@ -417,7 +417,7 @@ if (!empty($mac)) {
                 let usuario = '<?php echo $usuario ?>';
                 let op = 2;
                 $.ajax({
-                    url: "Rest.php",
+                    url: "controlador/Rest.php",
                     type: "GET",
                     data: {
                         op: op,
@@ -674,7 +674,7 @@ if (!empty($mac)) {
                     impresora.push($(this).val());
                 });
                 $.ajax({
-                    url: "Rest.php",
+                    url: "controlador/Rest.php",
                     type: "POST",
                     contentType: 'application/json',
                     data: JSON.stringify({
@@ -761,7 +761,7 @@ if (!empty($mac)) {
 
                 let op = 1;
                 $.ajax({
-                    url: "Rest.php",
+                    url: "controlador/Rest.php",
                     type: "GET",
                     data: { op: op, encargado_id: Encargadoid },
                     success: function (response) {
@@ -780,7 +780,7 @@ if (!empty($mac)) {
                 let departamento = $(this).val().trim();
                 let op = 2;
                 $.ajax({
-                    url: "Rest.php",
+                    url: "controlador/Rest.php",
                     type: "GET",
                     data: {
                         op: op,
