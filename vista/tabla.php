@@ -15,6 +15,7 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solicitudes</title>
+    <link rel="icon" href="../assets/images/cantonescudo1.png" type="image/x-icon">
     <!-- Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -33,7 +34,7 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
 <body>
     <nav class="navbar">
         <div class="nav-left">
-            <i class="fa-solid fa-house" style="color: #ffffff;"></i>
+            <a href="menu.php"><i class="fa-solid fa-house" style="color: #ffffff;"></i></a>
         </div>
         <div class="user">
             <span><?php echo $nombreUsuario; ?> <i class="fa-solid fa-user" style="color: #ffffff;"></i></span>

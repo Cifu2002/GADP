@@ -14,6 +14,7 @@ if ($sesion->getSesion('usuario_id') && $sesion->getSesion('usuario_nombre')) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="icon" href="../assets/images/cantonescudo1.png" type="image/x-icon">
     <!-- Bootstrap -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"

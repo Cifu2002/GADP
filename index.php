@@ -53,7 +53,7 @@ if (!empty($mac)) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -88,7 +88,7 @@ if (!empty($mac)) {
 <body>
     <nav class="navbar">
         <div class="nav-left">
-            <i class="fa-solid fa-house" style="color: #ffffff;"></i>
+        <a href="vista/menu.php"><i class="fa-solid fa-house" style="color: #ffffff;"></i></a>
         </div>
         <div class="user">
             <span><?php echo $nombreUsuario; ?> <i class="fa-solid fa-user" style="color: #ffffff;"></i></span>
