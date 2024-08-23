@@ -19,7 +19,7 @@ body {
     justify-content: flex-end;
     align-items: center;
     box-sizing: border-box;
-    position: fixed; /* Fija la barra de navegación en la parte superior */
+    position: fixed; 
     top: 0;
     left: 0;
     z-index: 1000;
@@ -59,7 +59,6 @@ body {
     background-color: #f1f1f1;
 }
 
-/* Contenedor centrado */
 /* .container {
     background-color: white;
     padding: 20px;

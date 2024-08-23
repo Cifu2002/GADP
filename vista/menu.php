@@ -27,10 +27,10 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
 
 <body>
     <nav class="navbar">
-        <div class="user">
+        <div class="user"> <i class="fa-solid fa-house" style="color: #ffffff;"></i>
             <span> <?php echo $nombreUsuario; ?> <i class="fa-solid fa-user" style="color: #ffffff;"></i></span>
             <div class="dropdown">
-                <a href="../controlador/cerrarSesion.php">Cerrar sesión</a>
+                <a href="../controlador/cerrarSesion.php"><i class="fa-solid fa-right-from-bracket" style="color: #ffffff;"></i> Cerrar sesión</a>
             </div>
         </div>
     </nav>

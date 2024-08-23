@@ -90,7 +90,7 @@ if (!empty($mac)) {
         <div class="user">
             <span> <?php echo $nombreUsuario; ?> <i class="fa-solid fa-user" style="color: #ffffff;"></i></span>
             <div class="dropdown">
-                <a href="../controlador/cerrarSesion.php">Cerrar sesión</a>
+                <a href="controlador/cerrarSesion.php">Cerrar sesión</a>
             </div>
         </div>
     </nav>
