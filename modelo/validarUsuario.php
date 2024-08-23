@@ -4,10 +4,10 @@ include_once('Sesion.php');
 
 function validarUsuario($usuario, $clave)
 {
-    global $conn;
+    $conexion = Conexion::getInstance()->getConexion();
 
     $consulta = "SELECT * FROM SOLICITUD_USUARIOS WHERE USUARIO = :usuario AND CLAVE = :clave";
-    $stmt = oci_parse($conn, $consulta);
+    $stmt = oci_parse($conexion, $consulta);
 
     oci_bind_by_name($stmt, ':usuario', $usuario);
     oci_bind_by_name($stmt, ':clave', $clave);
@@ -18,9 +18,9 @@ function validarUsuario($usuario, $clave)
 
     if ($row) {
 
-        /* $sesion = Sesion::getInstance();
+        $sesion = Sesion::getInstance();
         $sesion->setSesion('usuario_id', $row['ID']);
-        $sesion->setSesion('usuario_nombre', $row['NOM_APE']); */
+        $sesion->setSesion('usuario_nombre', $row['NOM_APE']);
 
         oci_free_statement($stmt);
 
