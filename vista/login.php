@@ -1,5 +1,5 @@
 <?php
-include_once('../Sesion.php');
+include_once('../modelo/Sesion.php');
 $sesion = Sesion::getInstance();
 
 if ($sesion->getSesion('usuario_id') && $sesion->getSesion('usuario_nombre')) {
