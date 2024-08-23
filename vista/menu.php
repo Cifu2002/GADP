@@ -19,13 +19,16 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="../assets/css/menu.css">
-
+    <!-- Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+        integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
     <nav class="navbar">
         <div class="user">
-            <span> <?php echo $nombreUsuario; ?> </span>
+            <span> <?php echo $nombreUsuario; ?> <i class="fa-solid fa-user" style="color: #ffffff;"></i></span>
             <div class="dropdown">
                 <a href="../controlador/cerrarSesion.php">Cerrar sesión</a>
             </div>
@@ -33,7 +36,6 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
     </nav>
     <div class="container my-5">
         <div class="row">
-            <!-- Tarjeta 1 -->
             <div class="col-md-6 mb-4">
                 <a href="../index.php">
                     <div class="card efectos borde">
@@ -45,7 +47,6 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
                 </a>
             </div>
 
-            <!-- Tarjeta 2 -->
             <div class="col-md-6 mb-4">
                 <a href="tabla.php">
                     <div class="card efectos borde">
