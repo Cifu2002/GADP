@@ -2,13 +2,72 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f0f0f0;
     color: #333;
-    /* margin: 0;
+    margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* Cambio para que el navbar esté centrado en la parte superior */
     align-items: center;
-    min-height: 100vh; */
+    min-height: 100vh;
 }
+
+/* Barra de navegación */
+.navbar {
+    background-color: #07856D;
+    color: white;
+    padding: 10px;
+    width: 100%; /* Asegura que la barra ocupe todo el ancho disponible */
+    max-width: 1200px; /* Limita el ancho máximo para que no se extienda demasiado */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    box-sizing: border-box; /* Incluye el padding en el ancho total */
+}
+
+.contenedor {
+    background-color: white; /* O cualquier otro color de fondo que prefieras */
+    width: 100%;
+    max-width: 1200px; /* Ajusta el ancho máximo según tus necesidades */
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px; /* Espacio entre la barra de navegación y el contenedor */
+    box-sizing: border-box; /* Asegura que el padding se incluya en el ancho total */
+}
+
+/* Estilos para el usuario en la navbar */
+.navbar .user {
+    position: relative;
+    cursor: pointer;
+}
+
+.navbar .user .dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: white;
+    color: black;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    white-space: nowrap;
+}
+
+.navbar .user:hover .dropdown {
+    display: block;
+}
+
+.navbar .user .dropdown a {
+    display: block;
+    padding: 8px 12px;
+    text-decoration: none;
+    color: black;
+}
+
+.navbar .user .dropdown a:hover {
+    background-color: #f1f1f1;
+}
+
+
 
 .container {
     background-color: white;
@@ -378,48 +437,4 @@ td:nth-child(1) input {
     td:nth-child(5) {
         display: none;
     }
-}
-
-/* Barra de navegación */
-.navbar {
-    background-color: #07856D;
-    color: white;
-    padding: 10px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    position: relative;
-}
-
-.navbar .user {
-    position: relative;
-    cursor: pointer;
-}
-
-.navbar .user .dropdown {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: 100%;
-    background-color: white;
-    color: black;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    white-space: nowrap;
-}
-
-.navbar .user:hover .dropdown {
-    display: block;
-}
-
-.navbar .user .dropdown a {
-    display: block;
-    padding: 8px 12px;
-    text-decoration: none;
-    color: black;
-}
-
-.navbar .user .dropdown a:hover {
-    background-color: #f1f1f1;
 }
