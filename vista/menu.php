@@ -41,31 +41,31 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
         </div>
     </nav>
 
-    <div class="container my-5 d-flex align-items-center justify-content-center" style="min-height: 100vh;">
-    <div class="row justify-content-center">
-        <div class="col-md-6 d-flex align-items-center mb-4">
-            <a href="../index.php" class="w-100">
-                <div class="card efectos borde">
-                    <img src="../assets/images/solicitud.jpeg" class="card-img-top" alt="Imagen de Solicitud">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Solicitud</h5>
+    <div class="container my-5" style="height: calc(100vh - 100px);">
+        <div class="row h-100 justify-content-center align-items-center">
+            <div class="col-md-6 mb-4">
+                <a href="../index.php">
+                    <div class="card efectos borde">
+                        <img src="../assets/images/solicitud.jpeg" class="card-img-top" alt="Imagen de Solicitud">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Solicitud</h5>
+                        </div>
                     </div>
-                </div>
-            </a>
-        </div>
+                </a>
+            </div>
 
-        <div class="col-md-6 d-flex align-items-center mb-4">
-            <a href="tabla.php" class="w-100">
-                <div class="card efectos borde">
-                    <img src="../assets/images/reporte.jpg" class="card-img-top" alt="Imagen de Reporte">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Reporte</h5>
+            <div class="col-md-6 mb-4">
+                <a href="tabla.php">
+                    <div class="card efectos borde">
+                        <img src="../assets/images/reporte.jpg" class="card-img-top" alt="Imagen de Reporte">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Reporte</h5>
+                        </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
     </div>
-</div>
 
 
 </body>
