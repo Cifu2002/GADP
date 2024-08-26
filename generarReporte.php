@@ -80,8 +80,6 @@ if (isset($_GET['ids'])) {
                 }
             }
 
-            // Imprime el array $solicitudes para verificar
-            print_r($solicitudes);
 
 
             // Cerrar conexión
