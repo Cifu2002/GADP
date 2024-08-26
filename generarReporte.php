@@ -46,8 +46,6 @@ if (isset($_GET['ids'])) {
             // Inicializar el array de resultados
             $solicitudes = [];
             while ($row = oci_fetch_assoc($stid)) {
-                $solicitudID = $row['SOL_ID'];
-                echo 'INTENTO'.$solicitudID;
                 print_r($row);
                 $solicitudID = $row['SOLICITUDID'];
                 echo 'INTENTO2'.$solicitudID;
