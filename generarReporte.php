@@ -47,6 +47,7 @@ if (isset($_GET['ids'])) {
             echo "Ejecutando la consulta...\n";
             while ($row = oci_fetch_assoc($stid)) {
                 echo '<pre>'; print_r($row); echo '</pre>';
+                echo '<pre> asa </pre>';
                 $solicitudID = $row['SOL_ID']; // Nombre de columna en la consulta SQL
 
                 // Verificar si ya existe una entrada para este ID
