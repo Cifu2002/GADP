@@ -341,9 +341,7 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
 
                 window.location.href = url.toString();
 
-                setTimeout(function () {
-                    window.location.href = 'tabla.php';
-                }, 2000);
+                
             });
 
         });
