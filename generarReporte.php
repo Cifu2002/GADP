@@ -1,9 +1,8 @@
 <?php
 include_once('modelo/conexion.php');
-include_once('ReportePDF.php');
 
 if (isset($_GET['ids'])) {
-    // Obtener los IDs únicos desde la solicitud POST
+    // Obtener los IDs únicos desde la solicitud GET
     $ids = $_GET['ids'];
 
     if (!empty($ids)) {
@@ -44,25 +43,13 @@ if (isset($_GET['ids'])) {
             $stid = oci_parse($conexion, $consulta);
             oci_execute($stid);
 
-            oci_free_statement($stid);
-            oci_close($conexion);
-
-            // Inicializar el array de resultados
             $solicitudes = [];
 
             while ($row = oci_fetch_assoc($stid)) {
                 $solicitudID = $row['SOLICITUDID']; // Nombre de columna en la consulta SQL
 
                 // Verificar si ya existe una entrada para este ID
-                if (isset($solicitudes[$solicitudID])) {
-                    // Agregar los datos de componentes y cambios si existen
-                    if (!empty($row['COMPONENTENOMBRE'])) {
-                        $solicitudes[$solicitudID]['componentes'][] = $row['COMPONENTENOMBRE'];
-                    }
-                    if (!empty($row['CAMBIONOMBRECOMPONENTE'])) {
-                        $solicitudes[$solicitudID]['cambios'][] = $row['CAMBIONOMBRECOMPONENTE'];
-                    }
-                } else {
+                if (!isset($solicitudes[$solicitudID])) {
                     // Agregar una nueva entrada para este ID
                     $solicitudes[$solicitudID] = [
                         'solicitudID' => $row['SOLICITUDID'],
@@ -79,9 +66,17 @@ if (isset($_GET['ids'])) {
                         'horaSolicitudF' => $row['HORASOLICITUDF'],
                         'detalles' => $row['DETALLES'],
                         'impresoraString' => $row['IMPRESORASTRING'],
-                        'componentes' => !empty($row['COMPONENTENOMBRE']) ? [$row['COMPONENTENOMBRE']] : [],
-                        'cambios' => !empty($row['CAMBIONOMBRECOMPONENTE']) ? [$row['CAMBIONOMBRECOMPONENTE']] : [],
+                        'componentes' => [],
+                        'cambios' => [],
                     ];
+                }
+
+                // Agregar los datos de componentes y cambios si existen
+                if (!empty($row['COMPONENTENOMBRE'])) {
+                    $solicitudes[$solicitudID]['componentes'][] = $row['COMPONENTENOMBRE'];
+                }
+                if (!empty($row['CAMBIONOMBRECOMPONENTE'])) {
+                    $solicitudes[$solicitudID]['cambios'][] = $row['CAMBIONOMBRECOMPONENTE'];
                 }
             }
 
@@ -89,6 +84,7 @@ if (isset($_GET['ids'])) {
             oci_free_statement($stid);
             oci_close($conexion);
 
+            // Imprimir los resultados
             foreach ($solicitudes as $solicitudID => $datos) {
                 echo "<h2>Solicitud ID: $solicitudID</h2>";
                 echo "<p>Código: {$datos['codigo']}</p>";
@@ -125,12 +121,9 @@ if (isset($_GET['ids'])) {
 
                 echo "<hr>";
             }
-
-            // Llamar a la función para generar el PDF
-            PDF::GenerarReportePDF($solicitudes);
         } catch (Exception $e) {
             error_log('Error al listar solicitudes: ' . $e->getMessage());
-            // Manejar el error si es necesario
+            echo 'Error al procesar la solicitud.';
         }
     }
 }
