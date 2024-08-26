@@ -159,18 +159,7 @@ class PDF extends FPDF
         $pdf->Cell(100, 10, utf8_decode('TÉCNICO RESPONSABLE'), 0, 0, 'C');
         $pdf->Cell(60, 10, 'USUARIO ATENDIDO', 0, 0, 'C');
 
-        $pdf->Ln(20);
-        $pdf->SetX($margenIzquierdo);
-        $pdf->Cell(100, 10, '................................', 0, 0, 'C');
-        $pdf->Cell(60, 10, '................................', 0, 0, 'C');
-
-        $pdf->Ln(5);
-        $pdf->SetX($margenIzquierdo);
-        $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(100, 10, 'Firma', 0, 0, 'C');
-        $pdf->Cell(60, 10, 'Firma', 0, 0, 'C');
-
-        $pdf->Ln(15);
+        $pdf->Ln(10);
         $pdf->SetX($margenIzquierdo);
         $pdf->Cell(18, 10, utf8_decode('Nombre: '), 0, 0, 'L');
         $pdf->SetFont('Arial', '', 12);
@@ -259,18 +248,17 @@ class PDF extends FPDF
 
         for ($i = 0; $i < $maxLength; $i++) {
             // Verificar si hay componentes
-            $componenteNombre = isset($componentes[$i]['nombre']) ? $componentes[$i]['nombre'] : null;
-            if ($componenteNombre !== null && trim($componenteNombre) !== '') {
-                $componenteText = '- ' . utf8_decode($componenteNombre);
+            $componenteText = isset($componentes[$i]) ? '- ' . utf8_decode(trim($componentes[$i])) : null;
+            if ($componenteText !== null && $componenteText !== '- ') {
+                $componenteText = $componenteText;
             } else {
                 $componenteText = null;
             }
 
             // Verificar si hay cambios
-            $cambioNombre = isset($cambios[$i]['nombreComponente']) ? $cambios[$i]['nombreComponente'] : null;
-            $cambioFecha = isset($cambios[$i]['fechaCambio']) ? $cambios[$i]['fechaCambio'] : null;
-            if ($cambioNombre !== null && trim($cambioNombre) !== '' && $cambioFecha !== null && trim($cambioFecha) !== '') {
-                $cambioText = '- ' . utf8_decode($cambioNombre);
+            $cambioText = isset($cambios[$i]) ? '- ' . utf8_decode(trim($cambios[$i])) : null;
+            if ($cambioText !== null && $cambioText !== '- ') {
+                $cambioText = $cambioText;
             } else {
                 $cambioText = null;
             }
@@ -281,6 +269,7 @@ class PDF extends FPDF
                 $pdf->Cell(0, 10, $cambioText ?: '- ', 0, 1, 'L');
             }
         }
+
 
         // Detalles
         $pdf->SetFont('Arial', 'B', 12);
@@ -313,18 +302,7 @@ class PDF extends FPDF
         $pdf->Cell(100, 10, utf8_decode('TÉCNICO RESPONSABLE'), 0, 0, 'C');
         $pdf->Cell(60, 10, 'USUARIO ATENDIDO', 0, 0, 'C');
 
-        $pdf->Ln(20);
-        $pdf->SetX($margenIzquierdo);
-        $pdf->Cell(100, 10, '................................', 0, 0, 'C');
-        $pdf->Cell(60, 10, '................................', 0, 0, 'C');
-
-        $pdf->Ln(5);
-        $pdf->SetX($margenIzquierdo);
-        $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(100, 10, 'Firma', 0, 0, 'C');
-        $pdf->Cell(60, 10, 'Firma', 0, 0, 'C');
-
-        $pdf->Ln(15);
+        $pdf->Ln(10);
         $pdf->SetX($margenIzquierdo);
         $pdf->Cell(18, 10, utf8_decode('Nombre: '), 0, 0, 'L');
         $pdf->SetFont('Arial', '', 12);
