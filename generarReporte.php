@@ -85,9 +85,9 @@ if (isset($_GET['ids'])) {
             // Cerrar conexión
             oci_free_statement($stid);
             
-            echo '<pre>';
+           
             print_r($solicitudes);
-            echo '</pre>';
+            
             // Imprimir los resultados
             foreach ($solicitudes as $solicitudID => $datos) {
                 echo "<h2>Solicitud ID: $solicitudID</h2>";
