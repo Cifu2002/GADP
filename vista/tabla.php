@@ -322,7 +322,7 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
                 }
             );
 
-            /*Enviar los ids por la URL y recargar la pagina luego de 2 segundos*/
+            /*Enviar los ids por la URL*/
             $('#generarReporte').on('click', function () {
                 let filasFiltradas = tablaSolicitud.rows({ filter: 'applied' }).data();
                 let idsUnicos = new Set();
@@ -341,7 +341,10 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
 
                 window.location.href = url.toString();
 
-                
+                /* Recargar la pagina luego de 2 segundos */
+                /* setTimeout(function () {
+                    window.location.href = 'tabla.php';
+                }, 2000); */
             });
 
         });
