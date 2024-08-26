@@ -84,10 +84,10 @@ if (isset($_GET['ids'])) {
 
             // Cerrar conexión
             oci_free_statement($stid);
-            
-           
+
+
             print_r($solicitudes);
-            
+
             // Imprimir los resultados
             foreach ($solicitudes as $solicitudID => $datos) {
                 echo "<h2>Solicitud ID: $solicitudID</h2>";
@@ -126,6 +126,9 @@ if (isset($_GET['ids'])) {
 
                 echo "<hr>";
             }
+            echo "<pre>";
+            print_r($solicitudes);
+            echo "</pre>";
             echo "ANTES DE LLAMAR";
             PDF::GenerarReportePDF($solicitudes);
             echo "SE LLAMO?";
