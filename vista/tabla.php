@@ -323,29 +323,32 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
             );
 
             $('#generarReporte').on('click', function () {
-                let filasFiltradas = tablaSolicitud.rows({ filter: 'applied' }).data();
-                let idsUnicos = new Set();
+    let filasFiltradas = tablaSolicitud.rows({ filter: 'applied' }).data();
+    let idsUnicos = new Set();
 
-                filasFiltradas.each(function (row) {
-                    idsUnicos.add(row.ID);
-                });
+    filasFiltradas.each(function (row) {
+        idsUnicos.add(row.ID);
+    });
 
-                let ids = Array.from(idsUnicos);
-                let ids_str = ids.join(',');
+    let ids = Array.from(idsUnicos);
+    let ids_str = ids.join(',');
 
-                $.ajax({
-                    url: '../generarReporte.php',
-                    type: 'GET',
-                    data: { ids: ids_str },
-                    success: function (data) {
-                        // Manejar la respuesta del servidor
-                        console.log('Respuesta del servidor:', data);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('Error al enviar la solicitud:', status, error);
-                    }
-                });
-            });
+    // Construir la URL
+    let url = new URL('../generarReporte.php.php', window.location.origin);
+    url.searchParams.append('ids', ids_str);
+
+    console.log('URL generada:', url.toString()); // Depurar URL
+
+    // Enviar la solicitud GET
+    fetch(url)
+        .then(response => response.text())
+        .then(data => {
+            console.log('Respuesta del servidor:', data);
+        })
+        .catch(error => {
+            console.error('Error al enviar la solicitud:', error);
+        });
+});
 
 
         });
