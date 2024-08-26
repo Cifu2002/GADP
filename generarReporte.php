@@ -17,22 +17,22 @@ if (isset($_GET['ids'])) {
             $ids_str = implode(',', array_map('intval', explode(',', $ids))); // Convertir string a array y luego a lista de enteros
             $consulta = "
                 SELECT 
-                    s.SOL_ID AS solicitudID,
-                    s.SOL_COD AS codigo,  
-                    s.SOL_MAC AS mac, 
-                    s.SOL_TIPOSOLICITUD AS tipoSolicitud, 
-                    s.SOL_TIPOMANTENIMIENTO AS tipoMantenimientoString,
-                    s.SOL_RESPONSABLEBIEN AS responsableBien, 
-                    s.SOL_DEPARTAMENTO AS departamento,
-                    s.SOL_ENCARGADO AS encargado,  
-                    TO_CHAR(s.SOL_FECSOLICITUD, 'DD-MM-YYYY') AS fechaSolicitud,
-                    s.SOL_HORASOLICITUD AS horaSolicitud, 
-                    TO_CHAR(s.SOL_FECSOLICITUDF, 'DD-MM-YYYY') AS fechaSolicitudF,
-                    s.SOL_HORASOLICITUDF AS horaSolicitudF,
-                    c.CAMB_NOM_COMP AS cambioNombreComponente,
-                    o.COMP_NOM AS componenteNombre,
-                    s.SOL_DETA AS detalles,
-                    s.SOL_IMP AS impresoraString
+                    s.SOL_ID,
+                    s.SOL_COD,  
+                    s.SOL_MAC, 
+                    s.SOL_TIPOSOLICITUD, 
+                    s.SOL_TIPOMANTENIMIENTO,
+                    s.SOL_RESPONSABLEBIEN, 
+                    s.SOL_DEPARTAMENTO,
+                    s.SOL_ENCARGADO,  
+                    TO_CHAR(s.SOL_FECSOLICITUD, 'DD-MM-YYYY'),
+                    s.SOL_HORASOLICITUD, 
+                    TO_CHAR(s.SOL_FECSOLICITUDF, 'DD-MM-YYYY'),
+                    s.SOL_HORASOLICITUDF,
+                    c.CAMB_NOM_COMP,
+                    o.COMP_NOM,
+                    s.SOL_DETA,
+                    s.SOL_IMP
                 FROM 
                     SOLICITUDMANTSISTEMAS s
                 LEFT JOIN 
@@ -50,7 +50,7 @@ if (isset($_GET['ids'])) {
 
             while ($row = oci_fetch_assoc($stid)) {
                 $solicitudID = $row['SOLICITUDID']; // Nombre de columna en la consulta SQL
-
+                echo 'bucle';
                 // Verificar si ya existe una entrada para este ID
                 if (!isset($solicitudes[$solicitudID])) {
                     // Agregar una nueva entrada para este ID
