@@ -333,7 +333,7 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
                 console.log(ids);
 
                 $.ajax({
-                    url: 'generarReporte.php',
+                    url: '../generarReporte.php',
                     type: 'POST',
                     data: { ids: ids },
                     success: function (respuesta) {
