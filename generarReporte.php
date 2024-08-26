@@ -1,35 +1,39 @@
 <?php
 include_once('modelo/conexion.php');
+include_once('ReportePDF.php');
 
 if (isset($_GET['ids'])) {
     // Obtener los IDs únicos desde la solicitud GET
     $ids = $_GET['ids'];
 
-    if (!empty($ids)) {
+    if (!empty($ids) && is_array($ids)) {
         try {
             // Conectar a la base de datos
             $conexion = Conexion::getInstance()->getConexion();
+            if (!$conexion) {
+                die('Error de conexión a la base de datos');
+            }
 
             // Preparar la consulta con los IDs recibidos
             $ids_str = implode(',', array_map('intval', $ids)); // Convertir array a una lista de enteros
             $consulta = "
                 SELECT 
-                    s.SOL_ID AS solicitudID,
-                    s.SOL_COD AS codigo,  
-                    s.SOL_MAC AS mac, 
-                    s.SOL_TIPOSOLICITUD AS tipoSolicitud, 
-                    s.SOL_TIPOMANTENIMIENTO AS tipoMantenimientoString,
-                    s.SOL_RESPONSABLEBIEN AS responsableBien, 
-                    s.SOL_DEPARTAMENTO AS departamento,
-                    s.SOL_ENCARGADO AS encargado,  
-                    TO_CHAR(s.SOL_FECSOLICITUD, 'DD-MM-YYYY') AS fechaSolicitud,
-                    s.SOL_HORASOLICITUD AS horaSolicitud, 
-                    TO_CHAR(s.SOL_FECSOLICITUDF, 'DD-MM-YYYY') AS fechaSolicitudF,
-                    s.SOL_HORASOLICITUDF AS horaSolicitudF,
-                    c.CAMB_NOM_COMP AS cambioNombreComponente,
-                    o.COMP_NOM AS componenteNombre,
-                    s.SOL_DETA AS detalles,
-                    s.SOL_IMP AS impresoraString
+                    s.SOL_ID AS SOL_ID,
+                    s.SOL_COD AS SOL_COD,  
+                    s.SOL_MAC AS SOL_MAC, 
+                    s.SOL_TIPOSOLICITUD AS SOL_TIPOSOLICITUD, 
+                    s.SOL_TIPOMANTENIMIENTO AS SOL_TIPOMANTENIMIENTO,
+                    s.SOL_RESPONSABLEBIEN AS SOL_RESPONSABLEBIEN, 
+                    s.SOL_DEPARTAMENTO AS SOL_DEPARTAMENTO,
+                    s.SOL_ENCARGADO AS SOL_ENCARGADO,  
+                    TO_CHAR(s.SOL_FECSOLICITUD, 'DD-MM-YYYY') AS SOL_FECSOLICITUD,
+                    s.SOL_HORASOLICITUD AS SOL_HORASOLICITUD,
+                    TO_CHAR(s.SOL_FECSOLICITUDF, 'DD-MM-YYYY') AS FECHASOLICITUDF,
+                    s.SOL_HORASOLICITUDF AS SOL_HORASOLICITUDF,
+                    c.CAMB_NOM_COMP AS CAMB_NOM_COMP,
+                    o.COMP_NOM AS COMP_NOM,
+                    s.SOL_DETA AS SOL_DETA,
+                    s.SOL_IMP AS SOL_IMP
                 FROM 
                     SOLICITUDMANTSISTEMAS s
                 LEFT JOIN 
@@ -38,16 +42,31 @@ if (isset($_GET['ids'])) {
                     MANTSISTEMASCOMPONENTES o ON s.SOL_ID = o.SOL_ID
                 WHERE 
                     s.SOL_ID IN ($ids_str)";
-            // Filtrar solo los IDs recibidos
 
+            // Ejecutar la consulta
             $stid = oci_parse($conexion, $consulta);
-            oci_execute($stid);
+            if (!$stid) {
+                $e = oci_error($conexion);
+                die("Error al preparar la consulta: " . $e['message']);
+            }
 
+            $r = oci_execute($stid);
+            if (!$r) {
+                $e = oci_error($stid);
+                die("Error al ejecutar la consulta: " . $e['message']);
+            }
+
+            // Inicializar el array de resultados
             $solicitudes = [];
+
+            // Depuración: Imprimir antes del bucle
             echo "Ejecutando la consulta...\n";
+
             while ($row = oci_fetch_assoc($stid)) {
-                echo '<pre>'; print_r($row); echo '</pre>';
-                echo '<pre> asa </pre>';
+                echo '<pre>';
+                print_r($row);
+                echo '</pre>'; // Imprimir cada fila para depuración
+
                 $solicitudID = $row['SOL_ID']; // Nombre de columna en la consulta SQL
 
                 // Verificar si ya existe una entrada para este ID
@@ -62,7 +81,7 @@ if (isset($_GET['ids'])) {
                         'responsableBien' => $row['SOL_RESPONSABLEBIEN'],
                         'departamento' => $row['SOL_DEPARTAMENTO'],
                         'encargado' => $row['SOL_ENCARGADO'],
-                        'fechaSolicitud' => $row['SOL_FECSOLICITUDF'],
+                        'fechaSolicitud' => $row['SOL_FECSOLICITUD'],
                         'horaSolicitud' => $row['SOL_HORASOLICITUD'],
                         'fechaSolicitudF' => $row['FECHASOLICITUDF'],
                         'horaSolicitudF' => $row['SOL_HORASOLICITUDF'],
@@ -81,52 +100,21 @@ if (isset($_GET['ids'])) {
                     $solicitudes[$solicitudID]['cambios'][] = $row['CAMB_NOM_COMP'];
                 }
             }
-            echo '<pre>'; print_r($solicitudes); echo '</pre>';
+
             // Cerrar conexión
             oci_free_statement($stid);
             oci_close($conexion);
-            echo '<pre>'; print_r($ids);'</pre>';
-            echo '<pre>'; print_r($solicitudes); echo '</pre>';
-            // Imprimir los resultados
-            foreach ($solicitudes as $solicitudID => $datos) {
-                echo "<h2>Solicitud ID: $solicitudID</h2>";
-                echo "<p>Código: {$datos['codigo']}</p>";
-                echo "<p>MAC: {$datos['mac']}</p>";
-                echo "<p>Tipo de Solicitud: {$datos['tipoSolicitud']}</p>";
-                echo "<p>Tipo de Mantenimiento: {$datos['tipoMantenimientoString']}</p>";
-                echo "<p>Responsable del Bien: {$datos['responsableBien']}</p>";
-                echo "<p>Departamento: {$datos['departamento']}</p>";
-                echo "<p>Encargado: {$datos['encargado']}</p>";
-                echo "<p>Fecha de Solicitud: {$datos['fechaSolicitud']}</p>";
-                echo "<p>Hora de Solicitud: {$datos['horaSolicitud']}</p>";
-                echo "<p>Fecha de Solicitud F: {$datos['fechaSolicitudF']}</p>";
-                echo "<p>Hora de Solicitud F: {$datos['horaSolicitudF']}</p>";
-                echo "<p>Detalles: {$datos['detalles']}</p>";
-                echo "<p>Impresora: {$datos['impresoraString']}</p>";
 
-                if (!empty($datos['componentes'])) {
-                    echo "<h3>Componentes:</h3>";
-                    echo "<ul>";
-                    foreach ($datos['componentes'] as $componente) {
-                        echo "<li>$componente</li>";
-                    }
-                    echo "</ul>";
-                }
+            // Imprimir el array final para depuración
+            echo '<pre>';
+            print_r($solicitudes);
+            echo '</pre>';
 
-                if (!empty($datos['cambios'])) {
-                    echo "<h3>Cambios:</h3>";
-                    echo "<ul>";
-                    foreach ($datos['cambios'] as $cambio) {
-                        echo "<li>$cambio</li>";
-                    }
-                    echo "</ul>";
-                }
-
-                echo "<hr>";
-            }
+            // Llamar a la función para generar el PDF
+            PDF::GenerarReportePDF($solicitudes);
         } catch (Exception $e) {
             error_log('Error al listar solicitudes: ' . $e->getMessage());
-            echo 'Error al procesar la solicitud.';
+            // Manejar el error si es necesario
         }
     }
 }
