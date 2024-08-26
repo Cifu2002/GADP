@@ -1,9 +1,8 @@
 <?php
 include_once('modelo/conexion.php');
 include_once('ReportePDF.php');
-
 if (isset($_GET['ids'])) {
-    // Obtener los IDs únicos desde la solicitud POST
+    // Obtener los IDs únicos desde la solicitud GET
     $ids = $_GET['ids'];
 
     if (!empty($ids)) {
@@ -44,10 +43,6 @@ if (isset($_GET['ids'])) {
             $stid = oci_parse($conexion, $consulta);
             oci_execute($stid);
 
-            oci_free_statement($stid);
-            oci_close($conexion);
-
-            // Inicializar el array de resultados
             $solicitudes = [];
 
             while ($row = oci_fetch_assoc($stid)) {
@@ -69,7 +64,7 @@ if (isset($_GET['ids'])) {
                         'codigo' => $row['CODIGO'],
                         'mac' => $row['MAC'],
                         'tipoSolicitud' => $row['TIPOSOLICITUD'],
-                        'tipoMantenimientoString' => $row['TIPOMANTENIMIENTOSTRING'],
+                        'tipoMantenimientoString' => $row['TIPOMANTENIMIENTO'],
                         'responsableBien' => $row['RESPONSABLEBIEN'],
                         'departamento' => $row['DEPARTAMENTO'],
                         'encargado' => $row['ENCARGADO'],
@@ -89,11 +84,46 @@ if (isset($_GET['ids'])) {
             oci_free_statement($stid);
             oci_close($conexion);
 
-            // Llamar a la función para generar el PDF
-            PDF::GenerarReportePDF($solicitudes);
+            // Imprimir los resultados
+            foreach ($solicitudes as $solicitudID => $datos) {
+                echo "<h2>Solicitud ID: $solicitudID</h2>";
+                echo "<p>Código: {$datos['codigo']}</p>";
+                echo "<p>MAC: {$datos['mac']}</p>";
+                echo "<p>Tipo de Solicitud: {$datos['tipoSolicitud']}</p>";
+                echo "<p>Tipo de Mantenimiento: {$datos['tipoMantenimientoString']}</p>";
+                echo "<p>Responsable del Bien: {$datos['responsableBien']}</p>";
+                echo "<p>Departamento: {$datos['departamento']}</p>";
+                echo "<p>Encargado: {$datos['encargado']}</p>";
+                echo "<p>Fecha de Solicitud: {$datos['fechaSolicitud']}</p>";
+                echo "<p>Hora de Solicitud: {$datos['horaSolicitud']}</p>";
+                echo "<p>Fecha de Solicitud F: {$datos['fechaSolicitudF']}</p>";
+                echo "<p>Hora de Solicitud F: {$datos['horaSolicitudF']}</p>";
+                echo "<p>Detalles: {$datos['detalles']}</p>";
+                echo "<p>Impresora: {$datos['impresoraString']}</p>";
+
+                if (!empty($datos['componentes'])) {
+                    echo "<h3>Componentes:</h3>";
+                    echo "<ul>";
+                    foreach ($datos['componentes'] as $componente) {
+                        echo "<li>$componente</li>";
+                    }
+                    echo "</ul>";
+                }
+
+                if (!empty($datos['cambios'])) {
+                    echo "<h3>Cambios:</h3>";
+                    echo "<ul>";
+                    foreach ($datos['cambios'] as $cambio) {
+                        echo "<li>$cambio</li>";
+                    }
+                    echo "</ul>";
+                }
+
+                echo "<hr>";
+            }
         } catch (Exception $e) {
             error_log('Error al listar solicitudes: ' . $e->getMessage());
-            // Manejar el error si es necesario
+            echo 'Error al procesar la solicitud.';
         }
     }
 }
