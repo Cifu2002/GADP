@@ -79,12 +79,12 @@ if (isset($_GET['ids'])) {
                     $solicitudes[$solicitudID]['cambios'][] = $row['CAMB_NOM_COMP'];
                 }
             }
- 
+            $s=[2,2,3];
             // Cerrar conexión
             oci_free_statement($stid);
             oci_close($conexion);
-            echo "<h2>Solicitud ID: $ids_str</h2>";
-            echo "<h2>Solicitud ID: $solicitudID </h2>";
+            echo "<h2>Solicitud ID: $ids</h2>";
+            echo "<h2>Solicitud ID: $s </h2>";
             // Imprimir los resultados
             foreach ($solicitudes as $solicitudID => $datos) {
                 echo "<h2>Solicitud ID: $solicitudID</h2>";
