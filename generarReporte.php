@@ -94,6 +94,7 @@ if (isset($_GET['ids'])) {
             // Imprimir los resultados
             foreach ($solicitudes as $solicitudID => $datos) {
                 echo "<h2>Solicitud ID: $solicitudID</h2>";
+                echo "<p>Código: {$datos['solicitudID']}</p>";
                 echo "<p>Código: {$datos['codigo']}</p>";
                 echo "<p>MAC: {$datos['mac']}</p>";
                 echo "<p>Tipo de Solicitud: {$datos['tipoSolicitud']}</p>";
