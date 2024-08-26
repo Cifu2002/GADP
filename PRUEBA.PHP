@@ -1,4 +1,5 @@
 <?php
+include_once('ReportePDF.php');
 $solicitudes = [
     [
         'solicitudID' => 60,
