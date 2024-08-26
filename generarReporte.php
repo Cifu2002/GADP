@@ -47,12 +47,12 @@ if (isset($_GET['ids'])) {
             echo 'Se ejecuto';
             // Inicializar el array de resultados
             $solicitudes = [];
-            $b=0;
+            $b = 0;
             while ($row = oci_fetch_assoc($stid)) {
-                
+
                 $solicitudID = $row['solicitudID']; // Nombre de columna en la consulta SQL
-                echo 'bucle'.$b;
-                $b=$b+1;
+                echo 'bucle' . $b;
+                $b = $b + 1;
                 // Verificar si ya existe una entrada para este ID
                 if (!isset($solicitudes[$solicitudID])) {
                     $solicitudes[$solicitudID] = [
@@ -88,7 +88,46 @@ if (isset($_GET['ids'])) {
             // Cerrar conexión
             oci_free_statement($stid);
             oci_close($conexion);
+            echo '<pre>';
+            print_r($solicitudes);
+            echo '</pre>';
+            // Imprimir los resultados
+            foreach ($solicitudes as $solicitudID => $datos) {
+                echo "<h2>Solicitud ID: $solicitudID</h2>";
+                echo "<p>Código: {$datos['codigo']}</p>";
+                echo "<p>MAC: {$datos['mac']}</p>";
+                echo "<p>Tipo de Solicitud: {$datos['tipoSolicitud']}</p>";
+                echo "<p>Tipo de Mantenimiento: {$datos['tipoMantenimientoString']}</p>";
+                echo "<p>Responsable del Bien: {$datos['responsableBien']}</p>";
+                echo "<p>Departamento: {$datos['departamento']}</p>";
+                echo "<p>Encargado: {$datos['encargado']}</p>";
+                echo "<p>Fecha de Solicitud: {$datos['fechaSolicitud']}</p>";
+                echo "<p>Hora de Solicitud: {$datos['horaSolicitud']}</p>";
+                echo "<p>Fecha de Solicitud F: {$datos['fechaSolicitudF']}</p>";
+                echo "<p>Hora de Solicitud F: {$datos['horaSolicitudF']}</p>";
+                echo "<p>Detalles: {$datos['detalles']}</p>";
+                echo "<p>Impresora: {$datos['impresoraString']}</p>";
 
+                if (!empty($datos['componentes'])) {
+                    echo "<h3>Componentes:</h3>";
+                    echo "<ul>";
+                    foreach ($datos['componentes'] as $componente) {
+                        echo "<li>$componente</li>";
+                    }
+                    echo "</ul>";
+                }
+
+                if (!empty($datos['cambios'])) {
+                    echo "<h3>Cambios:</h3>";
+                    echo "<ul>";
+                    foreach ($datos['cambios'] as $cambio) {
+                        echo "<li>$cambio</li>";
+                    }
+                    echo "</ul>";
+                }
+
+                echo "<hr>";
+            }
             // Llamar a la función para generar el PDF
             PDF::GenerarReportePDF($solicitudes);
         } catch (Exception $e) {
