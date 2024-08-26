@@ -47,14 +47,18 @@ if (isset($_GET['ids'])) {
             $solicitudes = [];
             $b = 0;
             while ($row = oci_fetch_assoc($stid)) {
+                echo "bucle" . $row['SOL_ID']; // Asegúrate de que SOL_ID está presente y correcto
+                $solicitudID = $row['SOL_ID'];
 
+                // Verifica si $row contiene los valores esperados
+                print_r($row);
                 $solicitudID = $row['solicitudID']; // Nombre de columna en la consulta SQL
                 echo 'bucle' . $b;
                 $b = $b + 1;
                 // Verificar si ya existe una entrada para este ID
                 if (!isset($solicitudes[$solicitudID])) {
                     $solicitudes[$solicitudID] = [
-                        'solicitudID' => $row['SOL_ID'],
+                        'solicitudID' => $row['solicitudID'],
                         'codigo' => $row['codigo'],
                         'mac' => $row['mac'],
                         'tipoSolicitud' => $row['tipoSolicitud'],
