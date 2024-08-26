@@ -151,7 +151,36 @@ class PDF extends FPDF
         $pdf->SetFont('Arial', '', 12);
         $pdf->Cell(0, 10, utf8_decode($horaSolicitudF), 0, 0, 'L');
 
-        
+        // Firmas
+        $margenIzquierdo = ($pdf->GetPageWidth() - 180) / 2;
+        $pdf->Ln(15);
+        $pdf->SetX($margenIzquierdo);
+
+        $pdf->Cell(100, 10, utf8_decode('TÉCNICO RESPONSABLE'), 0, 0, 'C');
+        $pdf->Cell(60, 10, 'USUARIO ATENDIDO', 0, 0, 'C');
+
+        $pdf->Ln(20);
+        $pdf->SetX($margenIzquierdo);
+        $pdf->Cell(100, 10, '................................', 0, 0, 'C');
+        $pdf->Cell(60, 10, '................................', 0, 0, 'C');
+
+        $pdf->Ln(5);
+        $pdf->SetX($margenIzquierdo);
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->Cell(100, 10, 'Firma', 0, 0, 'C');
+        $pdf->Cell(60, 10, 'Firma', 0, 0, 'C');
+
+        $pdf->Ln(15);
+        $pdf->SetX($margenIzquierdo);
+        $pdf->Cell(18, 10, utf8_decode('Nombre: '), 0, 0, 'L');
+        $pdf->SetFont('Arial', '', 12);
+        $pdf->Cell(90, 10, utf8_decode($encargado), 0, 0, 'L');
+
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->Cell(18, 10, utf8_decode('Nombre: '), 0, 0, 'L');
+        $pdf->SetFont('Arial', '', 12);
+        $pdf->Cell(0, 10, utf8_decode($responsableBien), 0, 0, 'L');
+
     }
 
     /* Generar pdf de la solicitud Correctiva */
@@ -276,6 +305,36 @@ class PDF extends FPDF
         $pdf->Cell(18, 10, utf8_decode('Hora fin: '), 0, 0, 'L');
         $pdf->SetFont('Arial', '', 12);
         $pdf->Cell(0, 10, utf8_decode($horaSolicitudF), 0, 0, 'L');
+        // Firmas
+        $margenIzquierdo = ($pdf->GetPageWidth() - 180) / 2;
+        $pdf->Ln(15);
+        $pdf->SetX($margenIzquierdo);
+
+        $pdf->Cell(100, 10, utf8_decode('TÉCNICO RESPONSABLE'), 0, 0, 'C');
+        $pdf->Cell(60, 10, 'USUARIO ATENDIDO', 0, 0, 'C');
+
+        $pdf->Ln(20);
+        $pdf->SetX($margenIzquierdo);
+        $pdf->Cell(100, 10, '................................', 0, 0, 'C');
+        $pdf->Cell(60, 10, '................................', 0, 0, 'C');
+
+        $pdf->Ln(5);
+        $pdf->SetX($margenIzquierdo);
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->Cell(100, 10, 'Firma', 0, 0, 'C');
+        $pdf->Cell(60, 10, 'Firma', 0, 0, 'C');
+
+        $pdf->Ln(15);
+        $pdf->SetX($margenIzquierdo);
+        $pdf->Cell(18, 10, utf8_decode('Nombre: '), 0, 0, 'L');
+        $pdf->SetFont('Arial', '', 12);
+        $pdf->Cell(90, 10, utf8_decode($encargado), 0, 0, 'L');
+
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->Cell(18, 10, utf8_decode('Nombre: '), 0, 0, 'L');
+        $pdf->SetFont('Arial', '', 12);
+        $pdf->Cell(0, 10, utf8_decode($responsableBien), 0, 0, 'L');
+
     }
 
     // Header
