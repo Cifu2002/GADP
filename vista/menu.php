@@ -57,7 +57,7 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
             <div class="col-md-6 mb-4">
                 <a href="tabla.php">
                     <div class="card efectos borde">
-                        <img src="../assets/images/reporte.jpeg" class="card-img-top" alt="Imagen de Reporte">
+                        <img src="../assets/images/reporte.jpg" class="card-img-top" alt="Imagen de Reporte">
                         <div class="card-body text-center">
                             <h5 class="card-title">Reporte</h5>
                         </div>
