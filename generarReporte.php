@@ -45,6 +45,9 @@ if (isset($_GET['ids'])) {
             oci_execute($stid);
             // Inicializar el array de resultados
             $solicitudes = [];
+            echo '<pre>';
+            print_r($solicitudes);
+            echo '</pre>';
             $b = 0;
             while ($row = oci_fetch_assoc($stid)) {
 
