@@ -12,6 +12,8 @@ if (isset($_GET['ids'])) {
             $conexion = Conexion::getInstance()->getConexion();
             if (!$conexion) {
                 die('Error de conexión a la base de datos');
+            } else {
+                echo "Conexión exitosa a la base de datos.<br>";
             }
 
             // Preparar la consulta con los IDs recibidos
@@ -43,17 +45,24 @@ if (isset($_GET['ids'])) {
                 WHERE 
                     s.SOL_ID IN ($ids_str)";
 
+            // Imprimir la consulta para depuración
+            echo "Consulta SQL: $consulta<br>";
+
             // Ejecutar la consulta
             $stid = oci_parse($conexion, $consulta);
             if (!$stid) {
                 $e = oci_error($conexion);
                 die("Error al preparar la consulta: " . $e['message']);
+            } else {
+                echo "Consulta preparada correctamente.<br>";
             }
 
             $r = oci_execute($stid);
             if (!$r) {
                 $e = oci_error($stid);
                 die("Error al ejecutar la consulta: " . $e['message']);
+            } else {
+                echo "Consulta ejecutada correctamente.<br>";
             }
 
             // Inicializar el array de resultados
@@ -62,10 +71,9 @@ if (isset($_GET['ids'])) {
             // Depuración: Imprimir antes del bucle
             echo "Ejecutando la consulta...\n";
 
+            // Obtener resultados
             while ($row = oci_fetch_assoc($stid)) {
-                echo '<pre>';
-                print_r($row);
-                echo '</pre>'; // Imprimir cada fila para depuración
+                echo '<pre>'; print_r($row); echo '</pre>'; // Imprimir cada fila
 
                 $solicitudID = $row['SOL_ID']; // Nombre de columna en la consulta SQL
 
@@ -106,9 +114,7 @@ if (isset($_GET['ids'])) {
             oci_close($conexion);
 
             // Imprimir el array final para depuración
-            echo '<pre>';
-            print_r($solicitudes);
-            echo '</pre>';
+            echo '<pre>'; print_r($solicitudes); echo '</pre>';
 
             // Llamar a la función para generar el PDF
             PDF::GenerarReportePDF($solicitudes);
@@ -116,6 +122,10 @@ if (isset($_GET['ids'])) {
             error_log('Error al listar solicitudes: ' . $e->getMessage());
             // Manejar el error si es necesario
         }
+    } else {
+        echo "No se recibieron IDs válidos en la solicitud.<br>";
     }
+} else {
+    echo "No se recibieron IDs en la solicitud.<br>";
 }
 ?>
