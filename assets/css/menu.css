@@ -95,7 +95,7 @@ a {
 /* centrar */
 /* Calcula la altura restante después del navbar */
 .content-container {
-    height: calc(100vh - 56px); /* Ajusta los 56px según la altura de tu navbar */
+    height: calc(100vh - 75px); /* Ajusta los 56px según la altura de tu navbar */
 }
 
 /* Asegura que las tarjetas estén centradas vertical y horizontalmente */
