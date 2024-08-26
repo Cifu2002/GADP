@@ -52,30 +52,30 @@ if (isset($_GET['ids'])) {
                 if (!isset($solicitudes[$solicitudID])) {
                     $solicitudes[$solicitudID] = [
                         'solicitudID' => $row['SOLICITUDID'],
-                        'codigo' => $row['codigo'],
-                        'mac' => $row['mac'],
-                        'tipoSolicitud' => $row['tipoSolicitud'],
-                        'tipoMantenimientoString' => $row['tipoMantenimientoString'],
-                        'responsableBien' => $row['responsableBien'],
-                        'departamento' => $row['departamento'],
-                        'encargado' => $row['encargado'],
-                        'fechaSolicitud' => $row['fechaSolicitud'],
-                        'horaSolicitud' => $row['horaSolicitud'],
-                        'fechaSolicitudF' => $row['fechaSolicitudF'],
-                        'horaSolicitudF' => $row['horaSolicitudF'],
-                        'detalles' => $row['detalles'],
+                        'codigo' => $row['CODIGO'],
+                        'mac' => $row['MAC'],
+                        'tipoSolicitud' => $row['TIPOSOLICITUD'],
+                        'tipoMantenimientoString' => $row['TIPOMANTENIMIENTOSTRING'],
+                        'responsableBien' => $row['RESPONSABLEBIEN'],
+                        'departamento' => $row['DEPARTAMENTO'],
+                        'encargado' => $row['ENCARGADO'],
+                        'fechaSolicitud' => $row['FECHASOLICITUD'],
+                        'horaSolicitud' => $row['HORASOLICITUD'],
+                        'fechaSolicitudF' => $row['FECHASOLICITUDF'],
+                        'horaSolicitudF' => $row['HORASOLICITUDF'],
+                        'detalles' => $row['DETALLES'],
                         'impresoraString' => $row['impresoraString'],
-                        'componentes' => !empty($row['componenteNombre']) ? [$row['componenteNombre']] : [],
-                        'cambios' => !empty($row['cambioNombreComponente']) ? [$row['cambioNombreComponente']] : [],
+                        'componentes' => !empty($row['COMPONENTENOMBRE']) ? [$row['COMPONENTENOMBRE']] : [],
+                        'cambios' => !empty($row['CAMBIONOMBRECOMPONENTE']) ? [$row['CAMBIONOMBRECOMPONENTE']] : [],
                     ];
                 } else {
                     // Agregar los datos de componentes y cambios si existen
                     echo 'Existe';
-                    if (!empty($row['componenteNombre'])) {
-                        $solicitudes[$solicitudID]['componentes'][] = $row['componenteNombre'];
+                    if (!empty($row['COMPONENTENOMBRE'])) {
+                        $solicitudes[$solicitudID]['componentes'][] = $row['COMPONENTENOMBRE'];
                     }
-                    if (!empty($row['cambioNombreComponente'])) {
-                        $solicitudes[$solicitudID]['cambios'][] = $row['cambioNombreComponente'];
+                    if (!empty($row['CAMBIONOMBRECOMPONENTE'])) {
+                        $solicitudes[$solicitudID]['cambios'][] = $row['CAMBIONOMBRECOMPONENTE'];
                     }
                 }
             }
