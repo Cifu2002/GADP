@@ -75,11 +75,11 @@ if (isset($_GET['ids'])) {
                     ];
                 } else {
                     // Agregar los datos de componentes y cambios si existen
-                    if (!empty($row['COMPONENTENOMBRE'])) {
-                        $solicitudes[$solicitudID]['componentes'][] = $row['COMPONENTENOMBRE'];
+                    if (!empty($row['componenteNombre'])) {
+                        $solicitudes[$solicitudID]['componentes'][] = $row['componenteNombre'];
                     }
-                    if (!empty($row['CAMBIONOMBRECOMPONENTE'])) {
-                        $solicitudes[$solicitudID]['cambios'][] = $row['CAMBIONOMBRECOMPONENTE'];
+                    if (!empty($row['cambioNombreComponente'])) {
+                        $solicitudes[$solicitudID]['cambios'][] = $row['cambioNombreComponente'];
                     }
                 }
             }
