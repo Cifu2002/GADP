@@ -326,16 +326,23 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
                 // Obtener las filas visibles después del filtrado
                 let filasFiltradas = tablaSolicitud.rows({ filter: 'applied' }).data();
 
-                // Crear un array con solo las IDs
-                let ids = [];
+                // Crear un Set para almacenar los IDs únicos
+                let idsUnicos = new Set();
+
+                // Agregar las IDs al Set
                 filasFiltradas.each(function (row) {
-                    ids.push(row.ID);
+                    idsUnicos.add(row.ID);
                 });
 
+                // Convertir el Set en un array
+                let ids = Array.from(idsUnicos);
+
+                // Mostrar los IDs en un alerta y en la consola para verificar
                 alert(ids);
                 console.log(ids);
+
                 // Enviar las IDs al backend mediante AJAX
-                /* $.ajax({
+                $.ajax({
                     url: 'generarReporte.php',
                     type: 'POST',
                     data: { ids: ids },
@@ -347,8 +354,9 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
                         // Manejar cualquier error
                         console.error('Error al enviar los datos: ', error);
                     }
-                }); */
+                });
             });
+
         });
 
     </script>
