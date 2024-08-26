@@ -334,7 +334,7 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
     let ids_str = ids.join(',');
 
     // Construir la URL
-    let url = new URL('../generarReporte.php.php', window.location.origin);
+    let url = new URL('../generarReporte.php', window.location.origin);
     url.searchParams.append('ids', ids_str);
 
     console.log('URL generada:', url.toString()); // Depurar URL
