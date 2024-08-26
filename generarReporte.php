@@ -2,14 +2,6 @@
 include_once('modelo/conexion.php');
 include_once('ReportePDF.php');
 
-if (isset($_GET['ids'])) {
-    // Obtener los IDs únicos desde la solicitud GET
-    $ids = $_GET['ids'];
-    echo 'IDs recibidos: ' . htmlspecialchars($ids); // Depurar IDs recibidos
-
-    if (!empty($ids)) {
-        try {
-            
             $solicitudes = [
                 60 => [
                     'solicitudID' => 60,
@@ -43,12 +35,5 @@ if (isset($_GET['ids'])) {
             
             PDF::GenerarReportePDF($solicitudes);
             
-        } catch (Exception $e) {
-            error_log('Error al listar solicitudes: ' . $e->getMessage());
-            // Manejar el error si es necesario
-        }
-    }
-} else {
-    echo 'No se recibieron IDs válidos en la solicitud.';
-}
+      
 ?>
