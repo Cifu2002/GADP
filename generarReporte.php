@@ -75,6 +75,7 @@ if (isset($_GET['ids'])) {
                     ];
                 } else {
                     // Agregar los datos de componentes y cambios si existen
+                    echo 'Existe';
                     if (!empty($row['componenteNombre'])) {
                         $solicitudes[$solicitudID]['componentes'][] = $row['componenteNombre'];
                     }
