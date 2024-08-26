@@ -16,7 +16,7 @@ class PDF extends FPDF
             $pdf->AddPage();
 
             // Detectar tipo de solicitud y generar el PDF correspondiente
-            if ($solicitud['tipoSolicitud'] === 'Preventivo') {
+            if ($solicitud['tipoSolicitud'] === 'Preventiva') {
                 self::GenerarPDFPreventivo(
                     $pdf,
                     $solicitud['solicitudID'],
@@ -34,7 +34,7 @@ class PDF extends FPDF
                     $solicitud['detalles'],
                     $solicitud['impresoraString']
                 );
-            } elseif ($solicitud['tipoSolicitud'] === 'Correctivo') {
+            } elseif ($solicitud['tipoSolicitud'] === 'Correctiva') {
                 self::GenerarPDFCorrectivo(
                     $pdf,
                     $solicitud['solicitudID'],
