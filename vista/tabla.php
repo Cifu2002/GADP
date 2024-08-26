@@ -334,7 +334,7 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
                 let ids_str = ids.join(',');
 
                 $.ajax({
-                    url: 'reporte.php',
+                    url: '../generarReporte.php',
                     type: 'GET',
                     data: { ids: ids_str },
                     success: function (data) {
