@@ -30,6 +30,11 @@ body {
     align-items: center;
 }
 
+.nav-left a{
+    color: white;
+    text-decoration: none;
+}
+
 /* Dropdown del usuario */
 .navbar .user {
     position: relative;

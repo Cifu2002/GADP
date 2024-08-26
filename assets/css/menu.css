@@ -20,6 +20,11 @@ body {
     align-items: center;
 }
 
+.nav-left a{
+    color: white;
+    text-decoration: none;
+}
+
 .navbar .user {
     position: relative;
     cursor: pointer;
