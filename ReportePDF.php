@@ -7,7 +7,6 @@ class PDF extends FPDF
     //Reporte de solicitudes
     public static function GenerarReportePDF($solicitudes)
     {
-        // Crear instancia de PDF
         $pdf = new self();
         $pdf->SetFont('Arial', 'B', 12);
 

@@ -3,17 +3,13 @@ include_once('modelo/conexion.php');
 include_once('ReportePDF.php');
 
 if (isset($_GET['ids'])) {
-    // Obtener los IDs únicos desde la solicitud GET
+    // Obtener los IDs
     $ids = $_GET['ids'];
-
 
     if (!empty($ids)) {
         try {
-            // Conectar a la base de datos
             $conexion = Conexion::getInstance()->getConexion();
-
-            // Preparar la consulta con los IDs recibidos
-            $ids_str = implode(',', array_map('intval', explode(',', $ids))); // Convertir string a array y luego a lista de enteros
+            $ids_str = implode(',', array_map('intval', explode(',', $ids)));
             $consulta = "
                 SELECT 
                     s.SOL_ID AS solicitudID,
@@ -43,11 +39,10 @@ if (isset($_GET['ids'])) {
 
             $stid = oci_parse($conexion, $consulta);
             oci_execute($stid);
-            // Inicializar el array de resultados
+            
             $solicitudes = [];
             while ($row = oci_fetch_assoc($stid)) {
                 $solicitudID = $row['SOLICITUDID'];
-                // Verificar si ya existe una entrada para este ID
                 if (!isset($solicitudes[$solicitudID])) {
                     $solicitudes[$solicitudID] = [
                         'solicitudID' => $row['SOLICITUDID'],
@@ -68,26 +63,23 @@ if (isset($_GET['ids'])) {
                         'cambios' => !empty($row['CAMBIONOMBRECOMPONENTE']) ? [$row['CAMBIONOMBRECOMPONENTE']] : [],
                     ];
                 } else {
-                    // Evitar duplicados en componentes
+                    // Evitar datos duplicados en componentes
                     if (!empty($row['COMPONENTENOMBRE']) && !in_array($row['COMPONENTENOMBRE'], $solicitudes[$solicitudID]['componentes'])) {
                         $solicitudes[$solicitudID]['componentes'][] = $row['COMPONENTENOMBRE'];
                     }
 
-                    // Evitar duplicados en cambios
+                    // Evitar datos duplicados en cambios
                     if (!empty($row['CAMBIONOMBRECOMPONENTE']) && !in_array($row['CAMBIONOMBRECOMPONENTE'], $solicitudes[$solicitudID]['cambios'])) {
                         $solicitudes[$solicitudID]['cambios'][] = $row['CAMBIONOMBRECOMPONENTE'];
                     }
                 }
             }
-
-            // Cerrar conexión
             oci_free_statement($stid);
             
             PDF::GenerarReportePDF($solicitudes);
             
         } catch (Exception $e) {
             error_log('Error al listar solicitudes: ' . $e->getMessage());
-            // Manejar el error si es necesario
         }
     }
 } else {

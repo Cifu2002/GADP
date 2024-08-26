@@ -322,6 +322,7 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
                 }
             );
 
+            /*Enviar los ids por la URL y recargar la pagina luego de 2 segundos*/
             $('#generarReporte').on('click', function () {
                 let filasFiltradas = tablaSolicitud.rows({ filter: 'applied' }).data();
                 let idsUnicos = new Set();
@@ -333,22 +334,17 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
                 let ids = Array.from(idsUnicos);
                 let ids_str = ids.join(',');
 
-                // Construir la URL
                 let url = new URL('GADP/generarReporte.php', window.location.origin);
                 url.searchParams.append('ids', ids_str);
 
-                console.log('URL generada:', url.toString()); // Depurar URL
+                console.log('URL generada:', url.toString());
 
-                // Redirigir a la URL de generación del reporte
                 window.location.href = url.toString();
 
-                // Redirigir a index después de 2 segundos
                 setTimeout(function () {
-                    window.location.href = 'GADP/vista/tabla.php';
+                    window.location.href = 'tabla.php';
                 }, 2000);
             });
-
-
 
         });
 
