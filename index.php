@@ -88,7 +88,7 @@ if (!empty($mac)) {
 <body>
     <nav class="navbar">
         <div class="nav-left">
-        <a href="vista/menu.php"><i class="fa-solid fa-house" style="color: #ffffff;"></i></a>
+        <a href="vista/menu.php"><i class="fa-solid fa-house" style="color: #ffffff;"></i> Inicio</a>
         </div>
         <div class="user">
             <span><?php echo $nombreUsuario; ?> <i class="fa-solid fa-user" style="color: #ffffff;"></i></span>
