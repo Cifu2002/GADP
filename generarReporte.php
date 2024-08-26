@@ -52,7 +52,7 @@ if (isset($_GET['ids'])) {
                 // Verifica si $row contiene los valores esperados
                 /* print_r($row); */
                 $cod=$row['SOL_COD'];
-                echo 'bucleC' . $codigo;
+                echo 'bucleC' . $cod;
                 // Verificar si ya existe una entrada para este ID
                 if (!isset($solicitudes[$solicitudID])) {
                     $solicitudes[$solicitudID] = [
