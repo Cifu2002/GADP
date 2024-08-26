@@ -1,8 +1,9 @@
 <?php
 include_once('modelo/conexion.php');
 include_once('ReportePDF.php');
+
 if (isset($_GET['ids'])) {
-    // Obtener los IDs únicos desde la solicitud GET
+    // Obtener los IDs únicos desde la solicitud POST
     $ids = $_GET['ids'];
 
     if (!empty($ids)) {
@@ -43,6 +44,10 @@ if (isset($_GET['ids'])) {
             $stid = oci_parse($conexion, $consulta);
             oci_execute($stid);
 
+            oci_free_statement($stid);
+            oci_close($conexion);
+
+            // Inicializar el array de resultados
             $solicitudes = [];
 
             while ($row = oci_fetch_assoc($stid)) {
@@ -64,7 +69,7 @@ if (isset($_GET['ids'])) {
                         'codigo' => $row['CODIGO'],
                         'mac' => $row['MAC'],
                         'tipoSolicitud' => $row['TIPOSOLICITUD'],
-                        'tipoMantenimientoString' => $row['TIPOMANTENIMIENTO'],
+                        'tipoMantenimientoString' => $row['TIPOMANTENIMIENTOSTRING'],
                         'responsableBien' => $row['RESPONSABLEBIEN'],
                         'departamento' => $row['DEPARTAMENTO'],
                         'encargado' => $row['ENCARGADO'],
@@ -84,7 +89,6 @@ if (isset($_GET['ids'])) {
             oci_free_statement($stid);
             oci_close($conexion);
 
-            // Imprimir los resultados
             foreach ($solicitudes as $solicitudID => $datos) {
                 echo "<h2>Solicitud ID: $solicitudID</h2>";
                 echo "<p>Código: {$datos['codigo']}</p>";
@@ -121,9 +125,12 @@ if (isset($_GET['ids'])) {
 
                 echo "<hr>";
             }
+
+            // Llamar a la función para generar el PDF
+            PDF::GenerarReportePDF($solicitudes);
         } catch (Exception $e) {
             error_log('Error al listar solicitudes: ' . $e->getMessage());
-            echo 'Error al procesar la solicitud.';
+            // Manejar el error si es necesario
         }
     }
 }
