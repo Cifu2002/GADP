@@ -161,6 +161,7 @@ class PDF extends FPDF
 
         $pdf->Ln(10);
         $pdf->SetX($margenIzquierdo);
+        $pdf->SetFont('Arial', 'B', 12);
         $pdf->Cell(18, 10, utf8_decode('Nombre: '), 0, 0, 'L');
         $pdf->SetFont('Arial', '', 12);
         $pdf->Cell(90, 10, utf8_decode($encargado), 0, 0, 'L');
@@ -304,6 +305,7 @@ class PDF extends FPDF
 
         $pdf->Ln(10);
         $pdf->SetX($margenIzquierdo);
+        $pdf->SetFont('Arial', 'B', 12);
         $pdf->Cell(18, 10, utf8_decode('Nombre: '), 0, 0, 'L');
         $pdf->SetFont('Arial', '', 12);
         $pdf->Cell(90, 10, utf8_decode($encargado), 0, 0, 'L');
