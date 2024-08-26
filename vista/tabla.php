@@ -47,9 +47,9 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
     </nav>
     <div class="content-wrapper contenedor-principal">
         <div class="container-fluid py-4">
-            <a href="http://localhost/GAD/mac/index.php"><button type="button" class="btn btn-primary btn-sm agregar"><i
-                        class="fa-solid fa-plus icono-agregar" style="color: #ffffff;" id="generarReporte"></i> Generar
-                    reportes</button></a>
+            <button type="button" class="btn btn-primary btn-sm agregar" id="generarReporte"><i
+                    class="fa-solid fa-plus icono-agregar" style="color: #ffffff;"></i> Generar
+                reportes</button>
             <div class="card shadow mb-4 contenedor">
                 <div class="card-body">
                     <div class="table-responsive tabla">
@@ -334,7 +334,7 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
                 });
 
                 // Enviar las IDs al backend mediante AJAX
-                $.ajax({
+                /* $.ajax({
                     url: 'generarReporte.php',
                     type: 'POST',
                     data: { ids: ids },
@@ -346,7 +346,7 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
                         // Manejar cualquier error
                         console.error('Error al enviar los datos: ', error);
                     }
-                });
+                }); */
             });
         });
 
