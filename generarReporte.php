@@ -2,7 +2,7 @@
 include_once('modelo/conexion.php');
 include_once('ReportePDF.php');
 
-if (isset($_POST['ids'])) {
+if (isset($_GET['ids'])) {
     // Obtener los IDs únicos desde la solicitud POST
     $ids = $_POST['ids'];
 
