@@ -48,7 +48,7 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
     <div class="content-wrapper contenedor-principal">
         <div class="container-fluid py-4">
             <a href="http://localhost/GAD/mac/index.php"><button type="button" class="btn btn-primary btn-sm agregar"><i
-                        class="fa-solid fa-plus icono-agregar" style="color: #ffffff;"></i> Generar
+                        class="fa-solid fa-plus icono-agregar" style="color: #ffffff;" id="generarReporte"></i> Generar
                     reportes</button></a>
             <div class="card shadow mb-4 contenedor">
                 <div class="card-body">
@@ -321,6 +321,33 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
                     return false;
                 }
             );
+
+            $('#generarReporte').on('click', function () {
+                alert("sd");
+                // Obtener las filas visibles después del filtrado
+                let filasFiltradas = tablaSolicitud.rows({ filter: 'applied' }).data();
+
+                // Crear un array con solo las IDs
+                let ids = [];
+                filasFiltradas.each(function (row) {
+                    ids.push(row.ID);
+                });
+
+                // Enviar las IDs al backend mediante AJAX
+                $.ajax({
+                    url: 'generarReporte.php',
+                    type: 'POST',
+                    data: { ids: ids },
+                    success: function (respuesta) {
+                        // Manejar la respuesta del servidor
+                        console.log(respuesta);
+                    },
+                    error: function (error) {
+                        // Manejar cualquier error
+                        console.error('Error al enviar los datos: ', error);
+                    }
+                });
+            });
         });
 
     </script>
