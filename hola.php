@@ -24,22 +24,6 @@ $solicitudes = [
             'Cambio 1',
             'Cambio 2'
         ]
-    ],
-    [
-        'solicitudID' => 61,
-        'codigo' => '9.1.1.17.07.00017.00008',
-        'mac' => '50-EB-F6-D2-F2-68',
-        'tipoSolicitud' => 'Preventiva',
-        'tipoMantenimientoString' => 'Mant. de rutina',
-        'responsableBien' => 'Carlos Pérez',
-        'departamento' => 'ADMINISTRACIÓN',
-        'encargado' => 'JUAN PÉREZ',
-        'fechaSolicitud' => '23-08-2024',
-        'horaSolicitud' => '10:00',
-        'fechaSolicitudF' => '24-08-2024',
-        'horaSolicitudF' => '12:00',
-        'detalles' => 'Revisión general',
-        'impresoraString' => 'Impresora XYZ'
     ]
 ];
 
