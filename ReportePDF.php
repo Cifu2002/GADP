@@ -57,7 +57,7 @@ class PDF extends FPDF
         }
 
         // Generar el PDF y forzar la descarga al final
-        $pdf->Output('D', 'Solicitudes.pdf');
+        $pdf->Output('D', 'Reporte.pdf');
     }
 
     /* Generar pdf de la solicitud Preventiva */
