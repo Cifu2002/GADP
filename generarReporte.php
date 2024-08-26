@@ -4,7 +4,7 @@ include_once('ReportePDF.php');
 
 if (isset($_GET['ids'])) {
     // Obtener los IDs únicos desde la solicitud POST
-    $ids = $_POST['ids'];
+    $ids = $_GET['ids'];
 
     if (!empty($ids)) {
         try {
