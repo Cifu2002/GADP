@@ -41,7 +41,7 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
         </div>
     </nav>
 
-    <div class="container my-5">
+    <div class="container my-5 d-flex align-items-center justify-content-center" style="min-height: 100vh;">
     <div class="row justify-content-center">
         <div class="col-md-6 d-flex align-items-center mb-4">
             <a href="../index.php" class="w-100">
