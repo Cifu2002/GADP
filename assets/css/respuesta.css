@@ -1,3 +1,14 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* background-color: #181818; */
+    background-image: url('../images/tenaren.jpg');
+    background-size: cover; 
+    background-position: center; 
+}
+
 .contenedor-mensaje {
     background-color: #2e8b57;
     padding: 20px;
