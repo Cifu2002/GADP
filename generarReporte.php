@@ -161,7 +161,7 @@ if (isset($_GET['ids'])) {
             echo "</pre>";
             echo "ANTES DE LLAMAR";
             PDF::GenerarReportePDF($solicitudes);
-            echo "SE LLAMO?";
+            
         } catch (Exception $e) {
             error_log('Error al listar solicitudes: ' . $e->getMessage());
             // Manejar el error si es necesario

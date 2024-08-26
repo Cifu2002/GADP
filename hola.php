@@ -7,7 +7,7 @@ $solicitudes = [
         'codigo' => '9.1.1.17.07.00017.00007',
         'mac' => '50-EB-F6-D2-F2-67',
         'tipoSolicitud' => 'Correctiva',
-        'tipoMantenimientoString' => '', // Vacío
+        'tipoMantenimientoString' => '', // Campo vacío
         'responsableBien' => 'Diana Quevedo',
         'departamento' => 'BODEGA',
         'encargado' => 'KATHERINE STEFANIA LADINES GARCES',
@@ -16,7 +16,7 @@ $solicitudes = [
         'fechaSolicitudF' => '22-08-2024',
         'horaSolicitudF' => '16:04',
         'detalles' => 'sd',
-        'impresoraString' => '', // Vacío
+        'impresoraString' => '', // Campo vacío
         'componentes' => [
             'componente 3',
             'componente 2',
@@ -28,7 +28,6 @@ $solicitudes = [
         ]
     ]
 ];
-
 // Generar el reporte PDF para todas las solicitudes
 PDF::GenerarReportePDF($solicitudes);
 ?>
