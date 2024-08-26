@@ -63,7 +63,7 @@ if (isset($_GET['ids'])) {
                         'fechaSolicitudF' => $row['FECHASOLICITUDF'],
                         'horaSolicitudF' => $row['HORASOLICITUDF'],
                         'detalles' => $row['DETALLES'],
-                        'impresoraString' => $row['impresoraString'],
+                        'impresoraString' => $row['IMPRESORASTRING'],
                         'componentes' => !empty($row['COMPONENTENOMBRE']) ? [$row['COMPONENTENOMBRE']] : [],
                         'cambios' => !empty($row['CAMBIONOMBRECOMPONENTE']) ? [$row['CAMBIONOMBRECOMPONENTE']] : [],
                     ];
