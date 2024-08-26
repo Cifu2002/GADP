@@ -46,7 +46,7 @@ if (isset($_GET['ids'])) {
             $solicitudes = [];
 
             while ($row = oci_fetch_assoc($stid)) {
-                $solicitudID = $row['SOLICITUDID']; // Nombre de columna en la consulta SQL
+                $solicitudID = $row['SOL_ID']; // Nombre de columna en la consulta SQL
 
                 // Verificar si ya existe una entrada para este ID
                 if (!isset($solicitudes[$solicitudID])) {
@@ -79,11 +79,12 @@ if (isset($_GET['ids'])) {
                     $solicitudes[$solicitudID]['cambios'][] = $row['CAMB_NOM_COMP'];
                 }
             }
-
+ 
             // Cerrar conexión
             oci_free_statement($stid);
             oci_close($conexion);
-            echo "<h2>Solicitud ID: $solicitudID</h2>";
+            echo "<h2>Solicitud ID: $ids_str</h2>";
+            echo "<h2>Solicitud ID: $solicitudID </h2>";
             // Imprimir los resultados
             foreach ($solicitudes as $solicitudID => $datos) {
                 echo "<h2>Solicitud ID: $solicitudID</h2>";
