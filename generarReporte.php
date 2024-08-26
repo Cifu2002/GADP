@@ -47,9 +47,9 @@ if (isset($_GET['ids'])) {
             echo 'Se ejecuto';
             // Inicializar el array de resultados
             $solicitudes = [];
-
+            $b=0;
             while ($row = oci_fetch_assoc($stid)) {
-                $b=0;
+                
                 $solicitudID = $row['SOLICITUDID']; // Nombre de columna en la consulta SQL
                 echo 'bucle'.$b;
                 $b=$b+1;
