@@ -323,7 +323,6 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
             );
 
             $('#generarReporte').on('click', function () {
-                alert("sd");
                 // Obtener las filas visibles después del filtrado
                 let filasFiltradas = tablaSolicitud.rows({ filter: 'applied' }).data();
 
@@ -333,6 +332,8 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
                     ids.push(row.ID);
                 });
 
+                alert(ids);
+                console.log(ids);
                 // Enviar las IDs al backend mediante AJAX
                 /* $.ajax({
                     url: 'generarReporte.php',
