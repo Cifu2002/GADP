@@ -42,30 +42,30 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
     </nav>
 
     <div class="container my-5">
-        <div class="row align-items-center" style="min-height: 100vh;">
-            <div class="col-md-6 mb-4">
-                <a href="../index.php">
-                    <div class="card efectos borde">
-                        <img src="../assets/images/solicitud.jpeg" class="card-img-top" alt="Imagen de Solicitud">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Solicitud</h5>
-                        </div>
+    <div class="row justify-content-center">
+        <div class="col-md-6 d-flex align-items-center mb-4">
+            <a href="../index.php" class="w-100">
+                <div class="card efectos borde">
+                    <img src="../assets/images/solicitud.jpeg" class="card-img-top" alt="Imagen de Solicitud">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Solicitud</h5>
                     </div>
-                </a>
-            </div>
+                </div>
+            </a>
+        </div>
 
-            <div class="col-md-6 mb-4">
-                <a href="tabla.php">
-                    <div class="card efectos borde">
-                        <img src="../assets/images/reporte.jpg" class="card-img-top" alt="Imagen de Reporte">
-                        <div class="card-body text-center">
-                            <h5 class="card-title">Reporte</h5>
-                        </div>
+        <div class="col-md-6 d-flex align-items-center mb-4">
+            <a href="tabla.php" class="w-100">
+                <div class="card efectos borde">
+                    <img src="../assets/images/reporte.jpg" class="card-img-top" alt="Imagen de Reporte">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Reporte</h5>
                     </div>
-                </a>
-            </div>
+                </div>
+            </a>
         </div>
     </div>
+</div>
 
 
 </body>
