@@ -159,7 +159,7 @@ if (isset($_GET['ids'])) {
             echo "<pre>";
             print_r($solicitudes);
             echo "</pre>";
-            echo "ANTES DE LLAMAR";
+            
             PDF::GenerarReportePDF($solicitudes);
             
         } catch (Exception $e) {
