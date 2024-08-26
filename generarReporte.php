@@ -47,38 +47,42 @@ if (isset($_GET['ids'])) {
             $solicitudes = [];
             while ($row = oci_fetch_assoc($stid)) {
                 $solicitudID = $row['SOL_ID'];
-                print_r($row);
-                // Verificar si ya existe una entrada para este ID
+            
                 if (!isset($solicitudes[$solicitudID])) {
                     $solicitudes[$solicitudID] = [
-                        'solicitudID' => $row['SOLICITUDID'],
-                        'codigo' => $row['CODIGO'],
-                        'mac' => $row['MAC'],
-                        'tipoSolicitud' => $row['TIPOSOLICITUD'],
-                        'tipoMantenimientoString' => $row['TIPOMANTENIMIENTOSTRING'],
-                        'responsableBien' => $row['RESPONSABLEBIEN'],
-                        'departamento' => $row['DEPARTAMENTO'],
-                        'encargado' => $row['ENCARGADO'],
-                        'fechaSolicitud' => $row['FECHASOLICITUD'],
-                        'horaSolicitud' => $row['HORASOLICITUD'],
+                        'solicitudID' => $row['SOL_ID'],
+                        'codigo' => $row['SOL_COD'],
+                        'mac' => $row['SOL_MAC'],
+                        'tipoSolicitud' => $row['SOL_TIPOSOLICITUD'],
+                        'tipoMantenimientoString' => $row['SOL_TIPOMANTENIMIENTO'],
+                        'responsableBien' => $row['SOL_RESPONSABLEBIEN'],
+                        'departamento' => $row['SOL_DEPARTAMENTO'],
+                        'encargado' => $row['SOL_ENCARGADO'],
+                        'fechaSolicitud' => $row['SOL_FECSOLICITUDF'],
+                        'horaSolicitud' => $row['SOL_HORASOLICITUD'],
                         'fechaSolicitudF' => $row['FECHASOLICITUDF'],
-                        'horaSolicitudF' => $row['HORASOLICITUDF'],
-                        'detalles' => $row['DETALLES'],
-                        'impresoraString' => $row['impresoraString'],
-                        'componentes' => !empty($row['COMPONENTENOMBRE']) ? [$row['COMPONENTENOMBRE']] : [],
-                        'cambios' => !empty($row['CAMBIONOMBRECOMPONENTE']) ? [$row['CAMBIONOMBRECOMPONENTE']] : [],
+                        'horaSolicitudF' => $row['SOL_HORASOLICITUDF'],
+                        'detalles' => $row['SOL_DETA'],
+                        'impresoraString' => $row['SOL_IMP'],
+                        'componentes' => [],
+                        'cambios' => [],
                     ];
-                } else {
-                    // Agregar los datos de componentes y cambios si existen
-                    echo 'Existe';
-                    if (!empty($row['COMPONENTENOMBRE'])) {
-                        $solicitudes[$solicitudID]['componentes'][] = $row['COMPONENTENOMBRE'];
-                    }
-                    if (!empty($row['CAMBIONOMBRECOMPONENTE'])) {
-                        $solicitudes[$solicitudID]['cambios'][] = $row['CAMBIONOMBRECOMPONENTE'];
-                    }
+                }
+            
+                // Evitar duplicados en componentes
+                if (!empty($row['COMP_NOM']) && !in_array($row['COMP_NOM'], $solicitudes[$solicitudID]['componentes'])) {
+                    $solicitudes[$solicitudID]['componentes'][] = $row['COMP_NOM'];
+                }
+            
+                // Evitar duplicados en cambios
+                if (!empty($row['CAMB_NOM_COMP']) && !in_array($row['CAMB_NOM_COMP'], $solicitudes[$solicitudID]['cambios'])) {
+                    $solicitudes[$solicitudID]['cambios'][] = $row['CAMB_NOM_COMP'];
                 }
             }
+            
+            // Imprime el array $solicitudes para verificar
+            print_r($solicitudes);
+            
 
             // Cerrar conexión
             oci_free_statement($stid);
