@@ -46,9 +46,7 @@ if (isset($_GET['ids'])) {
             // Inicializar el array de resultados
             $solicitudes = [];
             while ($row = oci_fetch_assoc($stid)) {
-                print_r($row);
                 $solicitudID = $row['SOLICITUDID'];
-                echo 'INTENTO2'.$solicitudID;
                 // Verificar si ya existe una entrada para este ID
                 if (!isset($solicitudes[$solicitudID])) {
                     $solicitudes[$solicitudID] = [
@@ -70,8 +68,6 @@ if (isset($_GET['ids'])) {
                         'cambios' => !empty($row['CAMBIONOMBRECOMPONENTE']) ? [$row['CAMBIONOMBRECOMPONENTE']] : [],
                     ];
                 } else {
-                    echo 'Existe';
-
                     // Evitar duplicados en componentes
                     if (!empty($row['COMPONENTENOMBRE']) && !in_array($row['COMPONENTENOMBRE'], $solicitudes[$solicitudID]['componentes'])) {
                         $solicitudes[$solicitudID]['componentes'][] = $row['COMPONENTENOMBRE'];
@@ -90,8 +86,7 @@ if (isset($_GET['ids'])) {
 
             // Cerrar conexión
             oci_free_statement($stid);
-            oci_close($conexion);
-            echo 'Se cerro';
+            
             echo '<pre>';
             print_r($solicitudes);
             echo '</pre>';
