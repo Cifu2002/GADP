@@ -323,35 +323,23 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
             );
 
             $('#generarReporte').on('click', function () {
-                // Obtener las filas visibles después del filtrado
                 let filasFiltradas = tablaSolicitud.rows({ filter: 'applied' }).data();
-
-                // Crear un Set para almacenar los IDs únicos
                 let idsUnicos = new Set();
-
-                // Agregar las IDs al Set
                 filasFiltradas.each(function (row) {
                     idsUnicos.add(row.ID);
                 });
-
-                // Convertir el Set en un array
                 let ids = Array.from(idsUnicos);
 
-                // Mostrar los IDs en un alerta y en la consola para verificar
-                alert(ids);
                 console.log(ids);
 
-                // Enviar las IDs al backend mediante AJAX
                 $.ajax({
                     url: 'generarReporte.php',
                     type: 'POST',
                     data: { ids: ids },
                     success: function (respuesta) {
-                        // Manejar la respuesta del servidor
                         console.log(respuesta);
                     },
                     error: function (error) {
-                        // Manejar cualquier error
                         console.error('Error al enviar los datos: ', error);
                     }
                 });
