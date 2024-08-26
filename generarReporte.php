@@ -51,9 +51,9 @@ if (isset($_GET['ids'])) {
                 $solicitudID = $row['SOL_ID'];
 
                 // Verifica si $row contiene los valores esperados
-                print_r($row);
+                
                 $solicitudID = $row['solicitudID']; // Nombre de columna en la consulta SQL
-                echo 'bucle' . $b;
+                echo ' ';
                 $b = $b + 1;
                 // Verificar si ya existe una entrada para este ID
                 if (!isset($solicitudes[$solicitudID])) {
