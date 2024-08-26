@@ -49,8 +49,10 @@ if (isset($_GET['ids'])) {
             $solicitudes = [];
 
             while ($row = oci_fetch_assoc($stid)) {
+                $b=0;
                 $solicitudID = $row['SOLICITUDID']; // Nombre de columna en la consulta SQL
-                echo 'bucle';
+                echo 'bucle'.$b;
+                $b=$b+1;
                 // Verificar si ya existe una entrada para este ID
                 if (!isset($solicitudes[$solicitudID])) {
                     // Agregar una nueva entrada para este ID
