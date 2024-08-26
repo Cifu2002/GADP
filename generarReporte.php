@@ -17,7 +17,7 @@ if (isset($_GET['ids'])) {
             $ids_str = implode(',', array_map('intval', explode(',', $ids))); // Convertir string a array y luego a lista de enteros
             $consulta = "
                 SELECT 
-               s.SOL_ID AS solicitudID,
+                    s.SOL_ID AS solicitudID,
                     s.SOL_COD AS codigo,  
                     s.SOL_MAC AS mac, 
                     s.SOL_TIPOSOLICITUD AS tipoSolicitud, 
@@ -50,7 +50,7 @@ if (isset($_GET['ids'])) {
             $b=0;
             while ($row = oci_fetch_assoc($stid)) {
                 
-                $solicitudID = $row['SOLICITUDID']; // Nombre de columna en la consulta SQL
+                $solicitudID = $row['solicitudID']; // Nombre de columna en la consulta SQL
                 echo 'bucle'.$b;
                 $b=$b+1;
                 // Verificar si ya existe una entrada para este ID
