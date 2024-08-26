@@ -41,8 +41,9 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
         </div>
     </nav>
 
-    <div class="container my-5" style="height: calc(100vh - 100px);">
-        <div class="row h-100 justify-content-center align-items-center">
+
+    <div class="container my-5 content-container">
+        <div class="row row-centered">
             <div class="col-md-6 mb-4">
                 <a href="../index.php">
                     <div class="card efectos borde">
@@ -66,7 +67,6 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
             </div>
         </div>
     </div>
-
 
 </body>
 

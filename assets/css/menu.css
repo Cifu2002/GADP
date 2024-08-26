@@ -91,3 +91,17 @@ a {
     border: 2px solid #000;
     color: #000;
 }
+
+/* centrar */
+/* Calcula la altura restante después del navbar */
+.content-container {
+    height: calc(100vh - 50px); /* Ajusta los 56px según la altura de tu navbar */
+}
+
+/* Asegura que las tarjetas estén centradas vertical y horizontalmente */
+.row-centered {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
