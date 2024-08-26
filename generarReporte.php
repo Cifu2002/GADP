@@ -52,38 +52,38 @@ if (isset($_GET['ids'])) {
                 if (!isset($solicitudes[$solicitudID])) {
                     // Agregar una nueva entrada para este ID
                     $solicitudes[$solicitudID] = [
-                        'solicitudID' => $row['SOLICITUDID'],
-                        'codigo' => $row['CODIGO'],
-                        'mac' => $row['MAC'],
-                        'tipoSolicitud' => $row['TIPOSOLICITUD'],
-                        'tipoMantenimientoString' => $row['TIPOMANTENIMIENTOSTRING'],
-                        'responsableBien' => $row['RESPONSABLEBIEN'],
-                        'departamento' => $row['DEPARTAMENTO'],
-                        'encargado' => $row['ENCARGADO'],
-                        'fechaSolicitud' => $row['FECHASOLICITUD'],
-                        'horaSolicitud' => $row['HORASOLICITUD'],
+                        'solicitudID' => $row['SOL_ID'],
+                        'codigo' => $row['SOL_COD'],
+                        'mac' => $row['SOL_MAC'],
+                        'tipoSolicitud' => $row['SOL_TIPOSOLICITUD'],
+                        'tipoMantenimientoString' => $row['SOL_TIPOMANTENIMIENTO'],
+                        'responsableBien' => $row['SOL_RESPONSABLEBIEN'],
+                        'departamento' => $row['SOL_DEPARTAMENTO'],
+                        'encargado' => $row['SOL_ENCARGADO'],
+                        'fechaSolicitud' => $row['SOL_FECSOLICITUDF'],
+                        'horaSolicitud' => $row['SOL_HORASOLICITUD'],
                         'fechaSolicitudF' => $row['FECHASOLICITUDF'],
-                        'horaSolicitudF' => $row['HORASOLICITUDF'],
-                        'detalles' => $row['DETALLES'],
-                        'impresoraString' => $row['IMPRESORASTRING'],
+                        'horaSolicitudF' => $row['SOL_HORASOLICITUDF'],
+                        'detalles' => $row['SOL_DETA'],
+                        'impresoraString' => $row['SOL_IMP'],
                         'componentes' => [],
                         'cambios' => [],
                     ];
                 }
 
                 // Agregar los datos de componentes y cambios si existen
-                if (!empty($row['COMPONENTENOMBRE'])) {
-                    $solicitudes[$solicitudID]['componentes'][] = $row['COMPONENTENOMBRE'];
+                if (!empty($row['COMP_NOM'])) {
+                    $solicitudes[$solicitudID]['componentes'][] = $row['COMP_NOM'];
                 }
-                if (!empty($row['CAMBIONOMBRECOMPONENTE'])) {
-                    $solicitudes[$solicitudID]['cambios'][] = $row['CAMBIONOMBRECOMPONENTE'];
+                if (!empty($row['CAMB_NOM_COMP'])) {
+                    $solicitudes[$solicitudID]['cambios'][] = $row['CAMB_NOM_COMP'];
                 }
             }
 
             // Cerrar conexión
             oci_free_statement($stid);
             oci_close($conexion);
-
+            echo "<h2>Solicitud ID: $solicitudID</h2>";
             // Imprimir los resultados
             foreach ($solicitudes as $solicitudID => $datos) {
                 echo "<h2>Solicitud ID: $solicitudID</h2>";
