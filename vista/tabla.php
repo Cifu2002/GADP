@@ -325,25 +325,28 @@ if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) 
             $('#generarReporte').on('click', function () {
                 let filasFiltradas = tablaSolicitud.rows({ filter: 'applied' }).data();
                 let idsUnicos = new Set();
+
                 filasFiltradas.each(function (row) {
                     idsUnicos.add(row.ID);
                 });
-                let ids = Array.from(idsUnicos);
 
-                console.log(ids);
+                let ids = Array.from(idsUnicos);
+                let ids_str = ids.join(',');
 
                 $.ajax({
-                    url: '../generarReporte.php',
-                    type: 'POST',
-                    data: { ids: ids },
-                    success: function (respuesta) {
-                        console.log(respuesta);
+                    url: 'reporte.php',
+                    type: 'GET',
+                    data: { ids: ids_str },
+                    success: function (data) {
+                        // Manejar la respuesta del servidor
+                        console.log('Respuesta del servidor:', data);
                     },
-                    error: function (error) {
-                        console.error('Error al enviar los datos: ', error);
+                    error: function (xhr, status, error) {
+                        console.error('Error al enviar la solicitud:', status, error);
                     }
                 });
             });
+
 
         });
 
