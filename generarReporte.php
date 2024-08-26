@@ -9,7 +9,6 @@ if (isset($_GET['ids'])) {
 
     if (!empty($ids)) {
         try {
-            echo 'Entro al try';
             // Conectar a la base de datos
             $conexion = Conexion::getInstance()->getConexion();
 
@@ -44,7 +43,6 @@ if (isset($_GET['ids'])) {
 
             $stid = oci_parse($conexion, $consulta);
             oci_execute($stid);
-            echo 'Se ejecuto';
             // Inicializar el array de resultados
             $solicitudes = [];
             $b = 0;
@@ -88,6 +86,7 @@ if (isset($_GET['ids'])) {
             // Cerrar conexión
             oci_free_statement($stid);
             oci_close($conexion);
+            echo 'Se cerro';
             echo '<pre>';
             print_r($solicitudes);
             echo '</pre>';
