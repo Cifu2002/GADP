@@ -11,7 +11,7 @@
                     $_SESSION['initiated'] = true;
                 }
     
-                if (isset($_SESSION['last_access']) && (time() - $_SESSION['last_access'] > 60)) {
+                if (isset($_SESSION['last_access']) && (time() - $_SESSION['last_access'] > 1800)) {
                     $this->cerrarSesion();
                     throw new Exception("Sesión expirada");
                 }
