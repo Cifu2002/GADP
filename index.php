@@ -1,10 +1,16 @@
 <?php
 include_once("modelo/Consultas.php");
 include_once('modelo/Sesion.php');
-$sesion = Sesion::getInstance();
-$nombreUsuario = $sesion->getSesion('usuario_nombre');
+try {
+    $sesion = Sesion::getInstance();
 
-if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) {
+    if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) {
+        header('Location: vista/login.php');
+        exit();
+    }
+
+    $nombreUsuario = $sesion->getSesion('usuario_nombre');
+} catch (Exception $e) {
     header('Location: vista/login.php');
     exit();
 }
@@ -88,7 +94,7 @@ if (!empty($mac)) {
 <body>
     <nav class="navbar">
         <div class="nav-left">
-        <a href="vista/menu.php"><i class="fa-solid fa-house" style="color: #ffffff;"></i> Inicio</a>
+            <a href="vista/menu.php"><i class="fa-solid fa-house" style="color: #ffffff;"></i> Inicio</a>
         </div>
         <div class="user">
             <span><?php echo $nombreUsuario; ?> <i class="fa-solid fa-user" style="color: #ffffff;"></i></span>

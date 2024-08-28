@@ -1,9 +1,15 @@
 <?php
 include_once('../modelo/Sesion.php');
-$sesion = Sesion::getInstance();
-$nombreUsuario = $sesion->getSesion('usuario_nombre');
+try {
+    $sesion = Sesion::getInstance();
 
-if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) {
+    if (!$sesion->getSesion('usuario_id') || !$sesion->getSesion('usuario_nombre')) {
+        header('Location: login.php');
+        exit();
+    }
+
+    $nombreUsuario = $sesion->getSesion('usuario_nombre');
+} catch (Exception $e) {
     header('Location: login.php');
     exit();
 }
